@@ -737,7 +737,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-      // === PDF ГЕНЕРАЦИЯ ===
+  // === PDF ГЕНЕРАЦИЯ ===
   document.getElementById('btnPdf').addEventListener('click', function() {
     var btn = this;
 
@@ -850,12 +850,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       + '</div>';
 
-    // Полный HTML-документ для iframe
     var fullDoc = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
       + '<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>'
       + '</head><body style="margin:0;background:white;">' + body + '</body></html>';
 
-    // Создаём скрытый iframe
     var iframe = document.createElement('iframe');
     iframe.style.cssText = 'position:fixed;left:0;top:0;width:700px;height:2000px;z-index:1;border:none;opacity:0;pointer-events:none;';
     document.body.appendChild(iframe);
@@ -864,14 +862,13 @@ document.addEventListener('DOMContentLoaded', function() {
     iframe.contentDocument.write(fullDoc);
     iframe.contentDocument.close();
 
-    // Ждём пока iframe загрузится + библиотека
     function tryGenerate(attempts) {
       if (attempts <= 0) {
         document.body.removeChild(iframe);
         overlay.remove();
         btn.disabled = false;
         btn.textContent = '📄 Скачать PDF';
-        showToast('Не удалось сгенерировать PDF', '✗');
+        showToast('Не удалось загрузить библиотеку PDF', '✗');
         return;
       }
       var h2p = iframe.contentWindow.html2pdf;
@@ -888,9 +885,22 @@ document.addEventListener('DOMContentLoaded', function() {
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      h2p().set(opt).from(iframe.contentDocument.body).save().then(function() {
+      // КЛЮЧЕВОЕ: генерируем blob в iframe, скачиваем из основного окна
+      h2p().set(opt).from(iframe.contentDocument.body).outputPdf('blob').then(function(blob) {
+        // Убираем iframe и плашку
         document.body.removeChild(iframe);
         overlay.remove();
+
+        // Создаём ссылку в ОСНОВНОМ окне и кликаем
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = opt.filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 3000);
+
         btn.disabled = false;
         btn.textContent = '📄 Скачать PDF';
         showToast('PDF скачан!', '📄');
@@ -903,7 +913,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    // Стартуем проверку через 1 секунду
     setTimeout(function() { tryGenerate(10); }, 1000);
   });
 
