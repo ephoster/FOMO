@@ -308,9 +308,6 @@
   .storage-ok { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #4ADE80; }
   .storage-fail { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #F87171; }
 
-  /* PDF контейнер — скрыт, не влияет на страницу */
-  #pdfContent { position: absolute; left: -9999px; top: 0; }
-
   @media print {
     .noise-overlay, .bg-grid, .progress-bar, .toast, .floating-nav, .no-print, .storage-badge { display: none !important; }
     body { background: white; color: #1a1a1a; }
@@ -602,15 +599,10 @@
 
   <div class="no-print fade-in" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
     <button class="btn-pdf" id="btnPdf" type="button">📄 Скачать PDF</button>
-    <button class="btn-primary" id="btnPrint" type="button">🖨️ Печать</button>
-    <button class="btn-secondary" id="btnCopy" type="button">📑 Копировать текст</button>
-    <button class="btn-secondary" id="btnClear" type="button">🗑️ Очистить</button>
+    <button class="btn-secondary" id="btnClear" type="button">🗑️ Очистить всё</button>
   </div>
 
 </main>
-
-<!-- Скрытый контейнер для генерации PDF -->
-<div id="pdfContent"></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -709,7 +701,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var b2t = document.querySelector('[data-key="b2_temp"]');
   if (b2t) b2t.addEventListener('input', updateTempIndicator);
 
-  // === СБОР ДАННЫХ ===
   function collectData() {
     var data = {};
     document.querySelectorAll('[data-key]').forEach(function(el) {
@@ -759,7 +750,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var body = ''
       + '<div style="font-family:Helvetica,Arial,sans-serif;color:#1a1a1a;padding:40px 48px;max-width:700px;margin:0 auto;line-height:1.6;">'
-
       + '<div style="text-align:center;margin-bottom:40px;padding-bottom:24px;border-bottom:3px solid #FF4F30;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#FF4F30;margin-bottom:12px;">Рабочая тетрадь участника</div>'
       + '<h1 style="font-size:26px;font-weight:600;margin-bottom:6px;color:#111;">Психология принятия решений</h1>'
@@ -768,7 +758,6 @@ document.addEventListener('DOMContentLoaded', function() {
       + '<table style="margin:0 auto;font-size:14px;"><tr><td style="padding:4px 12px;color:#888;">Дата:</td><td style="font-weight:500;">'+esc(d.date||'—')+'</td></tr>'
       + '<tr><td style="padding:4px 12px;color:#888;">Имя:</td><td style="font-weight:500;">'+esc(name)+'</td></tr></table>'
       + '</div>'
-
       + '<div style="margin-bottom:32px;">'
       + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">'
       + '<span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">1</span>'
@@ -779,7 +768,6 @@ document.addEventListener('DOMContentLoaded', function() {
       + '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Время раздумий</td><td style="padding:10px 14px;border:1px solid #eee;font-weight:500;">'+esc(rv(d,'b1_time'))+'</td></tr>'
       + '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Запланировано</td><td style="padding:10px 14px;border:1px solid #eee;font-weight:500;">'+esc(rv(d,'b1_planned'))+'</td></tr>'
       + '</table></div>'
-
       + '<div style="margin-bottom:32px;">'
       + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">'
       + '<span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">2</span>'
@@ -790,12 +778,10 @@ document.addEventListener('DOMContentLoaded', function() {
       + '</table>'
       + '<div style="margin-top:12px;padding:12px 16px;background:#fff5f0;border:1px solid #ffddcc;border-radius:8px;font-size:13px;color:#cc4400;">❄️ ПРАВИЛО ЗАМОРОЗКИ: при 38.5° и выше — заморозка на 24 часа</div>'
       + '</div>'
-
       + '<div style="margin-bottom:32px;">'
       + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">'
       + '<span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">3</span>'
       + '<h2 style="font-size:18px;font-weight:600;color:#111;">Эксперименты и инсайты</h2></div>'
-
       + '<div style="margin-bottom:20px;padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 1 — «Тест на мамонта»</div>'
       + '<table style="width:100%;font-size:13px;border-collapse:collapse;">'
@@ -805,7 +791,6 @@ document.addEventListener('DOMContentLoaded', function() {
       + '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Decision Drift</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(rv(d,'e1_drift'))+'</td></tr>'
       + '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Момент</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(rv(d,'e1_moment'))+'</td></tr>'
       + '</table></div>'
-
       + '<div style="margin-bottom:20px;padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 2 — «Аукцион с таймером»</div>'
       + '<table style="width:100%;font-size:13px;border-collapse:collapse;">'
@@ -813,41 +798,33 @@ document.addEventListener('DOMContentLoaded', function() {
       + '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Сильнее</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(rv(d,'e2_stronger'))+'</td></tr>'
       + '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Заметки</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.e2_notes||'—')+'</td></tr>'
       + '</table></div>'
-
       + '<div style="padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 3 — «Публичная иерархия»</div>'
       + '<table style="width:100%;font-size:13px;border-collapse:collapse;">'
       + '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;width:40%;border:1px solid #eee;">Чувство при +300%</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.e3_feeling||'—')+'</td></tr>'
       + '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Источники</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc((d.e3_source1||'—')+', '+(d.e3_source2||'—'))+'</td></tr>'
       + '</table></div></div>'
-
       + '<div style="margin-bottom:32px;">'
       + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">'
       + '<span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">4</span>'
       + '<h2 style="font-size:18px;font-weight:600;color:#111;">Мой нейро-протокол</h2></div>'
-
       + '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 1 — Условие входа (макс. '+esc(d.r1_temp||'—')+'°)</div>'
       + '<div style="font-size:13px;">'+(d.r1_cond1_check?'✓':'○')+' '+esc(d.r1_cond1_text||'—')+'</div>'
       + '<div style="font-size:13px;">'+(d.r1_cond2_check?'✓':'○')+' '+esc(d.r1_cond2_text||'—')+'</div></div>'
-
       + '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 2 — Заморозка (24 часа)</div>'
       + '<div style="font-size:13px;"><strong>Триггер:</strong> '+esc(d.r2_trigger||'—')+'</div></div>'
-
       + '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 3 — Фильтр шума (выше '+esc(d.r3_temp||'—')+'°)</div>'
       + '<div style="font-size:13px;">'+esc(d.r3_sources||'—')+'</div></div>'
-
       + '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 4 — Стоп-механизм (при '+esc(d.r4_temp||'—')+'°)</div>'
       + '<div style="font-size:13px;">'+esc(d.r4_action||'—')+'</div></div>'
-
       + '<div style="padding:16px;background:#fff5f0;border:2px dashed #ffccbb;border-radius:8px;text-align:center;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#999;margin-bottom:6px;">⚓ Фраза-якорь</div>'
       + '<div style="font-size:16px;font-weight:600;color:#cc3300;font-style:italic;">«'+esc(d.anchor||'—')+'»</div>'
       + '</div></div>'
-
       + '</div>';
 
     var fullDoc = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
@@ -885,13 +862,9 @@ document.addEventListener('DOMContentLoaded', function() {
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      // КЛЮЧЕВОЕ: генерируем blob в iframe, скачиваем из основного окна
       h2p().set(opt).from(iframe.contentDocument.body).outputPdf('blob').then(function(blob) {
-        // Убираем iframe и плашку
         document.body.removeChild(iframe);
         overlay.remove();
-
-        // Создаём ссылку в ОСНОВНОМ окне и кликаем
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
@@ -900,7 +873,6 @@ document.addEventListener('DOMContentLoaded', function() {
         a.click();
         document.body.removeChild(a);
         setTimeout(function() { URL.revokeObjectURL(url); }, 3000);
-
         btn.disabled = false;
         btn.textContent = '📄 Скачать PDF';
         showToast('PDF скачан!', '📄');
