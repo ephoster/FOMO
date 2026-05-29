@@ -1,0 +1,872 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ru"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;Рабочая тетрадь — Психология принятия решений&lt;/title&gt;</p>
+<p class="p1">&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--bg-page: #0B0C0E;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--glass-border: rgba(255, 255, 255, 0.08);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--glass-surface: rgba(255, 255, 255, 0.03);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>* { box-sizing: border-box; margin: 0; padding: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html { scroll-behavior: smooth; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>-webkit-font-smoothing: antialiased;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--bg-page);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #EDEDED;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.noise-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; inset: 0; z-index: 0; pointer-events: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: url('https://grainy-gradients.vercel.app/noise.svg');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>opacity: 0.15;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.bg-grid {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; inset: 0; z-index: 0; pointer-events: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background-size: 40px 40px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background-image:</p>
+<p class="p1"><span class="Apple-converted-space">      </span>linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),</p>
+<p class="p1"><span class="Apple-converted-space">      </span>linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.glass-card {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--glass-surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid var(--glass-border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>backdrop-filter: blur(24px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: border-color 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.glass-card:hover { border-color: rgba(255,255,255,0.15); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-input {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.04);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #EDEDED;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 12px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: border-color 0.3s, box-shadow 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-input:focus {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255, 79, 48, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 0 0 3px rgba(255, 79, 48, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-input::placeholder { color: rgba(255,255,255,0.25); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>textarea.text-input { resize: vertical; min-height: 80px; line-height: 1.6; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.radio-label {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 12px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.radio-label:hover {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.05);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255,255,255,0.12);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.radio-label input { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.radio-label .dot {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 20px; height: 20px; min-width: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 2px solid rgba(255,255,255,0.2);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.radio-label input:checked ~ .dot {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: #FF4F30;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #FF4F30;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.radio-label input:checked ~ .dot::after {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: ''; width: 6px; height: 6px; background: white; border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.radio-label input:checked ~ .label-text { color: #fff; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.label-text { color: rgba(255,255,255,0.7); transition: color 0.2s; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-input {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 80px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.04);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #EDEDED;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 8px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: border-color 0.3s, box-shadow 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-input:focus {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255, 79, 48, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 0 0 3px rgba(255, 79, 48, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.section-number {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 32px; height: 32px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255, 79, 48, 0.15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #FF4F30;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fomo-row {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>grid-template-columns: 70px 1fr 1fr 2fr;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 14px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom: 1px solid rgba(255,255,255,0.04);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: start;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.5;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fomo-row:last-child { border-bottom: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fomo-header {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.4);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.08em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-badge {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 4px 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-normal { background: rgba(34,197,94,0.12); color: #4ADE80; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-warn { background: rgba(250,204,21,0.12); color: #FACC15; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-danger { background: rgba(249,115,22,0.12); color: #FB923C; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-critical { background: rgba(239,68,68,0.12); color: #F87171; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.temp-catastrophe { background: rgba(220,38,38,0.2); color: #EF4444; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.freeze-box {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255, 79, 48, 0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255, 79, 48, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 20px 24px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.rule-card {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: border-color 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.rule-card:hover { border-color: rgba(255,255,255,0.12); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.rule-number {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px; font-weight: 600; letter-spacing: 0.1em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase; color: #FF4F30; margin-bottom: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.anchor-input {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255, 79, 48, 0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 2px dashed rgba(255, 79, 48, 0.25);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #FF4F30;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 16px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.anchor-input:focus {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255, 79, 48, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 0 30px rgba(255, 79, 48, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255, 79, 48, 0.08);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.anchor-input::placeholder { color: rgba(255, 79, 48, 0.35); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.progress-bar {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; top: 0; left: 0; height: 3px; z-index: 100;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: linear-gradient(90deg, #FF4F30, #FACC15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: width 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 0 2px 2px 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toast {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; bottom: 32px; right: 32px; z-index: 200;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(34, 197, 94, 0.15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(34, 197, 94, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>backdrop-filter: blur(24px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 14px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px; color: #4ADE80;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transform: translateY(100px); opacity: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>pointer-events: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toast.show { transform: translateY(0); opacity: 1; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 12px 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #FF4F30;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: white; font-size: 15px; font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 10px; border: none; cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(255,79,48,0.3); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-secondary {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 12px 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.05);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.8); font-size: 15px; font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.experiment-card {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.experiment-card::before {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute; top: 0; left: 0; right: 0; height: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: linear-gradient(90deg, transparent, rgba(255,79,48,0.4), transparent);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.exp-number {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px; font-weight: 600; letter-spacing: 0.1em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.condition-row { display: flex; align-items: center; gap: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.condition-check {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 22px; height: 22px; min-width: 22px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 2px solid rgba(255,255,255,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.condition-check.checked { border-color: #FF4F30; background: #FF4F30; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.condition-check.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 600; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.condition-text-input {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: transparent; border: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom: 1px dashed rgba(255,255,255,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #EDEDED; padding: 8px 4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif; font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 100%; outline: none; transition: border-color 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.condition-text-input:focus { border-color: rgba(255, 79, 48, 0.5); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.condition-text-input::placeholder { color: rgba(255,255,255,0.2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fade-in {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>opacity: 0; transform: translateY(20px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: opacity 0.6s ease, transform 0.6s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fade-in.visible { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dot {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 8px; height: 8px; border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; transition: all 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dot.active { background: #FF4F30; transform: scale(1.3); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dot:hover { background: rgba(255,255,255,0.4); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.confirm-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; inset: 0; z-index: 300;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.confirm-box {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #18181b; border: 1px solid rgba(255,255,255,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 16px; padding: 28px; max-width: 400px; width: 90%; text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.storage-badge {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 4px 12px; border-radius: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px; font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; bottom: 32px; left: 32px; z-index: 50;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.storage-ok { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #4ADE80; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.storage-fail { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #F87171; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>@media print {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.noise-overlay, .bg-grid, .progress-bar, .toast, .floating-nav, .no-print, .storage-badge { display: none !important; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body { background: white; color: #1a1a1a; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.glass-card { background: #f8f8f8; border: 1px solid #ddd; backdrop-filter: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.text-input, .temp-input, .anchor-input { border: 1px solid #ccc; background: white; color: #1a1a1a; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.text-input::placeholder, .anchor-input::placeholder { color: #aaa; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.radio-label { background: #f5f5f5; border-color: #ddd; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.label-text { color: #333; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.fomo-row { border-color: #eee; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.freeze-box { background: #fff5f0; border-color: #ffccbb; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.rule-card { background: #f5f5f5; border-color: #ddd; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.anchor-input { border-color: #ffaa88; color: #cc3300; background: #fff5f0; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.temp-badge { print-color-adjust: exact; -webkit-print-color-adjust: exact; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.section-number { background: #ffe8e0; color: #cc3300; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.rule-number { color: #cc3300; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.experiment-card { background: #f8f8f8; border-color: #ddd; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.exp-number { color: #888; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.condition-text-input { border-color: #ccc; color: #1a1a1a; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.fomo-row { grid-template-columns: 1fr 1fr; gap: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.fomo-row &gt; :first-child { grid-column: 1 / -1; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.fomo-header &gt; :first-child { grid-column: 1 / -1; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.floating-nav { right: 12px !important; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.storage-badge { bottom: 16px; left: 16px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="noise-overlay"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div class="bg-grid"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div class="progress-bar" id="progressBar" style="width: 0%"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="floating-nav no-print" style="position:fixed; right:24px; top:50%; transform:translateY(-50%); z-index:50; display:flex; flex-direction:column; gap:12px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="nav-dot active" data-section="header" title="Начало"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="nav-dot" data-section="block1" title="Блок 1"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="nav-dot" data-section="block2" title="Блок 2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="nav-dot" data-section="block3" title="Блок 3"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="nav-dot" data-section="block4" title="Блок 4"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="toast" id="toast"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;span id="toastIcon"&gt;✓&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;span id="toastText"&gt;Сохранено&lt;/span&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="storage-badge no-print" id="storageBadge"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;main style="position:relative; z-index:1; max-width:860px; margin:0 auto; padding:40px 20px 80px;"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;header id="header" class="fade-in" style="text-align:center; margin-bottom:56px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="display:inline-flex; align-items:center; gap:8px; padding:6px 16px; background:rgba(255,79,48,0.08); border:1px solid rgba(255,79,48,0.2); border-radius:100px; font-size:12px; font-weight:500; color:#FF4F30; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>🧠 Рабочая тетрадь участника</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1 style="font-size:clamp(28px,5vw,42px); font-weight:500; line-height:1.15; letter-spacing:-0.03em; margin-bottom:12px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Психология принятия решений</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p style="font-size:18px; color:rgba(255,255,255,0.5); margin-bottom:32px; line-height:1.5;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Как FOMO мешает сохранить капитал</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p style="font-size:15px; color:rgba(255,255,255,0.3); font-style:italic; margin-bottom:40px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>«Мы не выбираем активы. Мы чиним алгоритм.»</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="glass-card" style="padding:28px; max-width:480px; margin:0 auto; text-align:left;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.4); display:block; margin-bottom:8px;"&gt;Дата&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" class="text-input" data-key="date" placeholder="30 мая 2026" value="30 мая 2026"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.4); display:block; margin-bottom:8px;"&gt;Имя участника&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" class="text-input" data-key="name" placeholder="Ваше имя"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;section id="block1" class="fade-in" style="margin-bottom:56px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="section-number"&gt;1&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;"&gt;Стартовая диагностика&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="glass-card" style="padding:32px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px; line-height:1.5;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Вспомните последнюю сделку, о которой вы пожалели. Что произошло? &lt;span style="color:rgba(255,255,255,0.35);"&gt;(2-3 слова)&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="text-input" data-key="b1_deal" placeholder="Например: купил на хаях"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px;"&gt;Какое чувство предшествовало решению?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="text-input" data-key="b1_feeling" placeholder="Например: страх упустить, возбуждение..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:12px;"&gt;Как долго вы думали перед тем, как войти?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;flex-direction:column;gap:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="b1_time" value="less5"&gt;&lt;span class="dot"&gt;&lt;/span&gt;&lt;span class="label-text"&gt;Менее 5 мин&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="b1_time" value="to30"&gt;&lt;span class="dot"&gt;&lt;/span&gt;&lt;span class="label-text"&gt;До 30 мин&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="b1_time" value="hours"&gt;&lt;span class="dot"&gt;&lt;/span&gt;&lt;span class="label-text"&gt;Несколько часов&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="b1_time" value="days"&gt;&lt;span class="dot"&gt;&lt;/span&gt;&lt;span class="label-text"&gt;Несколько дней&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:12px;"&gt;Это было запланированное решение?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;flex-direction:column;gap:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="b1_planned" value="yes"&gt;&lt;span class="dot"&gt;&lt;/span&gt;&lt;span class="label-text"&gt;Да&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="b1_planned" value="no"&gt;&lt;span class="dot"&gt;&lt;/span&gt;&lt;span class="label-text"&gt;Нет&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="b1_planned" value="convinced"&gt;&lt;span class="dot"&gt;&lt;/span&gt;&lt;span class="label-text"&gt;Я убедил себя, что да&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;section id="block2" class="fade-in" style="margin-bottom:56px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="section-number"&gt;2&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;"&gt;Шкала FOMO-температуры&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="glass-card" style="overflow:hidden; margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fomo-row fomo-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;Степень&lt;/div&gt;&lt;div&gt;Образ&lt;/div&gt;&lt;div&gt;Чувство&lt;/div&gt;&lt;div&gt;Статус (Нейрофизиология)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fomo-row"&gt;&lt;div&gt;&lt;span class="temp-badge temp-normal"&gt;36.6°&lt;/span&gt;&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Радар&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Любопытство&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.5);"&gt;Норма. PFC (кора) активна. Наблюдение.&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fomo-row"&gt;&lt;div&gt;&lt;span class="temp-badge temp-warn"&gt;37.5°&lt;/span&gt;&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Зуд&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Беспокойство&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.5);"&gt;Внимание. Поиск подтверждений (Confirmation bias).&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fomo-row"&gt;&lt;div&gt;&lt;span class="temp-badge temp-danger"&gt;38.5°&lt;/span&gt;&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Жар&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Раздражение&lt;/div&gt;&lt;div style="color:#FB923C;"&gt;ОПАСНО. Активация миндалины, рост кортизола.&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fomo-row"&gt;&lt;div&gt;&lt;span class="temp-badge temp-critical"&gt;39.5°&lt;/span&gt;&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Лихорадка&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Возбуждение&lt;/div&gt;&lt;div style="color:#F87171;"&gt;КРИТИЧНО. Доминирование лимбической системы. PFC отключена.&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fomo-row"&gt;&lt;div&gt;&lt;span class="temp-badge temp-catastrophe"&gt;41.0°&lt;/span&gt;&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Удар&lt;/div&gt;&lt;div style="color:rgba(255,255,255,0.8);"&gt;Одержимость&lt;/div&gt;&lt;div style="color:#EF4444;"&gt;КАТАСТРОФА. Loss Aversion ×2.5. Sunk Cost. Туннельное мышление.&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="freeze-box" style="margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span style="font-size:20px;"&gt;❄️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span style="font-weight:600; color:#FF4F30; font-size:15px;"&gt;ПРАВИЛО ЗАМОРОЗКИ&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p style="color:rgba(255,255,255,0.7); font-size:15px; line-height:1.6;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>При температуре &lt;strong style="color:#FB923C;"&gt;38.5°&lt;/strong&gt; и выше — любая сделка откладывается минимум на &lt;strong style="color:#fff;"&gt;24 часа&lt;/strong&gt;.</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="glass-card" style="padding:32px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px;"&gt;Моя типичная температура входа:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex; align-items:center; gap:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" class="temp-input" data-key="b2_temp" placeholder="—"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span style="color:rgba(255,255,255,0.4); font-size:18px;"&gt;°&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span id="tempIndicator" style="margin-left:8px; font-size:13px; font-weight:500;"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px; line-height:1.5;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Как именно я понимаю физически, что температура растёт &lt;span style="color:rgba(255,255,255,0.35);"&gt;(пульс, напряжение, навязчивые мысли)?&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;textarea class="text-input" data-key="b2_physical" placeholder="Например: учащается пульс, начинаю постоянно обновлять график..." rows="3"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;section id="block3" class="fade-in" style="margin-bottom:56px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="section-number"&gt;3&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;"&gt;Эксперименты и инсайты&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="experiment-card" style="margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="exp-number"&gt;Эксперимент 1&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3 style="font-size:18px; font-weight:500; margin-bottom:24px;"&gt;«Тест на мамонта»&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;Температура&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex;align-items:center;gap:6px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="text" class="temp-input" data-key="e1_temp" placeholder="—" style="font-size:16px;width:70px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span style="color:rgba(255,255,255,0.4);"&gt;°&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;Решение&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex;gap:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label class="radio-label" style="flex:1;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e1_decision" value="buy"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;КУПИТЬ&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label class="radio-label" style="flex:1;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e1_decision" value="wait"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;ЖДАТЬ&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;Первое чувство&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="text-input" data-key="e1_feeling" placeholder=""&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;Изменилось ли решение во время таймера (Decision Drift)?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:8px;flex-wrap:wrap;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label" style="flex:1;min-width:120px;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e1_drift" value="no"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;Нет&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label" style="flex:1;min-width:120px;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e1_drift" value="buy"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;Да → «купить»&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label" style="flex:1;min-width:120px;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e1_drift" value="wait"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;Да → «ждать»&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;В какой момент произошло изменение?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label" style="flex:1;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e1_moment" value="start"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;В начале&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label" style="flex:1;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e1_moment" value="end"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;Ближе к концу&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="experiment-card" style="margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="exp-number"&gt;Эксперимент 2&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3 style="font-size:18px; font-weight:500; margin-bottom:24px;"&gt;«Аукцион с таймером»&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px; line-height:1.5;"&gt;Моя температура, когда ставка превысила 1000 ₽:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;gap:6px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" class="temp-input" data-key="e2_temp" placeholder="—" style="font-size:16px;width:70px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span style="color:rgba(255,255,255,0.4);"&gt;°&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;Что было сильнее?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label" style="flex:1;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e2_stronger" value="win"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;Желание выиграть&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="radio-label" style="flex:1;justify-content:center;padding:10px;"&gt;&lt;input type="radio" name="e2_stronger" value="fear"&gt;&lt;span class="dot" style="width:16px;height:16px;min-width:16px;"&gt;&lt;/span&gt;&lt;span class="label-text" style="font-size:14px;"&gt;Страх переплатить&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;Мои заметки (что заставило остановиться / продолжить):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;textarea class="text-input" data-key="e2_notes" placeholder="" rows="3"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="experiment-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="exp-number"&gt;Эксперимент 3&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3 style="font-size:18px; font-weight:500; margin-bottom:24px;"&gt;«Публичная иерархия»&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px; line-height:1.5;"&gt;Когда вижу пост «+300% за месяц», первое, что чувствую:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="text-input" data-key="e3_feeling" placeholder=""&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px; line-height:1.5;"&gt;Какие каналы / источники чаще всего поднимают температуру?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="text-input" data-key="e3_source1" placeholder="Источник 1" style="margin-bottom:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="text-input" data-key="e3_source2" placeholder="Источник 2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;section id="block4" class="fade-in" style="margin-bottom:48px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="section-number"&gt;4&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;"&gt;Мой нейро-протокол&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="rule-card" style="margin-bottom:16px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="rule-number"&gt;Правило 1 — Условие входа&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p style="font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:16px; line-height:1.6;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong style="color:#fff;"&gt;ВХОДИ&lt;/strong&gt; в незапланированную позицию только при температуре не выше</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="temp-input" data-key="r1_temp" placeholder="—" style="font-size:14px;width:60px;display:inline;vertical-align:middle;"&gt;°</p>
+<p class="p1"><span class="Apple-converted-space">        </span>и при условиях:</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex;flex-direction:column;gap:10px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="condition-row"&gt;&lt;div class="condition-check" data-key="r1_cond1_check"&gt;&lt;/div&gt;&lt;input type="text" class="condition-text-input" data-key="r1_cond1_text" placeholder="Условие 1"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="condition-row"&gt;&lt;div class="condition-check" data-key="r1_cond2_check"&gt;&lt;/div&gt;&lt;input type="text" class="condition-text-input" data-key="r1_cond2_text" placeholder="Условие 2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="rule-card" style="margin-bottom:16px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="rule-number"&gt;Правило 2 — Заморозка (Правило 24 часов)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-bottom:16px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"&gt;&lt;strong style="color:rgba(255,255,255,0.8);"&gt;ТРИГГЕР:&lt;/strong&gt; Мой личный сигнал для паузы:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="text-input" data-key="r2_trigger" placeholder="Например: учащённый пульс &gt; 90, мысли «все уже зашли»"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex;align-items:flex-start;gap:10px;padding:14px 18px;background:rgba(255,79,48,0.06);border-radius:10px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span style="font-size:18px;min-width:18px;margin-top:1px;"&gt;❄️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.6;"&gt;&lt;strong style="color:#FF4F30;"&gt;ДЕЙСТВИЕ:&lt;/strong&gt; При фиксации триггера — полная заморозка терминала на 24 часа.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="rule-card" style="margin-bottom:16px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="rule-number"&gt;Правило 3 — Фильтр шума&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p style="font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:16px; line-height:1.6;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong style="color:#fff;"&gt;ОТКЛЮЧАЙ&lt;/strong&gt; источники при температуре выше</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="temp-input" data-key="r3_temp" placeholder="—" style="font-size:14px;width:60px;display:inline;vertical-align:middle;"&gt;°</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="text" class="text-input" data-key="r3_sources" placeholder="Перечислите каналы и чаты через запятую"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="rule-card" style="margin-bottom:32px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="rule-number"&gt;Правило 4 — Стоп-механизм&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p style="font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:16px; line-height:1.6;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong style="color:#fff;"&gt;ВЫПОЛНИ&lt;/strong&gt; физическое действие при</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" class="temp-input" data-key="r4_temp" placeholder="—" style="font-size:14px;width:60px;display:inline;vertical-align:middle;"&gt;°</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="text" class="text-input" data-key="r4_action" placeholder="Например: встать из-за стола, умыться холодной водой"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="glass-card" style="padding:32px;text-align:center;border-color:rgba(255,79,48,0.15);background:rgba(255,79,48,0.03);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span style="font-size:18px;"&gt;⚓&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span style="font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);"&gt;Моя фраза-якорь&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="text" class="anchor-input" data-key="anchor" placeholder="Например: «Я не упускаю — я выбираю»"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="no-print fade-in" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-primary" id="btnPrint" type="button"&gt;🖨️ Печать&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-secondary" id="btnExport" type="button"&gt;📋 Открыть текст в новой вкладке&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-secondary" id="btnCopy" type="button"&gt;📑 Копировать в буфер&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-secondary" id="btnClear" type="button"&gt;🗑️ Очистить всё&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">document.addEventListener('DOMContentLoaded', function() {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var STORAGE_KEY = 'fomo_workbook_v2';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === ПРОВЕРКА localStorage ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var storageOk = false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>localStorage.setItem('_test', '1');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>localStorage.removeItem('_test');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>storageOk = true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} catch(e) { storageOk = false; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var badge = document.getElementById('storageBadge');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (storageOk) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>badge.className = 'storage-badge no-print storage-ok';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>badge.textContent = '💾 Автосохранение включено';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>badge.className = 'storage-badge no-print storage-fail';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>badge.textContent = '⚠️ localStorage недоступен — откройте через http';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === СОХРАНЕНИЕ ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function saveData() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!storageOk) return;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var data = {};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('[data-key]').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var key = el.dataset.key;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (el.type === 'radio') return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (el.classList.contains('condition-check')) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>data[key] = el.classList.contains('checked');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>data[key] = el.value;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('input[type="radio"]').forEach(function(radio) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (radio.checked) data[radio.name] = radio.value;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function loadData() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!storageOk) return;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var raw = localStorage.getItem(STORAGE_KEY);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!raw) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var data = JSON.parse(raw);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.querySelectorAll('[data-key]').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var key = el.dataset.key;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (el.type === 'radio') return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (el.classList.contains('condition-check')) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>if (data[key]) el.classList.add('checked');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (data[key] !== undefined) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>el.value = data[key];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Object.keys(data).forEach(function(key) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var radio = document.querySelector('input[name="' + key + '"][value="' + data[key] + '"]');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (radio) radio.checked = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>updateTempIndicator();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>updateProgress();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} catch(e) {}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === TOAST ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var toastTimer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function showToast(text, icon) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var toast = document.getElementById('toast');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('toastText').textContent = text;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('toastIcon').textContent = icon || '✓';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>toast.classList.add('show');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>clearTimeout(toastTimer);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2500);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === PROGRESS ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function updateProgress() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var all = document.querySelectorAll('[data-key]:not(.condition-check)');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var filled = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>all.forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (el.type === 'radio') return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (el.value &amp;&amp; el.value.trim()) filled++;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var radioNames = {};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('input[type="radio"]').forEach(function(r) { radioNames[r.name] = true; });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Object.keys(radioNames).forEach(function(name) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (document.querySelector('input[name="' + name + '"]:checked')) filled++;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.condition-check[data-key]').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (el.classList.contains('checked')) filled++;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var total = all.length + Object.keys(radioNames).length + document.querySelectorAll('.condition-check[data-key]').length;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('progressBar').style.width = Math.round((filled / total) * 100) + '%';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === TEMP INDICATOR ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function updateTempIndicator() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var el = document.querySelector('[data-key="b2_temp"]');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ind = document.getElementById('tempIndicator');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!el || !ind) return;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var v = parseFloat(el.value);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (isNaN(v)) { ind.textContent = ''; return; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (v &lt;= 36.6) { ind.textContent = '● Норма'; ind.style.color = '#4ADE80'; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else if (v &lt;= 37.5) { ind.textContent = '● Внимание'; ind.style.color = '#FACC15'; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else if (v &lt;= 38.5) { ind.textContent = '⚠ Опасно'; ind.style.color = '#FB923C'; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else if (v &lt;= 39.5) { ind.textContent = '🔴 Критично'; ind.style.color = '#F87171'; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else { ind.textContent = '🔴🔴 Катастрофа'; ind.style.color = '#EF4444'; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === CONDITION CHECKS ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.condition-check[data-key]').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>el.addEventListener('click', function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>el.classList.toggle('checked');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>saveData(); updateProgress();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === AUTO-SAVE ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var saveDebounce;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function scheduleSave() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>clearTimeout(saveDebounce);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>saveDebounce = setTimeout(function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>saveData(); updateProgress();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (storageOk) showToast('Прогресс сохранён', '✓');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}, 800);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('input[type="text"], textarea').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>el.addEventListener('input', scheduleSave);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('input[type="radio"]').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>el.addEventListener('change', scheduleSave);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var b2t = document.querySelector('[data-key="b2_temp"]');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (b2t) b2t.addEventListener('input', updateTempIndicator);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === СБОР ДАННЫХ В ТЕКСТ ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function collectText() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var data = {};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('[data-key]').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var key = el.dataset.key;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (el.type === 'radio') return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (el.classList.contains('condition-check')) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>data[key] = el.classList.contains('checked') ? '✓' : '—';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>data[key] = el.value || '—';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var labels = {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'b1_time': {'less5':'Менее 5 мин','to30':'До 30 мин','hours':'Несколько часов','days':'Несколько дней'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'b1_planned': {'yes':'Да','no':'Нет','convinced':'Я убедил себя, что да'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'e1_decision': {'buy':'КУПИТЬ','wait':'ЖДАТЬ'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'e1_drift': {'no':'Нет','buy':'Да → купить','wait':'Да → ждать'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'e1_moment': {'start':'В начале','end':'Ближе к концу'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'e2_stronger': {'win':'Желание выиграть','fear':'Страх переплатить'}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function rv(k) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!data[k] || data[k] === '—') return '—';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return (labels[k] &amp;&amp; labels[k][data[k]]) ? labels[k][data[k]] : data[k];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return 'РАБОЧАЯ ТЕТРАДЬ: ПСИХОЛОГИЯ ПРИНЯТИЯ РЕШЕНИЙ\nКак FOMO мешает сохранить капитал\n========================================\nДата: ' + (data.date||'—') + '\nИмя: ' + (data.name||'—') + '\n\n━━━ 1. СТАРТОВАЯ ДИАГНОСТИКА ━━━\nСделка: ' + (data.b1_deal||'—') + '\nЧувство: ' + (data.b1_feeling||'—') + '\nВремя раздумий: ' + rv('b1_time') + '\nЗапланировано: ' + rv('b1_planned') + '\n\n━━━ 2. ШКАЛА FOMO ━━━\nТипичная температура: ' + (data.b2_temp||'—') + '°\nФизические сигналы: ' + (data.b2_physical||'—') + '\n\n━━━ 3. ЭКСПЕРИМЕНТЫ ━━━\n\nЭ1 «Тест на мамонта»\n<span class="Apple-converted-space">  </span>Температура: ' + (data.e1_temp||'—') + '°\n<span class="Apple-converted-space">  </span>Решение: ' + rv('e1_decision') + '\n<span class="Apple-converted-space">  </span>Первое чувство: ' + (data.e1_feeling||'—') + '\n<span class="Apple-converted-space">  </span>Decision Drift: ' + rv('e1_drift') + '\n<span class="Apple-converted-space">  </span>Момент: ' + rv('e1_moment') + '\n\nЭ2 «Аукцион с таймером»\n<span class="Apple-converted-space">  </span>Температура &gt;1000₽: ' + (data.e2_temp||'—') + '°\n<span class="Apple-converted-space">  </span>Сильнее: ' + rv('e2_stronger') + '\n<span class="Apple-converted-space">  </span>Заметки: ' + (data.e2_notes||'—') + '\n\nЭ3 «Публичная иерархия»\n<span class="Apple-converted-space">  </span>Чувство при +300%: ' + (data.e3_feeling||'—') + '\n<span class="Apple-converted-space">  </span>Источники: ' + (data.e3_source1||'—') + ', ' + (data.e3_source2||'—') + '\n\n━━━ 4. НЕЙРО-ПРОТОКОЛ ━━━\n\nП1 — Макс. температура входа: ' + (data.r1_temp||'—') + '°\n<span class="Apple-converted-space">  </span>' + (data.r1_cond1_check||'—') + ' ' + (data.r1_cond1_text||'') + '\n<span class="Apple-converted-space">  </span>' + (data.r1_cond2_check||'—') + ' ' + (data.r1_cond2_text||'') + '\n\nП2 — Триггер заморозки: ' + (data.r2_trigger||'—') + '\n\nП3 — Фильтр шума выше ' + (data.r3_temp||'—') + '°: ' + (data.r3_sources||'—') + '\n\nП4 — Стоп-механизм при ' + (data.r4_temp||'—') + '°: ' + (data.r4_action||'—') + '\n\n⚓ ФРАЗА-ЯКОРЬ: «' + (data.anchor||'—') + '»';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === ПЕЧАТЬ ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btnPrint').addEventListener('click', function() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.print();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === ЭКСПОРТ: новая вкладка ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btnExport').addEventListener('click', function() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var text = collectText();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var w = window.open('', '_blank');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!w) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>showToast('Попап заблокирован — разрешите попапы', '✗');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>w.document.open();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>w.document.write('&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Рабочая тетрадь&lt;/title&gt;&lt;style&gt;body{font-family:monospace;font-size:14px;white-space:pre-wrap;padding:40px;background:#fff;color:#111;line-height:1.7;max-width:700px;margin:0 auto;}h1{font-size:18px;margin-bottom:4px;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;' + text.replace(/&amp;/g,'&amp;amp;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;') + '\n\n—\nСкопируйте текст (Ctrl+A, Ctrl+C) или сохраните страницу (Ctrl+S)&lt;/body&gt;&lt;/html&gt;');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>w.document.close();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>showToast('Текст открыт в новой вкладке', '📋');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === КОПИРОВАНИЕ ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btnCopy').addEventListener('click', function() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var text = collectText();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (navigator.clipboard &amp;&amp; navigator.clipboard.writeText) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>navigator.clipboard.writeText(text).then(function() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>showToast('Скопировано в буфер обмена', '📑');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}).catch(function() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>fallbackCopy(text);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>fallbackCopy(text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function fallbackCopy(text) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ta = document.createElement('textarea');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ta.value = text;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.body.appendChild(ta);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ta.select();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.execCommand('copy');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>showToast('Скопировано в буфер обмена', '📑');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} catch(e) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>showToast('Не удалось скопировать', '✗');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.body.removeChild(ta);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === ОЧИСТКА ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btnClear').addEventListener('click', function() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var overlay = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overlay.className = 'confirm-overlay';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var box = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box.className = 'confirm-box';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box.innerHTML = '&lt;p style="font-size:16px;color:rgba(255,255,255,0.85);margin-bottom:24px;line-height:1.5;"&gt;Очистить все введённые данные?&lt;/p&gt;&lt;div style="display:flex;gap:10px;justify-content:center;"&gt;&lt;button class="btn-secondary" id="cc" type="button" style="padding:10px 20px;"&gt;Отмена&lt;/button&gt;&lt;button class="btn-primary" id="co" type="button" style="padding:10px 20px;background:#EF4444;"&gt;Очистить&lt;/button&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overlay.appendChild(box);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.body.appendChild(overlay);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box.querySelector('#cc').addEventListener('click', function() { overlay.remove(); });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box.querySelector('#co').addEventListener('click', function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>overlay.remove();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.querySelectorAll('[data-key]').forEach(function(el) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (el.type === 'radio') el.checked = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if (el.classList.contains('condition-check')) el.classList.remove('checked');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else el.value = (el.dataset.key === 'date') ? '30 мая 2026' : '';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>updateTempIndicator(); updateProgress();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>showToast('Данные очищены', '🗑️');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === SCROLL ANIMATIONS ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var obs = new IntersectionObserver(function(entries) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}, { threshold: 0.1 });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === NAV DOTS ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var sections = ['header','block1','block2','block3','block4'];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var dots = document.querySelectorAll('.nav-dot');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var sObs = new IntersectionObserver(function(entries) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>entries.forEach(function(e) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (e.isIntersecting) dots.forEach(function(d) { d.classList.toggle('active', d.dataset.section === e.target.id); });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}, { threshold: 0.3 });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sections.forEach(function(id) { var el = document.getElementById(id); if (el) sObs.observe(el); });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>dots.forEach(function(d) { d.addEventListener('click', function() { var el = document.getElementById(d.dataset.section); if (el) el.scrollIntoView({behavior:'smooth'}); }); });</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// === INIT ===</p>
+<p class="p1"><span class="Apple-converted-space">  </span>loadData();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateProgress();</p>
+<p class="p2"><br></p>
+<p class="p1">});</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
