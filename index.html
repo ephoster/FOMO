@@ -916,26 +916,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() { tryGenerate(10); }, 1000);
   });
 
-  // === ПЕЧАТЬ ===
-  document.getElementById('btnPrint').addEventListener('click', function() { window.print(); });
-
-  // === КОПИРОВАНИЕ ===
-  document.getElementById('btnCopy').addEventListener('click', function() {
-    var d = collectData();
-    var text = 'РАБОЧАЯ ТЕТРАДЬ: ПСИХОЛОГИЯ ПРИНЯТИЯ РЕШЕНИЙ\n========================================\nДата: '+(d.date||'—')+'\nИмя: '+(d.name||'—')+'\n\n1. СТАРТОВАЯ ДИАГНОСТИКА\nСделка: '+(d.b1_deal||'—')+'\nЧувство: '+(d.b1_feeling||'—')+'\nВремя: '+rv(d,'b1_time')+'\nЗапланировано: '+rv(d,'b1_planned')+'\n\n2. ШКАЛА FOMO\nТемпература: '+(d.b2_temp||'—')+'°\nСигналы: '+(d.b2_physical||'—')+'\n\n3. ЭКСПЕРИМЕНТЫ\nЭ1: '+(d.e1_temp||'—')+'° '+rv(d,'e1_decision')+' / '+rv(d,'e1_drift')+'\nЭ2: '+(d.e2_temp||'—')+'° '+rv(d,'e2_stronger')+'\nЭ3: '+(d.e3_feeling||'—')+'\n\n4. НЕЙРО-ПРОТОКОЛ\nП1: '+(d.r1_temp||'—')+'°\nП2: '+(d.r2_trigger||'—')+'\nП3: '+(d.r3_sources||'—')+'\nП4: '+(d.r4_action||'—')+'\n\n⚓ «'+(d.anchor||'—')+'»';
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function() { showToast('Скопировано!', '📑'); }).catch(function() { fallbackCopy(text); });
-    } else { fallbackCopy(text); }
-  });
-
-  function fallbackCopy(text) {
-    var ta = document.createElement('textarea');
-    ta.value = text; ta.style.cssText = 'position:fixed;left:-9999px;';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); showToast('Скопировано!', '📑'); } catch(e) { showToast('Не удалось скопировать', '✗'); }
-    document.body.removeChild(ta);
-  }
-
   // === ОЧИСТКА ===
   document.getElementById('btnClear').addEventListener('click', function() {
     var ov = document.createElement('div');
