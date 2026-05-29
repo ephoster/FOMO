@@ -737,12 +737,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  // === PDF ГЕНЕРАЦИЯ ===
+    // === PDF ГЕНЕРАЦИЯ ===
   document.getElementById('btnPdf').addEventListener('click', function() {
     var btn = this;
     btn.disabled = true;
     btn.textContent = '⏳ Генерация PDF...';
-    showToast('Создаём PDF, подождите...', '📄');
+
+    // Затемняющая плашка чтобы не было видно контент
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9998;background:#0B0C0E;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;';
+    overlay.innerHTML = '<div style="width:48px;height:48px;border:3px solid rgba(255,255,255,0.1);border-top-color:#FF4F30;border-radius:50%;animation:spin 0.8s linear infinite;"></div><p style="color:rgba(255,255,255,0.7);font-size:15px;">Генерируем PDF...</p><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
+    document.body.appendChild(overlay);
 
     var d = collectData();
     var name = d.name || 'Участник';
@@ -841,10 +846,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var container = document.getElementById('pdfContent');
     container.innerHTML = html;
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
+    // КЛЮЧЕВОЕ: элемент должен быть ВНУТРИ вьюпорта, но под плашкой
+    container.style.position = 'fixed';
+    container.style.left = '0';
     container.style.top = '0';
+    container.style.zIndex = '1';
     container.style.width = '700px';
+    container.style.background = 'white';
 
     var opt = {
       margin: [10, 10, 10, 10],
@@ -856,14 +864,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     html2pdf().set(opt).from(container).save().then(function() {
       container.innerHTML = '';
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      overlay.remove();
       btn.disabled = false;
       btn.textContent = '📄 Скачать PDF';
       showToast('PDF скачан!', '📄');
     }).catch(function(err) {
       container.innerHTML = '';
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      overlay.remove();
       btn.disabled = false;
       btn.textContent = '📄 Скачать PDF';
-      showToast('Ошибка PDF: ' + err.message, '✗');
+      showToast('Ошибка: ' + err.message, '✗');
     });
   });
 
