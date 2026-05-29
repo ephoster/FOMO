@@ -737,13 +737,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-    // === PDF ГЕНЕРАЦИЯ ===
+      // === PDF ГЕНЕРАЦИЯ ===
   document.getElementById('btnPdf').addEventListener('click', function() {
     var btn = this;
+
+    if (typeof html2pdf === 'undefined') {
+      showToast('Библиотека не загрузилась — обновите страницу (F5)', '✗');
+      return;
+    }
+
     btn.disabled = true;
     btn.textContent = '⏳ Генерация PDF...';
 
-    // Затемняющая плашка чтобы не было видно контент
     var overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;z-index:9998;background:#0B0C0E;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;';
     overlay.innerHTML = '<div style="width:48px;height:48px;border:3px solid rgba(255,255,255,0.1);border-top-color:#FF4F30;border-radius:50%;animation:spin 0.8s linear infinite;"></div><p style="color:rgba(255,255,255,0.7);font-size:15px;">Генерируем PDF...</p><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
@@ -752,7 +757,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var d = collectData();
     var name = d.name || 'Участник';
 
-    var html = '<div style="font-family:Helvetica,Arial,sans-serif;color:#1a1a1a;padding:40px 48px;max-width:700px;margin:0 auto;line-height:1.6;">'
+    var body = ''
+      + '<div style="font-family:Helvetica,Arial,sans-serif;color:#1a1a1a;padding:40px 48px;max-width:700px;margin:0 auto;line-height:1.6;">'
 
       + '<div style="text-align:center;margin-bottom:40px;padding-bottom:24px;border-bottom:3px solid #FF4F30;">'
       + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#FF4F30;margin-bottom:12px;">Рабочая тетрадь участника</div>'
@@ -844,41 +850,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
       + '</div>';
 
-    var container = document.getElementById('pdfContent');
-    container.innerHTML = html;
-    // КЛЮЧЕВОЕ: элемент должен быть ВНУТРИ вьюпорта, но под плашкой
-    container.style.position = 'fixed';
-    container.style.left = '0';
-    container.style.top = '0';
-    container.style.zIndex = '1';
-    container.style.width = '700px';
-    container.style.background = 'white';
+    // Полный HTML-документ для iframe
+    var fullDoc = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+      + '<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>'
+      + '</head><body style="margin:0;background:white;">' + body + '</body></html>';
 
-    var opt = {
-      margin: [10, 10, 10, 10],
-      filename: 'рабочая_тетрадь_' + name.replace(/\s+/g, '_') + '.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, logging: false },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+    // Создаём скрытый iframe
+    var iframe = document.createElement('iframe');
+    iframe.style.cssText = 'position:fixed;left:0;top:0;width:700px;height:2000px;z-index:1;border:none;opacity:0;pointer-events:none;';
+    document.body.appendChild(iframe);
 
-    html2pdf().set(opt).from(container).save().then(function() {
-      container.innerHTML = '';
-      container.style.position = 'absolute';
-      container.style.left = '-9999px';
-      overlay.remove();
-      btn.disabled = false;
-      btn.textContent = '📄 Скачать PDF';
-      showToast('PDF скачан!', '📄');
-    }).catch(function(err) {
-      container.innerHTML = '';
-      container.style.position = 'absolute';
-      container.style.left = '-9999px';
-      overlay.remove();
-      btn.disabled = false;
-      btn.textContent = '📄 Скачать PDF';
-      showToast('Ошибка: ' + err.message, '✗');
-    });
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(fullDoc);
+    iframe.contentDocument.close();
+
+    // Ждём пока iframe загрузится + библиотека
+    function tryGenerate(attempts) {
+      if (attempts <= 0) {
+        document.body.removeChild(iframe);
+        overlay.remove();
+        btn.disabled = false;
+        btn.textContent = '📄 Скачать PDF';
+        showToast('Не удалось сгенерировать PDF', '✗');
+        return;
+      }
+      var h2p = iframe.contentWindow.html2pdf;
+      if (!h2p) {
+        setTimeout(function() { tryGenerate(attempts - 1); }, 500);
+        return;
+      }
+
+      var opt = {
+        margin: [10, 10, 10, 10],
+        filename: 'рабочая_тетрадь_' + name.replace(/\s+/g, '_') + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      h2p().set(opt).from(iframe.contentDocument.body).save().then(function() {
+        document.body.removeChild(iframe);
+        overlay.remove();
+        btn.disabled = false;
+        btn.textContent = '📄 Скачать PDF';
+        showToast('PDF скачан!', '📄');
+      }).catch(function(err) {
+        document.body.removeChild(iframe);
+        overlay.remove();
+        btn.disabled = false;
+        btn.textContent = '📄 Скачать PDF';
+        showToast('Ошибка: ' + err.message, '✗');
+      });
+    }
+
+    // Стартуем проверку через 1 секунду
+    setTimeout(function() { tryGenerate(10); }, 1000);
   });
 
   // === ПЕЧАТЬ ===
