@@ -316,7 +316,6 @@
   .storage-ok { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #4ADE80; }
   .storage-fail { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #F87171; }
 
-  /* Заблокированный блок */
   .unlock-area {
     border: 1px solid rgba(255,79,48,0.15);
     border-radius: 14px;
@@ -353,7 +352,6 @@
   #block3Content { display: none; }
   #block3Content.unlocked { display: block; }
 
-  /* Карточки активов */
   .asset-card {
     background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.06);
@@ -412,41 +410,6 @@
   }
   .dist-sum strong { color: #EDEDED; }
 
-  /* Шёпот */
-  .whisper-reveal-wrap { text-align: center; margin: 24px 0; }
-  .whisper-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 22px;
-    background: transparent;
-    color: rgba(255,255,255,0.6);
-    font-size: 14px; font-weight: 500;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.12);
-    cursor: pointer; transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
-  }
-  .whisper-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); color: #EDEDED; }
-  .whisper-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-  .whisper-box {
-    display: none;
-    margin-top: 16px;
-    padding: 20px 24px;
-    background: linear-gradient(135deg, rgba(255,79,48,0.08), rgba(255,79,48,0.02));
-    border: 1px solid rgba(255,79,48,0.25);
-    border-radius: 12px;
-    font-size: 16px;
-    color: #FF4F30;
-    font-style: italic;
-    line-height: 1.6;
-    text-align: center;
-    animation: fadeUp 0.4s ease;
-  }
-  .whisper-box.visible { display: block; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
   .section-divider {
     border: none;
     border-top: 1px solid rgba(255,255,255,0.06);
@@ -480,8 +443,6 @@
     .asset-detail { color: #333 !important; }
     .dist-input { border: 1px solid #999 !important; background: white !important; color: #000 !important; }
     .dist-sum { color: #333 !important; border-color: #ccc !important; }
-    .whisper-box { background: #fff5f0 !important; border-color: #ffccbb !important; color: #cc3300 !important; }
-    .whisper-btn { display: none !important; }
     #block3Content.unlocked { display: block !important; }
   }
   @media (max-width: 768px) {
@@ -516,7 +477,6 @@
 
 <main style="position:relative; z-index:1; max-width:860px; margin:0 auto; padding:40px 20px 80px;">
 
-  <!-- ЗАГОЛОВОК -->
   <header id="header" class="fade-in" style="text-align:center; margin-bottom:56px;">
     <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 16px; background:rgba(255,79,48,0.08); border:1px solid rgba(255,79,48,0.2); border-radius:100px; font-size:12px; font-weight:500; color:#FF4F30; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:24px;">
       Рабочая тетрадь участника
@@ -544,7 +504,6 @@
     </div>
   </header>
 
-  <!-- БЛОК 1: СТАРТОВАЯ ДИАГНОСТИКА -->
   <section id="block1" class="fade-in" style="margin-bottom:56px;">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
       <span class="section-number">1</span>
@@ -581,7 +540,6 @@
     </div>
   </section>
 
-  <!-- БЛОК 2: ШКАЛА FOMO-ТЕМПЕРАТУРЫ -->
   <section id="block2" class="fade-in" style="margin-bottom:56px;">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
       <span class="section-number">2</span>
@@ -624,7 +582,6 @@
     </div>
   </section>
 
-  <!-- БЛОК 3: ЭКСПЕРИМЕНТЫ И ИНСАЙТЫ (ЗАБЛОКИРОВАН) -->
   <section id="block3" class="fade-in" style="margin-bottom:56px;">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
       <span class="section-number">3</span>
@@ -645,7 +602,6 @@
     </div>
 
     <div id="block3Content">
-      <!-- ЭКСПЕРИМЕНТ 1: ШЁПОТ ИНСАЙДЕРА -->
       <div class="experiment-card" style="margin-bottom:20px;">
         <div class="exp-number">Эксперимент 1</div>
         <h3 style="font-size:18px; font-weight:500; margin-bottom:8px;">Шёпот инсайдера</h3>
@@ -713,12 +669,7 @@
           </div>
         </div>
 
-        <div class="whisper-reveal-wrap no-print">
-          <button class="whisper-btn" id="whisperBtn" type="button">Показать шёпот инсайдера</button>
-          <div class="whisper-box" id="whisperBox"></div>
-        </div>
-
-        <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px; margin-top:8px;">
+        <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px; margin-top:20px;">
           <p style="font-size:14px; color:rgba(255,255,255,0.7); margin-bottom:20px; font-weight:500;">После того как вы увидели шёпот:</p>
 
           <div style="margin-bottom:16px;">
@@ -770,7 +721,6 @@
 
       <hr class="section-divider">
 
-      <!-- ЭКСПЕРИМЕНТ 2: АУКЦИОН С ТАЙМЕРОМ -->
       <div class="experiment-card" style="margin-bottom:20px;">
         <div class="exp-number">Эксперимент 2</div>
         <h3 style="font-size:18px; font-weight:500; margin-bottom:24px;">«Аукцион с таймером»</h3>
@@ -796,7 +746,6 @@
 
       <hr class="section-divider">
 
-      <!-- ЭКСПЕРИМЕНТ 3: ПУБЛИЧНАЯ ИЕРАРХИЯ -->
       <div class="experiment-card">
         <div class="exp-number">Эксперимент 3</div>
         <h3 style="font-size:18px; font-weight:500; margin-bottom:24px;">«Публичная иерархия»</h3>
@@ -813,7 +762,6 @@
     </div>
   </section>
 
-  <!-- БЛОК 4: МОЙ НЕЙРО-ПРОТОКОЛ -->
   <section id="block4" class="fade-in" style="margin-bottom:48px;">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
       <span class="section-number">4</span>
@@ -868,7 +816,6 @@
     </div>
   </section>
 
-  <!-- КНОПКИ ДЕЙСТВИЙ -->
   <div class="no-print fade-in" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
     <button class="btn-pdf" id="btnPdf" type="button">Скачать PDF</button>
     <button class="btn-primary" id="btnPrint" type="button">Печать</button>
@@ -881,22 +828,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-  /* =============================================
-     КОНФИГУРАЦИЯ — ИЗМЕНИТЕ КОД ЗДЕСЬ
-     ============================================= */
-  var STORAGE_KEY = 'fomo_workbook_v6';
+  var STORAGE_KEY = 'fomo_workbook_v7';
   var CODEWORD = 'FOMO2026';
-  var WHISPER_TEXT = 'Инсайдер перевёл 40 000 ₽ из «Северного Логистика» в «МедТех-Р».';
 
-  /* =============================================
-     СОСТОЯНИЕ
-     ============================================= */
   var block3Unlocked = false;
-  var whisperRevealed = false;
 
-  /* =============================================
-     LOCALSTORAGE
-     ============================================= */
   var storageOk = false;
   try { localStorage.setItem('_t','1'); localStorage.removeItem('_t'); storageOk = true; } catch(e) {}
   var badge = document.getElementById('storageBadge');
@@ -910,7 +846,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function saveData() {
     if (!storageOk) return;
-    var data = { _block3Unlocked: block3Unlocked, _whisperRevealed: whisperRevealed };
+    var data = { _block3Unlocked: block3Unlocked };
     document.querySelectorAll('[data-key]').forEach(function(el) {
       var k = el.dataset.key;
       if (el.type === 'radio') return;
@@ -927,7 +863,6 @@ document.addEventListener('DOMContentLoaded', function() {
       var data = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (!data) return;
       if (data._block3Unlocked) { block3Unlocked = true; unlockBlock3UI(); }
-      if (data._whisperRevealed) { whisperRevealed = true; revealWhisperUI(); }
       document.querySelectorAll('[data-key]').forEach(function(el) {
         var k = el.dataset.key;
         if (el.type === 'radio') return;
@@ -943,9 +878,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch(e) {}
   }
 
-  /* =============================================
-     ТОСТ
-     ============================================= */
   var toastTimer;
   function showToast(text, icon, isError) {
     var t = document.getElementById('toast');
@@ -957,9 +889,6 @@ document.addEventListener('DOMContentLoaded', function() {
     toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2500);
   }
 
-  /* =============================================
-     ПРОГРЕСС
-     ============================================= */
   function updateProgress() {
     var all = document.querySelectorAll('[data-key]:not(.condition-check)');
     var filled = 0;
@@ -978,15 +907,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var total = all.length + Object.keys(rn).length + document.querySelectorAll('.condition-check[data-key]').length;
     var cnt = 0;
     all.forEach(function(el) { if (el.closest('#block3Content') && !block3Unlocked) cnt++; });
-    document.querySelectorAll('input[type="radio"]').forEach(function(r) { if (r.closest('#block3Content') && !block3Unlocked) { if (!rn[r.name+'_cnt']) { cnt++; rn[r.name+'_cnt']=1; } } });
+    var rnc = {};
+    document.querySelectorAll('input[type="radio"]').forEach(function(r) {
+      if (r.closest('#block3Content') && !block3Unlocked) { if (!rnc[r.name]) { cnt++; rnc[r.name]=1; } }
+    });
     total -= cnt;
     if (total < 1) total = 1;
     document.getElementById('progressBar').style.width = Math.round((filled/total)*100) + '%';
   }
 
-  /* =============================================
-     ИНДИКАТОР ТЕМПЕРАТУРЫ
-     ============================================= */
   function updateTempIndicator() {
     var el = document.querySelector('[data-key="b2_temp"]');
     var ind = document.getElementById('tempIndicator');
@@ -1000,16 +929,10 @@ document.addEventListener('DOMContentLoaded', function() {
     else { ind.textContent = '🔴🔴 Катастрофа'; ind.style.color = '#EF4444'; }
   }
 
-  /* =============================================
-     ЧЕКБОКСЫ-УСЛОВИЯ
-     ============================================= */
   document.querySelectorAll('.condition-check[data-key]').forEach(function(el) {
     el.addEventListener('click', function() { el.classList.toggle('checked'); saveData(); updateProgress(); });
   });
 
-  /* =============================================
-     АВТОСОХРАНЕНИЕ
-     ============================================= */
   var saveDebounce;
   function scheduleSave() {
     clearTimeout(saveDebounce);
@@ -1020,9 +943,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var b2t = document.querySelector('[data-key="b2_temp"]');
   if (b2t) b2t.addEventListener('input', updateTempIndicator);
 
-  /* =============================================
-     КОД ДОСТУПА К БЛОКУ 3
-     ============================================= */
   function unlockBlock3UI() {
     document.getElementById('unlockArea').style.display = 'none';
     document.getElementById('block3Content').classList.add('unlocked');
@@ -1051,28 +971,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  /* =============================================
-     ШЁПОТ ИНСАЙДЕРА
-     ============================================= */
-  function revealWhisperUI() {
-    var box = document.getElementById('whisperBox');
-    var btn = document.getElementById('whisperBtn');
-    box.textContent = WHISPER_TEXT;
-    box.classList.add('visible');
-    btn.disabled = true;
-    btn.style.opacity = '0.35';
-    btn.style.pointerEvents = 'none';
-  }
-  document.getElementById('whisperBtn').addEventListener('click', function() {
-    if (whisperRevealed) return;
-    whisperRevealed = true;
-    revealWhisperUI();
-    saveData();
-  });
-
-  /* =============================================
-     СУММА РАСПРЕДЕЛЕНИЯ
-     ============================================= */
   function calcSum(prefix) {
     var a = parseFloat(document.querySelector('[data-key="'+prefix+'a"]')?.value) || 0;
     var b = parseFloat(document.querySelector('[data-key="'+prefix+'b"]')?.value) || 0;
@@ -1085,22 +983,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (s1) s1.innerHTML = calcSum('sh_') + ' ₽';
     if (s2) s2.innerHTML = calcSum('sh_n') + ' ₽';
   }
-  document.querySelectorAll('[data-key^="sh_"][data-key$="a"],[data-key^="sh_"][data-key$="b"],[data-key^="sh_n"][data-key$="a"],[data-key^="sh_n"][data-key$="b"],[data-key^="sh_"][data-key$="v"],[data-key^="sh_n"][data-key$="v"]').forEach(function(el) {
+  document.querySelectorAll('.dist-input').forEach(function(el) {
     el.addEventListener('input', updateAllDistSums);
   });
 
-  /* =============================================
-     ПОКАЗ/СКРЫТИЕ НОВОГО РАСПРЕДЕЛЕНИЯ
-     ============================================= */
   function toggleNewDist() {
     var checked = document.querySelector('input[name="sh_changed"][value="yes"]');
     var el = document.getElementById('shNewDist');
     if (el) el.style.display = (checked && checked.checked) ? 'block' : 'none';
   }
 
-  /* =============================================
-     СБОР ДАННЫХ
-     ============================================= */
   function collectData() {
     var data = {};
     document.querySelectorAll('[data-key]').forEach(function(el) {
@@ -1127,9 +1019,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-  /* =============================================
-     PDF-ГЕНЕРАЦИЯ
-     ============================================= */
   document.getElementById('btnPdf').addEventListener('click', function() {
     var btn = this;
     if (typeof html2pdf === 'undefined') { showToast('Библиотека не загрузилась — обновите страницу (F5)', '✗', true); return; }
@@ -1142,10 +1031,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var d = collectData();
     var name = d.name || 'Участник';
-
     var h = '';
 
-    // Заголовок
     h += '<div style="font-family:Helvetica,Arial,sans-serif;color:#1a1a1a;padding:40px 48px;max-width:700px;margin:0 auto;line-height:1.6;">';
     h += '<div style="text-align:center;margin-bottom:36px;padding-bottom:24px;border-bottom:3px solid #FF4F30;">';
     h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#FF4F30;margin-bottom:12px;">Рабочая тетрадь участника</div>';
@@ -1155,7 +1042,6 @@ document.addEventListener('DOMContentLoaded', function() {
     h += '<table style="margin:0 auto;font-size:14px;"><tr><td style="padding:4px 12px;color:#888;">Дата:</td><td style="font-weight:500;">'+esc(d.date||'—')+'</td></tr>';
     h += '<tr><td style="padding:4px 12px;color:#888;">Имя:</td><td style="font-weight:500;">'+esc(name)+'</td></tr></table></div>';
 
-    // Блок 1
     h += '<div style="margin-bottom:28px;">';
     h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">1</span><h2 style="font-size:18px;font-weight:600;color:#111;">Стартовая диагностика</h2></div>';
     h += '<table style="width:100%;font-size:14px;border-collapse:collapse;">';
@@ -1165,7 +1051,6 @@ document.addEventListener('DOMContentLoaded', function() {
     h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Запланировано</td><td style="padding:10px 14px;border:1px solid #eee;">'+esc(rv(d,'b1_planned'))+'</td></tr>';
     h += '</table></div>';
 
-    // Блок 2
     h += '<div style="margin-bottom:28px;">';
     h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">2</span><h2 style="font-size:18px;font-weight:600;color:#111;">Шкала FOMO-температуры</h2></div>';
     h += '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:12px;">';
@@ -1181,20 +1066,15 @@ document.addEventListener('DOMContentLoaded', function() {
     h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Физические сигналы</td><td style="padding:10px 14px;border:1px solid #eee;">'+esc(d.b2_physical)+'</td></tr>';
     h += '</table></div>';
 
-    // Блок 3 (только если разблокирован)
     if (block3Unlocked) {
       h += '<div style="page-break-before:always;margin-bottom:28px;">';
       h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">3</span><h2 style="font-size:18px;font-weight:600;color:#111;">Эксперименты и инсайты</h2></div>';
 
-      // Эксперимент 1
       h += '<div style="margin-bottom:18px;padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">';
       h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 1 — Шёпот инсайдера</div>';
       h += '<table style="width:100%;font-size:13px;border-collapse:collapse;">';
       h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;width:45%;border:1px solid #eee;">Распределение (до)</td><td style="padding:6px 10px;border:1px solid #eee;">А: '+esc(d.sh_a)+' ₽ &nbsp; Б: '+esc(d.sh_b)+' ₽ &nbsp; В: '+esc(d.sh_v)+' ₽</td></tr>';
       h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Почему так</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.sh_why)+'</td></tr>';
-      if (whisperRevealed) {
-        h += '<tr><td style="padding:6px 10px;background:#fff5f0;color:#cc4400;border:1px solid #ffddcc;font-weight:600;">Шёпот инсайдера</td><td style="padding:6px 10px;border:1px solid #ffddcc;font-style:italic;color:#cc4400;">«'+esc(WHISPER_TEXT)+'»</td></tr>';
-      }
       h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Температура после</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.sh_temp)+'°</td></tr>';
       h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Изменил?</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(rv(d,'sh_changed'))+'</td></tr>';
       if (d.sh_changed === 'yes') {
@@ -1205,7 +1085,6 @@ document.addEventListener('DOMContentLoaded', function() {
       h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Чувство (одно слово)</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.sh_emotion)+'</td></tr>';
       h += '</table></div>';
 
-      // Эксперимент 2
       h += '<div style="margin-bottom:18px;padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">';
       h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 2 — Аукцион с таймером</div>';
       h += '<table style="width:100%;font-size:13px;border-collapse:collapse;">';
@@ -1214,7 +1093,6 @@ document.addEventListener('DOMContentLoaded', function() {
       h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Заметки</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.e2_notes)+'</td></tr>';
       h += '</table></div>';
 
-      // Эксперимент 3
       h += '<div style="padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">';
       h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 3 — Публичная иерархия</div>';
       h += '<table style="width:100%;font-size:13px;border-collapse:collapse;">';
@@ -1225,7 +1103,6 @@ document.addEventListener('DOMContentLoaded', function() {
       h += '</div>';
     }
 
-    // Блок 4
     h += '<div style="page-break-before:always;">';
     h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">4</span><h2 style="font-size:18px;font-weight:600;color:#111;">Мой нейро-протокол</h2></div>';
 
@@ -1253,7 +1130,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     h += '</div></div>';
 
-    // Формируем документ в iframe
     var fullDoc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script></head><body style="margin:0;background:white;">'+h+'</body></html>';
     var iframe = document.createElement('iframe');
     iframe.style.cssText = 'position:fixed;left:0;top:0;width:700px;height:2000px;z-index:1;border:none;opacity:0;pointer-events:none;';
@@ -1308,20 +1184,13 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() { tryGenerate(12); }, 1000);
   });
 
-  /* =============================================
-     ПЕЧАТЬ
-     ============================================= */
   document.getElementById('btnPrint').addEventListener('click', function() { window.print(); });
 
-  /* =============================================
-     КОПИРОВАНИЕ
-     ============================================= */
   document.getElementById('btnCopy').addEventListener('click', function() {
     var d = collectData();
     var text = 'РАБОЧАЯ ТЕТРАДЬ: ПСИХОЛОГИЯ ПРИНЯТИЯ РЕШЕНИЙ\n========================================\nДата: '+(d.date||'—')+'\nИмя: '+(d.name||'—')+'\n\n1. СТАРТОВАЯ ДИАГНОСТИКА\nСделка: '+(d.b1_deal||'—')+'\nЧувство: '+(d.b1_feeling||'—')+'\nВремя: '+rv(d,'b1_time')+'\nЗапланировано: '+rv(d,'b1_planned')+'\n\n2. ШКАЛА FOMO\nТемпература: '+(d.b2_temp||'—')+'°\nСигналы: '+(d.b2_physical||'—')+'\n';
     if (block3Unlocked) {
       text += '\n3. ЭКСПЕРИМЕНТЫ\nШёпот инсайдера:\n  Распределение: А='+d.sh_a+' Б='+d.sh_b+' В='+d.sh_v+'\n  Почему: '+(d.sh_why||'—')+'\n';
-      if (whisperRevealed) text += '  Шёпот: «'+WHISPER_TEXT+'»\n';
       text += '  Температура после: '+(d.sh_temp||'—')+'°\n  Изменил: '+rv(d,'sh_changed')+'\n';
       if (d.sh_changed==='yes') text += '  Новое: А='+d.sh_na+' Б='+d.sh_nb+' В='+d.sh_nv+'\n  Причина: '+(d.sh_redirect||'—')+'\n';
       text += '  Что сработало: '+rv(d,'sh_what')+'\n  Чувство: '+(d.sh_emotion||'—')+'\n';
@@ -1341,9 +1210,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.removeChild(ta);
   }
 
-  /* =============================================
-     ОЧИСТКА
-     ============================================= */
   document.getElementById('btnClear').addEventListener('click', function() {
     var ov = document.createElement('div'); ov.className = 'confirm-overlay';
     var bx = document.createElement('div'); bx.className = 'confirm-box';
@@ -1354,11 +1220,9 @@ document.addEventListener('DOMContentLoaded', function() {
     bx.querySelector('#co').addEventListener('click', function() {
       ov.remove();
       try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
-      block3Unlocked = false; whisperRevealed = false;
+      block3Unlocked = false;
       document.getElementById('unlockArea').style.display = '';
       document.getElementById('block3Content').classList.remove('unlocked');
-      var wbox = document.getElementById('whisperBox'); wbox.textContent = ''; wbox.classList.remove('visible');
-      var wbtn = document.getElementById('whisperBtn'); wbtn.disabled = false; wbtn.style.opacity = ''; wbtn.style.pointerEvents = '';
       document.getElementById('codeInput').value = '';
       document.getElementById('unlockError').textContent = '';
       document.querySelectorAll('[data-key]').forEach(function(el) {
@@ -1371,9 +1235,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  /* =============================================
-     SCROLL REVEAL И НАВИГАЦИЯ
-     ============================================= */
   var obs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
@@ -1389,9 +1250,6 @@ document.addEventListener('DOMContentLoaded', function() {
   sections.forEach(function(id) { var el = document.getElementById(id); if (el) sObs.observe(el); });
   dots.forEach(function(d) { d.addEventListener('click', function() { var el = document.getElementById(d.dataset.section); if (el) el.scrollIntoView({behavior:'smooth'}); }); });
 
-  /* =============================================
-     ЗАГРУЗКА СОХРАНЁННЫХ ДАННЫХ
-     ============================================= */
   loadData();
 });
 </script>
