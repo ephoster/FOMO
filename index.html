@@ -3,1255 +3,940 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Рабочая тетрадь — Психология принятия решений</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Матрица стыков — 16 типов трещин</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
   :root {
-    --bg-page: #0B0C0E;
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-surface: rgba(255, 255, 255, 0.03);
-    --accent: #FF4F30;
-    --accent-dim: rgba(255, 79, 48, 0.15);
-    --accent-glow: rgba(255, 79, 48, 0.1);
+    --bg: #fcfbf9;
+    --bg-warm: #F2F0E9;
+    --bg-warm-light: #F8F7F4;
+    --text-primary: #1C1C1C;
+    --text-secondary: #2C2C2C;
+    --text-tertiary: #5C5C5C;
+    --text-muted: #9CA3AF;
+    --accent: #2A382E;
+    --accent-light: #3D5A45;
+    --border-light: #E8E4D9;
+    --border-mid: #D6CEC0;
+    --card-bg: #FFFFFF;
+    --highlight-physical: #F59E0B;
+    --highlight-emotional: #3B82F6;
+    --highlight-mental: #8B5CF6;
+    --highlight-value: #EF4444;
+    --cap-human: #059669;
+    --cap-social: #2563EB;
+    --cap-financial: #D97706;
+    --cap-market: #7C3AED;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+
   body {
     font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    background: var(--bg-page);
-    color: #EDEDED;
-    min-height: 100vh;
-  }
-  .noise-overlay {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: url('https://grainy-gradients.vercel.app/noise.svg');
-    opacity: 0.15;
-  }
-  .bg-grid {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-size: 40px 40px;
-    background-image:
-      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
-  .glass-card {
-    background: var(--glass-surface);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(24px);
-    border-radius: 16px;
-    transition: border-color 0.3s;
-  }
-  .glass-card:hover { border-color: rgba(255,255,255,0.15); }
-  .text-input {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 10px;
-    color: #EDEDED;
-    padding: 12px 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    width: 100%;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    outline: none;
-  }
-  .text-input:focus {
-    border-color: rgba(255, 79, 48, 0.5);
-    box-shadow: 0 0 0 3px rgba(255, 79, 48, 0.1);
-  }
-  .text-input::placeholder { color: rgba(255,255,255,0.25); }
-  textarea.text-input { resize: vertical; min-height: 80px; line-height: 1.6; }
-  .radio-label {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 15px;
-    user-select: none;
-  }
-  .radio-label:hover {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.12);
-  }
-  .radio-label input { display: none; }
-  .radio-label .dot {
-    width: 20px; height: 20px; min-width: 20px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.2);
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-  }
-  .radio-label input:checked ~ .dot {
-    border-color: #FF4F30;
-    background: #FF4F30;
-  }
-  .radio-label input:checked ~ .dot::after {
-    content: ''; width: 6px; height: 6px; background: white; border-radius: 50%;
-  }
-  .radio-label input:checked ~ .label-text { color: #fff; }
-  .label-text { color: rgba(255,255,255,0.7); transition: color 0.2s; }
-  .temp-input {
-    width: 80px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px;
-    color: #EDEDED;
-    padding: 8px 12px;
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    text-align: center;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .temp-input:focus {
-    border-color: rgba(255, 79, 48, 0.5);
-    box-shadow: 0 0 0 3px rgba(255, 79, 48, 0.1);
-  }
-  .section-number {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 32px; height: 32px;
-    background: var(--accent-dim);
-    color: var(--accent);
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .fomo-row {
-    display: grid;
-    grid-template-columns: 70px 1fr 1fr 2fr;
-    gap: 12px;
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    align-items: start;
-    font-size: 14px;
+    background: var(--bg);
+    color: var(--text-primary);
     line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .fomo-row:last-child { border-bottom: none; }
-  .fomo-header {
-    color: rgba(255,255,255,0.4);
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    background: rgba(255,255,255,0.02);
+
+  /* === PAGE WRAPPER === */
+  .page {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 32px 60px;
   }
-  .temp-badge {
-    display: inline-flex;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-  }
-  .temp-normal { background: rgba(34,197,94,0.12); color: #4ADE80; }
-  .temp-warn { background: rgba(250,204,21,0.12); color: #FACC15; }
-  .temp-danger { background: rgba(249,115,22,0.12); color: #FB923C; }
-  .temp-critical { background: rgba(239,68,68,0.12); color: #F87171; }
-  .temp-catastrophe { background: rgba(220,38,38,0.2); color: #EF4444; }
-  .freeze-box {
-    background: rgba(255, 79, 48, 0.06);
-    border: 1px solid rgba(255, 79, 48, 0.2);
-    border-radius: 12px;
-    padding: 20px 24px;
-  }
-  .rule-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
-    padding: 24px;
-    transition: border-color 0.3s;
-  }
-  .rule-card:hover { border-color: rgba(255,255,255,0.12); }
-  .rule-number {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: #FF4F30; margin-bottom: 8px;
-  }
-  .anchor-input {
-    background: rgba(255, 79, 48, 0.06);
-    border: 2px dashed rgba(255, 79, 48, 0.25);
-    border-radius: 12px;
-    color: #FF4F30;
-    padding: 16px 20px;
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    width: 100%;
+
+  /* === HEADER === */
+  .header {
     text-align: center;
-    outline: none;
-    transition: all 0.3s;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-light);
   }
-  .anchor-input:focus {
-    border-color: rgba(255, 79, 48, 0.5);
-    box-shadow: 0 0 30px rgba(255, 79, 48, 0.1);
-    background: rgba(255, 79, 48, 0.08);
+
+  .header-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    background: rgba(42, 56, 46, 0.06);
+    border: 1px solid rgba(42, 56, 46, 0.12);
+    border-radius: 100px;
+    padding: 6px 16px;
+    margin-bottom: 20px;
   }
-  .anchor-input::placeholder { color: rgba(255, 79, 48, 0.35); }
-  .progress-bar {
-    position: fixed; top: 0; left: 0; height: 3px; z-index: 100;
-    background: linear-gradient(90deg, #FF4F30, #FACC15);
-    transition: width 0.3s;
-    border-radius: 0 2px 2px 0;
+
+  .header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 12px;
   }
-  .toast {
-    position: fixed; bottom: 32px; right: 32px; z-index: 200;
-    background: rgba(34, 197, 94, 0.15);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    backdrop-filter: blur(24px);
-    border-radius: 12px;
-    padding: 14px 20px;
-    display: flex; align-items: center; gap: 10px;
-    font-size: 14px; color: #4ADE80;
-    transform: translateY(100px); opacity: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
+
+  .header-sub {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
   }
-  .toast.show { transform: translateY(0); opacity: 1; }
-  .toast-error {
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: #F87171;
+
+  .header-tagline {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--accent);
+    margin-top: 16px;
   }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 24px;
-    background: #FF4F30;
-    color: white; font-size: 15px; font-weight: 500;
-    border-radius: 10px; border: none; cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
+
+  /* === FORMULA BAR === */
+  .formula-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 36px;
+    padding: 14px 24px;
+    background: var(--accent);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
   }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(255,79,48,0.3); }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 24px;
-    background: rgba(255,255,255,0.05);
-    color: rgba(255,255,255,0.8); font-size: 15px; font-weight: 500;
-    border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);
-    cursor: pointer; transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
+
+  .formula-bar .arrow { color: rgba(255,255,255,0.5); }
+  .formula-bar .plus { color: rgba(255,255,255,0.4); font-weight: 300; }
+  .formula-bar .eq { color: rgba(255,255,255,0.4); font-weight: 300; }
+  .formula-bar .result {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: #F2F0E9;
   }
-  .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
-  .btn-pdf {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #FF4F30, #e0432a);
-    color: white; font-size: 15px; font-weight: 600;
-    border-radius: 10px; border: none; cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
-    box-shadow: 0 4px 15px rgba(255,79,48,0.3);
+
+  /* === BATTERY LABELS (Column Headers) === */
+  .battery-labels {
+    display: grid;
+    grid-template-columns: 160px repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: end;
   }
-  .btn-pdf:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(255,79,48,0.4); }
-  .btn-pdf:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-  .experiment-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
-    padding: 28px;
+
+  .battery-label {
+    text-align: center;
+    padding: 12px 8px 14px;
+    border-radius: 8px 8px 0 0;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+  }
+
+  .battery-label .emoji {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 4px;
+    filter: grayscale(0);
+  }
+
+  .battery-label.physical {
+    background: rgba(245, 158, 11, 0.08);
+    color: #92400E;
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-bottom: none;
+  }
+  .battery-label.emotional {
+    background: rgba(59, 130, 246, 0.08);
+    color: #1E40AF;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-bottom: none;
+  }
+  .battery-label.mental {
+    background: rgba(139, 92, 246, 0.08);
+    color: #5B21B6;
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    border-bottom: none;
+  }
+  .battery-label.value {
+    background: rgba(239, 68, 68, 0.08);
+    color: #991B1B;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    border-bottom: none;
+  }
+
+  .battery-desc {
+    display: block;
+    font-size: 9.5px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+
+  /* === MATRIX GRID === */
+  .matrix {
+    display: grid;
+    grid-template-columns: 160px repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 48px;
+  }
+
+  /* Row Label */
+  .row-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 14px;
+    border-radius: 8px;
+    text-align: left;
+  }
+
+  .row-label .cap-code {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.6;
+    margin-bottom: 4px;
+  }
+
+  .row-label .cap-name {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .row-label.human {
+    background: rgba(5, 150, 105, 0.06);
+    color: #065F46;
+    border: 1px solid rgba(5, 150, 105, 0.12);
+  }
+  .row-label.social {
+    background: rgba(37, 99, 235, 0.06);
+    color: #1E3A8A;
+    border: 1px solid rgba(37, 99, 235, 0.12);
+  }
+  .row-label.financial {
+    background: rgba(217, 119, 6, 0.06);
+    color: #92400E;
+    border: 1px solid rgba(217, 119, 6, 0.12);
+  }
+  .row-label.market {
+    background: rgba(124, 58, 237, 0.06);
+    color: #4C1D95;
+    border: 1px solid rgba(124, 58, 237, 0.12);
+  }
+
+  /* Cell */
+  .cell {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 14px 13px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
     position: relative;
     overflow: hidden;
   }
-  .experiment-card::before {
+
+  .cell::before {
     content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255,79,48,0.4), transparent);
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
-  .exp-number {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px;
-  }
-  .condition-row { display: flex; align-items: center; gap: 10px; }
-  .condition-check {
-    width: 22px; height: 22px; min-width: 22px;
-    border-radius: 6px;
-    border: 2px solid rgba(255,255,255,0.15);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.2s;
-    background: rgba(255,255,255,0.02);
-  }
-  .condition-check.checked { border-color: #FF4F30; background: #FF4F30; }
-  .condition-check.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 600; }
-  .condition-text-input {
-    background: transparent; border: none;
-    border-bottom: 1px dashed rgba(255,255,255,0.15);
-    color: #EDEDED; padding: 8px 4px;
-    font-family: 'Inter', sans-serif; font-size: 15px;
-    width: 100%; outline: none; transition: border-color 0.3s;
-  }
-  .condition-text-input:focus { border-color: rgba(255, 79, 48, 0.5); }
-  .condition-text-input::placeholder { color: rgba(255,255,255,0.2); }
-  .fade-in {
-    opacity: 0; transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
-  .nav-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    cursor: pointer; transition: all 0.3s;
-  }
-  .nav-dot.active { background: #FF4F30; transform: scale(1.3); }
-  .nav-dot:hover { background: rgba(255,255,255,0.4); }
-  .confirm-overlay {
-    position: fixed; inset: 0; z-index: 300;
-    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .confirm-box {
-    background: #18181b; border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px; padding: 28px; max-width: 400px; width: 90%; text-align: center;
-  }
-  .storage-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 4px 12px; border-radius: 100px;
-    font-size: 11px; font-weight: 500;
-    position: fixed; bottom: 32px; left: 32px; z-index: 50;
-  }
-  .storage-ok { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #4ADE80; }
-  .storage-fail { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #F87171; }
 
-  .unlock-area {
-    border: 1px solid rgba(255,79,48,0.15);
+  .cell.col-physical::before { background: var(--highlight-physical); }
+  .cell.col-emotional::before { background: var(--highlight-emotional); }
+  .cell.col-mental::before { background: var(--highlight-mental); }
+  .cell.col-value::before { background: var(--highlight-value); }
+
+  .cell:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border-color: var(--border-mid);
+  }
+  .cell:hover::before { opacity: 1; }
+
+  .cell-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .cell-desc {
+    font-size: 10.5px;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    line-height: 1.45;
+    flex: 1;
+  }
+
+  .cell-question {
+    font-size: 10px;
+    font-style: italic;
+    color: var(--accent-light);
+    line-height: 1.4;
+    padding-top: 6px;
+    border-top: 1px solid var(--border-light);
+    font-weight: 400;
+  }
+
+  /* === MY SHEET SECTION === */
+  .my-sheet {
+    background: var(--bg-warm);
+    border: 1px solid var(--border-light);
     border-radius: 14px;
-    padding: 40px 28px;
-    text-align: center;
-    background: rgba(255,79,48,0.02);
+    padding: 36px 32px;
+    margin-bottom: 32px;
   }
-  .unlock-input {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    color: #EDEDED;
-    padding: 12px 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    width: 100%;
-    max-width: 280px;
-    text-align: center;
-    outline: none;
-    transition: all 0.3s;
-    letter-spacing: 0.1em;
-  }
-  .unlock-input:focus {
-    border-color: rgba(255, 79, 48, 0.5);
-    box-shadow: 0 0 0 3px rgba(255, 79, 48, 0.1);
-  }
-  .unlock-input::placeholder { color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
-  .unlock-error {
-    color: #F87171;
-    font-size: 13px;
-    margin-top: 10px;
-    min-height: 20px;
-  }
-  #block3Content { display: none; }
-  #block3Content.unlocked { display: block; }
 
-  .asset-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px;
-    padding: 16px 18px;
-    margin-bottom: 12px;
-    transition: border-color 0.3s;
+  .my-sheet-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 28px;
+    text-align: center;
+    color: var(--text-primary);
   }
-  .asset-card:hover { border-color: rgba(255,255,255,0.12); }
-  .asset-name { font-weight: 600; font-size: 14px; color: #EDEDED; margin-bottom: 4px; }
-  .asset-tag {
-    display: inline-block;
-    padding: 2px 8px;
+
+  .assess-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 32px;
+  }
+
+  .assess-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .assess-block-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .assess-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.06);
+  }
+
+  .assess-row:last-child { border-bottom: none; }
+
+  .assess-label {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .assess-scale {
+    display: flex;
+    gap: 6px;
+  }
+
+  .assess-dot {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--border-mid);
     border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 11px;
     font-weight: 500;
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    background: #fff;
   }
-  .asset-detail { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; }
-  .asset-detail strong { color: rgba(255,255,255,0.8); }
-  .dynamics { font-size: 12px; color: rgba(255,255,255,0.4); font-family: 'Inter', monospace; }
-  .dynamics .pos { color: #4ADE80; }
-  .dynamics .neg { color: #F87171; }
-  .dist-input {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px;
-    color: #EDEDED;
-    padding: 8px 12px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    width: 100px;
+
+  .assess-dot:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(42, 56, 46, 0.04);
+  }
+
+  .assess-dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* === RESULT AREA === */
+  .result-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .result-box {
+    background: #fff;
+    border: 1.5px solid var(--border-mid);
+    border-radius: 10px;
+    padding: 18px 20px;
+    min-height: 80px;
+  }
+
+  .result-box-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .result-box-content {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.4;
+    min-height: 24px;
+  }
+
+  /* === STEPS === */
+  .steps {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+
+  .steps-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 24px;
     text-align: center;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .dist-input:focus { border-color: rgba(255,79,48,0.5); box-shadow: 0 0 0 3px rgba(255,79,48,0.1); }
-  .dist-input::placeholder { color: rgba(255,255,255,0.2); }
-  .dist-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 0;
-  }
-  .dist-label {
-    color: rgba(255,255,255,0.5);
-    font-size: 14px;
-    min-width: 24px;
-    font-weight: 500;
-  }
-  .dist-suffix { color: rgba(255,255,255,0.3); font-size: 14px; }
-  .dist-sum {
-    font-size: 14px; color: rgba(255,255,255,0.5);
-    margin-top: 10px; padding-top: 10px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-  .dist-sum strong { color: #EDEDED; }
-
-  .section-divider {
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    margin: 28px 0;
   }
 
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .step {
+    text-align: center;
+    padding: 20px 16px;
+    border-radius: 10px;
+    background: var(--bg-warm-light);
+    border: 1px solid var(--border-light);
+    position: relative;
+  }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+
+  .step-text {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .step-text strong {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* === FOOTER NOTE === */
+  .footer-note {
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-muted);
+    padding-top: 8px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .page { padding: 24px 16px 40px; }
+    .header h1 { font-size: 30px; }
+    .battery-labels, .matrix {
+      grid-template-columns: 100px repeat(4, 1fr);
+      gap: 5px;
+    }
+    .row-label { padding: 10px 8px; }
+    .row-label .cap-name { font-size: 12px; }
+    .row-label .cap-code { font-size: 8px; }
+    .cell { padding: 10px 8px 9px; }
+    .cell-title { font-size: 11px; }
+    .cell-desc { font-size: 9.5px; }
+    .cell-question { font-size: 9px; }
+    .assess-grid { grid-template-columns: 1fr; gap: 16px; }
+    .result-area { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; gap: 12px; }
+    .battery-label .emoji { font-size: 18px; }
+    .battery-label { font-size: 9.5px; padding: 8px 4px 10px; }
+    .battery-desc { font-size: 8.5px; }
+  }
+
+  @media (max-width: 640px) {
+    .battery-labels, .matrix {
+      grid-template-columns: 70px repeat(4, 1fr);
+      gap: 3px;
+    }
+    .row-label .cap-name { font-size: 10px; }
+    .row-label .cap-code { display: none; }
+    .cell { padding: 8px 6px; }
+    .cell-desc { display: none; }
+    .cell-title { font-size: 10px; }
+    .cell-question { font-size: 8.5px; padding-top: 4px; border-top: none; }
+    .formula-bar { font-size: 12px; padding: 10px 14px; flex-wrap: wrap; }
+  }
+
+  /* === PRINT === */
   @media print {
-    .noise-overlay, .bg-grid, .progress-bar, .toast, .floating-nav, .no-print, .storage-badge, .unlock-area { display: none !important; }
-    body { background: white !important; color: #000 !important; }
-    * { color: #000 !important; }
-    .glass-card { background: #f8f8f8 !important; border: 1px solid #ddd !important; backdrop-filter: none !important; }
-    .text-input, .temp-input, .anchor-input { border: 1px solid #999 !important; background: white !important; color: #000 !important; }
-    .radio-label { background: #f5f5f5 !important; border-color: #bbb !important; }
-    .label-text { color: #000 !important; }
-    .radio-label input:checked ~ .dot { border-color: #333 !important; background: #333 !important; }
-    .radio-label input:checked ~ .dot::after { background: white !important; }
-    .fomo-row { border-color: #ccc !important; }
-    .freeze-box { background: #f0f0f0 !important; border-color: #ccc !important; }
-    .rule-card { background: #f5f5f5 !important; border-color: #ccc !important; }
-    .anchor-input { border-color: #999 !important; color: #000 !important; background: #f0f0f0 !important; }
-    .temp-badge { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-    .section-number { background: #e8e8e8 !important; color: #333 !important; }
-    .rule-number { color: #333 !important; }
-    .experiment-card { background: #f8f8f8 !important; border-color: #ccc !important; }
-    .exp-number { color: #666 !important; }
-    .condition-text-input { border-color: #999 !important; color: #000 !important; }
-    .condition-check.checked { border-color: #333 !important; background: #333 !important; }
-    .asset-card { background: #f5f5f5 !important; border-color: #ddd !important; }
-    .asset-name { color: #111 !important; }
-    .asset-tag { background: #eee !important; color: #555 !important; }
-    .asset-detail { color: #333 !important; }
-    .dist-input { border: 1px solid #999 !important; background: white !important; color: #000 !important; }
-    .dist-sum { color: #333 !important; border-color: #ccc !important; }
-    #block3Content.unlocked { display: block !important; }
+    body { background: #fff; }
+    .page { padding: 20px 16px; max-width: 100%; }
+    .cell { break-inside: avoid; }
+    .cell:hover { box-shadow: none; border-color: var(--border-light); }
+    .cell::before { opacity: 0; }
+    .assess-dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .assess-dot.active { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .formula-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .step-num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .row-label { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .battery-label { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
-  @media (max-width: 768px) {
-    .fomo-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .fomo-row > :first-child { grid-column: 1 / -1; }
-    .fomo-header > :first-child { grid-column: 1 / -1; }
-    .floating-nav { right: 12px !important; }
-    .storage-badge { bottom: 16px; left: 16px; }
+
+  /* Subtle page grain */
+  .page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.3;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: rgba(42, 56, 46, 0.15);
+    color: var(--text-primary);
   }
 </style>
 </head>
 <body>
 
-<div class="noise-overlay"></div>
-<div class="bg-grid"></div>
-<div class="progress-bar" id="progressBar" style="width: 0%"></div>
+<div class="page">
 
-<div class="floating-nav no-print" style="position:fixed; right:24px; top:50%; transform:translateY(-50%); z-index:50; display:flex; flex-direction:column; gap:12px;">
-  <div class="nav-dot active" data-section="header"></div>
-  <div class="nav-dot" data-section="block1"></div>
-  <div class="nav-dot" data-section="block2"></div>
-  <div class="nav-dot" data-section="block3"></div>
-  <div class="nav-dot" data-section="block4"></div>
-</div>
-
-<div class="toast" id="toast">
-  <span id="toastIcon">✓</span>
-  <span id="toastText">Сохранено</span>
-</div>
-
-<div class="storage-badge no-print" id="storageBadge"></div>
-
-<main style="position:relative; z-index:1; max-width:860px; margin:0 auto; padding:40px 20px 80px;">
-
-  <header id="header" class="fade-in" style="text-align:center; margin-bottom:56px;">
-    <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 16px; background:rgba(255,79,48,0.08); border:1px solid rgba(255,79,48,0.2); border-radius:100px; font-size:12px; font-weight:500; color:#FF4F30; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:24px;">
-      Рабочая тетрадь участника
-    </div>
-    <h1 style="font-size:clamp(28px,5vw,42px); font-weight:500; line-height:1.15; letter-spacing:-0.03em; margin-bottom:12px;">
-      Психология принятия решений
-    </h1>
-    <p style="font-size:18px; color:rgba(255,255,255,0.5); margin-bottom:32px; line-height:1.5;">
-      Как FOMO мешает сохранить капитал
-    </p>
-    <p style="font-size:15px; color:rgba(255,255,255,0.3); font-style:italic; margin-bottom:40px;">
-      «Мы не выбираем активы. Мы чиним алгоритм.»
-    </p>
-    <div class="glass-card" style="padding:28px; max-width:480px; margin:0 auto; text-align:left;">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-        <div>
-          <label style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.4); display:block; margin-bottom:8px;">Дата</label>
-          <input type="text" class="text-input" data-key="date" placeholder="30 мая 2026" value="30 мая 2026">
-        </div>
-        <div>
-          <label style="font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.4); display:block; margin-bottom:8px;">Имя участника</label>
-          <input type="text" class="text-input" data-key="name" placeholder="Ваше имя">
-        </div>
-      </div>
-    </div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-badge">Рабочий лист участника</div>
+    <h1>Матрица стыков</h1>
+    <p class="header-sub">16 типов трещин &nbsp;·&nbsp; Капитал бизнеса × Батарейка лидера</p>
+    <p class="header-tagline">Найдите свой стык — найдите свою трещину</p>
   </header>
 
-  <section id="block1" class="fade-in" style="margin-bottom:56px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-      <span class="section-number">1</span>
-      <h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;">Стартовая диагностика</h2>
-    </div>
-    <div class="glass-card" style="padding:32px;">
-      <div style="margin-bottom:24px;">
-        <label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px; line-height:1.5;">
-          Вспомните последнюю сделку, о которой вы пожалели. Что произошло? <span style="color:rgba(255,255,255,0.35);">(2-3 слова)</span>
-        </label>
-        <input type="text" class="text-input" data-key="b1_deal" placeholder="Например: купил на хаях">
-      </div>
-      <div style="margin-bottom:24px;">
-        <label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px;">Какое чувство предшествовало решению?</label>
-        <input type="text" class="text-input" data-key="b1_feeling" placeholder="Например: страх упустить, возбуждение...">
-      </div>
-      <div style="margin-bottom:24px;">
-        <label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:12px;">Как долго вы думали перед тем, как войти?</label>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <label class="radio-label"><input type="radio" name="b1_time" value="less5"><span class="dot"></span><span class="label-text">Менее 5 мин</span></label>
-          <label class="radio-label"><input type="radio" name="b1_time" value="to30"><span class="dot"></span><span class="label-text">До 30 мин</span></label>
-          <label class="radio-label"><input type="radio" name="b1_time" value="hours"><span class="dot"></span><span class="label-text">Несколько часов</span></label>
-          <label class="radio-label"><input type="radio" name="b1_time" value="days"><span class="dot"></span><span class="label-text">Несколько дней</span></label>
-        </div>
-      </div>
-      <div>
-        <label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:12px;">Это было запланированное решение?</label>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <label class="radio-label"><input type="radio" name="b1_planned" value="yes"><span class="dot"></span><span class="label-text">Да</span></label>
-          <label class="radio-label"><input type="radio" name="b1_planned" value="no"><span class="dot"></span><span class="label-text">Нет</span></label>
-          <label class="radio-label"><input type="radio" name="b1_planned" value="convinced"><span class="dot"></span><span class="label-text">Я убедил себя, что да</span></label>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="block2" class="fade-in" style="margin-bottom:56px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-      <span class="section-number">2</span>
-      <h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;">Шкала FOMO-температуры</h2>
-    </div>
-    <div class="glass-card" style="overflow:hidden; margin-bottom:24px;">
-      <div class="fomo-row fomo-header">
-        <div>Степень</div><div>Образ</div><div>Чувство</div><div>Статус (Нейрофизиология)</div>
-      </div>
-      <div class="fomo-row"><div><span class="temp-badge temp-normal">36.6°</span></div><div style="color:rgba(255,255,255,0.8);">Радар</div><div style="color:rgba(255,255,255,0.8);">Любопытство</div><div style="color:rgba(255,255,255,0.5);">Норма. PFC (кора) активна. Наблюдение.</div></div>
-      <div class="fomo-row"><div><span class="temp-badge temp-warn">37.5°</span></div><div style="color:rgba(255,255,255,0.8);">Зуд</div><div style="color:rgba(255,255,255,0.8);">Беспокойство</div><div style="color:rgba(255,255,255,0.5);">Внимание. Поиск подтверждений (Confirmation bias).</div></div>
-      <div class="fomo-row"><div><span class="temp-badge temp-danger">38.5°</span></div><div style="color:rgba(255,255,255,0.8);">Жар</div><div style="color:rgba(255,255,255,0.8);">Раздражение</div><div style="color:#FB923C;">ОПАСНО. Активация миндалины, рост кортизола.</div></div>
-      <div class="fomo-row"><div><span class="temp-badge temp-critical">39.5°</span></div><div style="color:rgba(255,255,255,0.8);">Лихорадка</div><div style="color:rgba(255,255,255,0.8);">Возбуждение</div><div style="color:#F87171;">КРИТИЧНО. Доминирование лимбической системы. PFC отключена.</div></div>
-      <div class="fomo-row"><div><span class="temp-badge temp-catastrophe">41.0°</span></div><div style="color:rgba(255,255,255,0.8);">Удар</div><div style="color:rgba(255,255,255,0.8);">Одержимость</div><div style="color:#EF4444;">КАТАСТРОФА. Loss Aversion ×2.5. Sunk Cost. Туннельное мышление.</div></div>
-    </div>
-    <div class="freeze-box" style="margin-bottom:24px;">
-      <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-        <span style="font-size:20px;">❄️</span>
-        <span style="font-weight:600; color:#FF4F30; font-size:15px;">ПРАВИЛО ЗАМОРОЗКИ</span>
-      </div>
-      <p style="color:rgba(255,255,255,0.7); font-size:15px; line-height:1.6;">
-        При температуре <strong style="color:#FB923C;">38.5°</strong> и выше — любая сделка откладывается минимум на <strong style="color:#fff;">24 часа</strong>.
-      </p>
-    </div>
-    <div class="glass-card" style="padding:32px;">
-      <div style="margin-bottom:24px;">
-        <label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px;">Моя типичная температура входа:</label>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <input type="text" class="temp-input" data-key="b2_temp" placeholder="—">
-          <span style="color:rgba(255,255,255,0.4); font-size:18px;">°</span>
-          <span id="tempIndicator" style="margin-left:8px; font-size:13px; font-weight:500;"></span>
-        </div>
-      </div>
-      <div>
-        <label style="font-size:15px; color:rgba(255,255,255,0.7); display:block; margin-bottom:10px; line-height:1.5;">
-          Как именно я понимаю физически, что температура растёт <span style="color:rgba(255,255,255,0.35);">(пульс, напряжение, навязчивые мысли)?</span>
-        </label>
-        <textarea class="text-input" data-key="b2_physical" placeholder="Например: учащается пульс, начинаю постоянно обновлять график..." rows="3"></textarea>
-      </div>
-    </div>
-  </section>
-
-  <section id="block3" class="fade-in" style="margin-bottom:56px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-      <span class="section-number">3</span>
-      <h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;">Эксперименты и инсайты</h2>
-    </div>
-
-    <div class="unlock-area no-print" id="unlockArea">
-      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;">
-        <span style="font-size:32px;">🔒</span>
-        <div style="text-align:left;">
-          <div style="font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Доступ по коду</div>
-          <div style="font-size:16px;font-weight:500;color:rgba(255,255,255,0.8);">Введите код, выданный ведущим</div>
-        </div>
-      </div>
-      <input type="text" class="unlock-input" id="codeInput" placeholder="К О Д" autocomplete="off">
-      <div class="unlock-error" id="unlockError"></div>
-      <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:12px;">Код вводится на сессии</p>
-    </div>
-
-    <div id="block3Content">
-      <div class="experiment-card" style="margin-bottom:20px;">
-        <div class="exp-number">Эксперимент 1</div>
-        <h3 style="font-size:18px; font-weight:500; margin-bottom:8px;">Шёпот инсайдера</h3>
-        <p style="font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:24px;">У вас 100 000 рублей. Распределите между тремя компаниями. Время — 4 минуты. Используйте только информацию ниже.</p>
-
-        <div class="asset-card">
-          <div class="asset-tag">АКТИВ А</div>
-          <div class="asset-name">«СЕВЕРНЫЙ ЛОГИСТИК»</div>
-          <div class="asset-detail">
-            Грузоперевозки, Сибирский регион. На рынке 11 лет.<br>
-            Выручка растёт +6-8% ежегодно последние 5 лет.<br>
-            Дивиденды стабильны, доходность 4,2% годовых.<br>
-            Долговая нагрузка низкая.<br>
-            Основной клиент — госструктуры, контракты до 2026 года.<br>
-            Аналитики: 4 × «держать», 1 × «покупать», 0 × «продавать»<br>
-            Динамика 6 мес.: <span class="dynamics"><span class="pos">+3,1%</span></span>
-          </div>
-        </div>
-
-        <div class="asset-card">
-          <div class="asset-tag">АКТИВ Б</div>
-          <div class="asset-name">«МЕДТЕХ-Р»</div>
-          <div class="asset-detail">
-            ПО для медицинской диагностики. На рынке 6 лет.<br>
-            Основатель — бывший хирург, кандидат наук.<br>
-            Три года подряд операционный убыток.<br>
-            Выручка за год: 180 → 360 млн руб. (×2).<br>
-            Месяц назад — «стратегическое соглашение» с федеральным ведомством. Детали закрыты до завершения оформления.<br>
-            Три патента, два поданы в этом году.<br>
-            Аналитики: покрытие отсутствует.<br>
-            Упоминается в 4 телеграм-каналах за 10 дней — тон позитивный, источники анонимны.<br>
-            Динамика 6 мес.: <span class="dynamics"><span class="neg">−4,7%</span></span> &nbsp; Динамика 3 нед.: <span class="dynamics"><span class="pos">+11,2%</span></span>
-          </div>
-        </div>
-
-        <div class="asset-card">
-          <div class="asset-tag">АКТИВ В</div>
-          <div class="asset-name">«АРКТИК РЕСУРС»</div>
-          <div class="asset-detail">
-            Добыча и переработка редкоземельных металлов. На рынке 14 лет.<br>
-            Листинг на Московской бирже с 2017 года.<br>
-            Выручка упала на 18% — падение мировых цен на сырьё.<br>
-            Последний квартал: убыток 340 млн руб.<br>
-            Реструктуризация: сокращение добычи на 30%, фокус на переработку с более высокой маржой.<br>
-            Новый CEO назначен 2 мес. назад — ранее вывел из кризиса аналогичную компанию за 18 месяцев.<br>
-            Крупный инвестфонд увеличил долю с 8% до 14% (последняя отчётность).<br>
-            Аналитики: 2 × «продавать», 1 × «держать»<br>
-            Динамика 6 мес.: <span class="dynamics"><span class="neg">−22%</span></span> &nbsp; Динамика 4 нед.: <span class="dynamics"><span class="neg">−6%</span></span>
-          </div>
-        </div>
-
-        <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px; margin-top:20px;">
-          <p style="font-size:14px; color:rgba(255,255,255,0.7); margin-bottom:16px; font-weight:500;">
-            МОЁ РАСПРЕДЕЛЕНИЕ — зафиксируйте ДО команды ведущего:
-          </p>
-          <div style="max-width:280px;">
-            <div class="dist-row"><span class="dist-label">А:</span><input type="text" class="dist-input" data-key="sh_a" placeholder="0"><span class="dist-suffix">₽</span></div>
-            <div class="dist-row"><span class="dist-label">Б:</span><input type="text" class="dist-input" data-key="sh_b" placeholder="0"><span class="dist-suffix">₽</span></div>
-            <div class="dist-row"><span class="dist-label">В:</span><input type="text" class="dist-input" data-key="sh_v" placeholder="0"><span class="dist-suffix">₽</span></div>
-            <div class="dist-sum">Итого: <strong id="distSum">0 ₽</strong></div>
-          </div>
-          <div style="margin-top:16px;">
-            <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;">Почему именно так — одна фраза:</label>
-            <input type="text" class="text-input" data-key="sh_why" placeholder="Одна фраза — почему именно это распределение">
-          </div>
-        </div>
-
-        <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px; margin-top:20px;">
-          <p style="font-size:14px; color:rgba(255,255,255,0.7); margin-bottom:20px; font-weight:500;">После того как вы увидели шёпот:</p>
-
-          <div style="margin-bottom:16px;">
-            <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;">Моя температура прямо сейчас:</label>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <input type="text" class="temp-input" data-key="sh_temp" placeholder="—" style="font-size:16px;width:70px;">
-              <span style="color:rgba(255,255,255,0.4);font-size:16px;">°</span>
-            </div>
-          </div>
-
-          <div style="margin-bottom:16px;">
-            <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:10px;">Я изменил распределение?</label>
-            <div style="display:flex;gap:10px;">
-              <label class="radio-label" style="flex:1;justify-content:center;padding:10px;"><input type="radio" name="sh_changed" value="no"><span class="dot" style="width:16px;height:16px;min-width:16px;"></span><span class="label-text" style="font-size:14px;">Нет</span></label>
-              <label class="radio-label" style="flex:1;justify-content:center;padding:10px;"><input type="radio" name="sh_changed" value="yes"><span class="dot" style="width:16px;height:16px;min-width:16px;"></span><span class="label-text" style="font-size:14px;">Да</span></label>
-            </div>
-          </div>
-
-          <div id="shNewDist" style="display:none; margin-bottom:16px;">
-            <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:10px;">Новое распределение:</label>
-            <div style="max-width:280px;">
-              <div class="dist-row"><span class="dist-label">А:</span><input type="text" class="dist-input" data-key="sh_na" placeholder="0"><span class="dist-suffix">₽</span></div>
-              <div class="dist-row"><span class="dist-label">Б:</span><input type="text" class="dist-input" data-key="sh_nb" placeholder="0"><span class="dist-suffix">₽</span></div>
-              <div class="dist-row"><span class="dist-label">В:</span><input type="text" class="dist-input" data-key="sh_nv" placeholder="0"><span class="dist-suffix">₽</span></div>
-              <div class="dist-sum">Итого: <strong id="distSumNew">0 ₽</strong></div>
-            </div>
-          </div>
-
-          <div style="margin-bottom:16px;">
-            <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;">В сторону какого актива переложили и почему:</label>
-            <textarea class="text-input" data-key="sh_redirect" placeholder="Опишите — почему переложили и на кого" rows="2"></textarea>
-          </div>
-
-          <div style="margin-bottom:16px;">
-            <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:10px; line-height:1.5;">Что именно сработало — неизвестность содержания шёпота или сам факт, что кто-то другой знает больше?</label>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <label class="radio-label" style="padding:10px;"><input type="radio" name="sh_what" value="unknown"><span class="dot" style="width:16px;height:16px;min-width:16px;"></span><span class="label-text" style="font-size:14px;">Неизвестность содержания шёпота</span></label>
-              <label class="radio-label" style="padding:10px;"><input type="radio" name="sh_what" value="insider"><span class="dot" style="width:16px;height:16px;min-width:16px;"></span><span class="label-text" style="font-size:14px;">Факт чужого информационного преимущества</span></label>
-              <label class="radio-label" style="padding:10px;"><input type="radio" name="sh_what" value="action"><span class="dot" style="width:16px;height:16px;min-width:16px;"></span><span class="label-text" style="font-size:14px;">Действие «инсайдера» — то, что он что-то изменил</span></label>
-            </div>
-          </div>
-
-          <div>
-            <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;">Что я почувствовал в момент шёпота — одним словом:</label>
-            <input type="text" class="text-input" data-key="sh_emotion" placeholder="Одно слово" style="max-width:300px;">
-          </div>
-        </div>
-      </div>
-
-      <hr class="section-divider">
-
-      <div class="experiment-card" style="margin-bottom:20px;">
-        <div class="exp-number">Эксперимент 2</div>
-        <h3 style="font-size:18px; font-weight:500; margin-bottom:24px;">«Аукцион с таймером»</h3>
-        <div style="margin-bottom:20px;">
-          <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px; line-height:1.5;">Моя температура в момент, когда ставка превысила 1000 ₽:</label>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <input type="text" class="temp-input" data-key="e2_temp" placeholder="—" style="font-size:16px;width:70px;">
-            <span style="color:rgba(255,255,255,0.4);font-size:16px;">°</span>
-          </div>
-        </div>
-        <div style="margin-bottom:20px;">
-          <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:10px;">Что было сильнее?</label>
-          <div style="display:flex;gap:10px;">
-            <label class="radio-label" style="flex:1;justify-content:center;padding:10px;"><input type="radio" name="e2_stronger" value="win"><span class="dot" style="width:16px;height:16px;min-width:16px;"></span><span class="label-text" style="font-size:14px;">Желание выиграть</span></label>
-            <label class="radio-label" style="flex:1;justify-content:center;padding:10px;"><input type="radio" name="e2_stronger" value="fear"><span class="dot" style="width:16px;height:16px;min-width:16px;"></span><span class="label-text" style="font-size:14px;">Страх переплатить</span></label>
-          </div>
-        </div>
-        <div>
-          <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;">Мои заметки (что заставило остановиться / продолжить):</label>
-          <textarea class="text-input" data-key="e2_notes" placeholder="..." rows="3"></textarea>
-        </div>
-      </div>
-
-      <hr class="section-divider">
-
-      <div class="experiment-card">
-        <div class="exp-number">Эксперимент 3</div>
-        <h3 style="font-size:18px; font-weight:500; margin-bottom:24px;">«Публичная иерархия»</h3>
-        <div style="margin-bottom:20px;">
-          <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px; line-height:1.5;">Когда я вижу пост «+300% за месяц», первое, что я чувствую:</label>
-          <input type="text" class="text-input" data-key="e3_feeling" placeholder="...">
-        </div>
-        <div>
-          <label style="font-size:14px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px; line-height:1.5;">Какие конкретные каналы / источники чаще всего поднимают мою температуру?</label>
-          <input type="text" class="text-input" data-key="e3_source1" placeholder="Источник 1" style="margin-bottom:8px;">
-          <input type="text" class="text-input" data-key="e3_source2" placeholder="Источник 2">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="block4" class="fade-in" style="margin-bottom:48px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-      <span class="section-number">4</span>
-      <h2 style="font-size:22px; font-weight:500; letter-spacing:-0.02em;">Мой нейро-протокол</h2>
-    </div>
-    <div class="rule-card" style="margin-bottom:16px;">
-      <div class="rule-number">Правило 1 — Условие входа</div>
-      <p style="font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:16px; line-height:1.6;">
-        <strong style="color:#fff;">ВХОДИ</strong> в незапланированную позицию только при температуре не выше
-        <input type="text" class="temp-input" data-key="r1_temp" placeholder="—" style="font-size:14px;width:60px;display:inline;vertical-align:middle;">°
-        и при условиях:
-      </p>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div class="condition-row"><div class="condition-check" data-key="r1_cond1_check"></div><input type="text" class="condition-text-input" data-key="r1_cond1_text" placeholder="Условие 1"></div>
-        <div class="condition-row"><div class="condition-check" data-key="r1_cond2_check"></div><input type="text" class="condition-text-input" data-key="r1_cond2_text" placeholder="Условие 2"></div>
-      </div>
-    </div>
-    <div class="rule-card" style="margin-bottom:16px;">
-      <div class="rule-number">Правило 2 — Заморозка (24 часа)</div>
-      <div style="margin-bottom:16px;">
-        <label style="font-size:13px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;"><strong style="color:rgba(255,255,255,0.8);">ТРИГГЕР:</strong> Мой личный сигнал для паузы (физический или ментальный):</label>
-        <input type="text" class="text-input" data-key="r2_trigger" placeholder="Например: учащённый пульс > 90, мысли «все уже зашли»">
-      </div>
-      <div style="display:flex;align-items:flex-start;gap:10px;padding:14px 18px;background:rgba(255,79,48,0.06);border-radius:10px;">
-        <span style="font-size:18px;min-width:18px;margin-top:1px;">❄️</span>
-        <p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.6;"><strong style="color:#FF4F30;">ДЕЙСТВИЕ:</strong> При фиксации триггера — полная заморозка терминала на 24 часа.</p>
-      </div>
-    </div>
-    <div class="rule-card" style="margin-bottom:16px;">
-      <div class="rule-number">Правило 3 — Фильтр шума</div>
-      <p style="font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:16px; line-height:1.6;">
-        <strong style="color:#fff;">ОТКЛЮЧАЙ</strong> следующие источники (ТГ-каналы, чаты) при температуре выше
-        <input type="text" class="temp-input" data-key="r3_temp" placeholder="—" style="font-size:14px;width:60px;display:inline;vertical-align:middle;">°
-      </p>
-      <input type="text" class="text-input" data-key="r3_sources" placeholder="Каналы и чаты через запятую">
-    </div>
-    <div class="rule-card" style="margin-bottom:32px;">
-      <div class="rule-number">Правило 4 — Стоп-механизм</div>
-      <p style="font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:16px; line-height:1.6;">
-        <strong style="color:#fff;">ВЫПОЛНИ</strong> следующее физическое действие при достижении
-        <input type="text" class="temp-input" data-key="r4_temp" placeholder="—" style="font-size:14px;width:60px;display:inline;vertical-align:middle;">°
-      </p>
-      <p style="font-size:12px; color:rgba(255,255,255,0.35); margin-bottom:8px;">Например: встать, закрыть ноутбук, умыться холодной водой</p>
-      <input type="text" class="text-input" data-key="r4_action" placeholder="Ваше физическое действие">
-    </div>
-    <div class="glass-card" style="padding:32px;text-align:center;border-color:rgba(255,79,48,0.15);background:rgba(255,79,48,0.03);">
-      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;">
-        <span style="font-size:18px;">⚓</span>
-        <span style="font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);">Моя фраза-якорь</span>
-      </div>
-      <input type="text" class="anchor-input" data-key="anchor" placeholder="Например: «Я не упускаю — я выбираю»">
-    </div>
-  </section>
-
-  <div class="no-print fade-in" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-    <button class="btn-pdf" id="btnPdf" type="button">Скачать PDF</button>
-    <button class="btn-primary" id="btnPrint" type="button">Печать</button>
-    <button class="btn-secondary" id="btnCopy" type="button">Копировать текст</button>
-    <button class="btn-secondary" id="btnClear" type="button">Очистить всё</button>
+  <!-- FORMULA -->
+  <div class="formula-bar">
+    <span>Капитал <span class="arrow">↓</span></span>
+    <span class="plus">+</span>
+    <span>Батарейка <span class="arrow">↓</span></span>
+    <span class="eq">=</span>
+    <span class="result">Трещина</span>
   </div>
 
-</main>
+  <!-- BATTERY COLUMN HEADERS -->
+  <div class="battery-labels">
+    <div></div>
+    <div class="battery-label physical">
+      <span class="emoji">⚡</span>
+      Физическая
+      <span class="battery-desc">Энергия тела: сон, питание, движение</span>
+    </div>
+    <div class="battery-label emotional">
+      <span class="emoji">🌊</span>
+      Эмоциональная
+      <span class="battery-desc">Устойчивость: не срываться, оставаться в ресурсе</span>
+    </div>
+    <div class="battery-label mental">
+      <span class="emoji">🧠</span>
+      Ментальная
+      <span class="battery-desc">Фокус: держать картину целиком</span>
+    </div>
+    <div class="battery-label value">
+      <span class="emoji">🧭</span>
+      Ценностная
+      <span class="battery-desc">Смысл: знать, зачем просыпаешься</span>
+    </div>
+  </div>
+
+  <!-- MATRIX -->
+  <div class="matrix">
+
+    <!-- ROW 1: Человеческий -->
+    <div class="row-label human">
+      <span class="cap-code">HCap</span>
+      <span class="cap-name">Человеческий</span>
+    </div>
+
+    <div class="cell col-physical">
+      <div class="cell-title">Выжженное поле</div>
+      <div class="cell-desc">Усталость лидера выжигает команду. Лучшие уходят от вашей энергии.</div>
+      <div class="cell-question">Когда ваша энергия зажигала команду, а не тушила её?</div>
+    </div>
+
+    <div class="cell col-emotional">
+      <div class="cell-title">Токсичная среда</div>
+      <div class="cell-desc">Вы срываетесь. Команда боится. Таланты уходят из-за атмосферы.</div>
+      <div class="cell-question">Какую атмосферу вы создаёте, когда злитесь?</div>
+    </div>
+
+    <div class="cell col-mental">
+      <div class="cell-title">Слепой найм</div>
+      <div class="cell-desc">Вы не видите, кто растёт, а кто тянет вниз. Ошибки в назначениях.</div>
+      <div class="cell-question">Когда вы точно знали, куда направить сотрудника?</div>
+    </div>
+
+    <div class="cell col-value">
+      <div class="cell-title">Бессмысленный труд</div>
+      <div class="cell-desc">Вы не знаете, зачем это делаете. Люди не видят смысла и уходят.</div>
+      <div class="cell-question">Какой смысл вы несёте в компанию каждый день?</div>
+    </div>
+
+    <!-- ROW 2: Социальный -->
+    <div class="row-label social">
+      <span class="cap-code">SCap</span>
+      <span class="cap-name">Социальный</span>
+    </div>
+
+    <div class="cell col-physical">
+      <div class="cell-title">Выгоревший дипломат</div>
+      <div class="cell-desc">Вы слишком устали гасить конфликты. Войны отделов — норма.</div>
+      <div class="cell-question">Когда вы перестали вмешиваться, потому что устали?</div>
+    </div>
+
+    <div class="cell col-emotional">
+      <div class="cell-title">Разрушенные мосты</div>
+      <div class="cell-desc">Вы срываетесь на людей. Доверие разрушено. Правды вам не говорят.</div>
+      <div class="cell-question">Когда последний раз люди говорили вам правду в глаза?</div>
+    </div>
+
+    <div class="cell col-mental">
+      <div class="cell-title">Потерянная карта</div>
+      <div class="cell-desc">Вы разрываетесь между задачами и не видите, как отделы воюют.</div>
+      <div class="cell-question">Вы видите, что происходит с культурой компании?</div>
+    </div>
+
+    <div class="cell col-value">
+      <div class="cell-title">Холодная война</div>
+      <div class="cell-desc">Вы потеряли смысл. Никто не задаёт вопроса «зачем мы вместе».</div>
+      <div class="cell-question">Зачем вашей компании быть вместе? Что вас объединяет?</div>
+    </div>
+
+    <!-- ROW 3: Финансовый -->
+    <div class="row-label financial">
+      <span class="cap-code">FCap</span>
+      <span class="cap-name">Финансовый</span>
+    </div>
+
+    <div class="cell col-physical">
+      <div class="cell-title">Экономия на себе</div>
+      <div class="cell-desc">Вы не спите, экономите на себе. «Выложусь на 150% — компания выживет».</div>
+      <div class="cell-question">Когда вы перестали заботиться о себе, чтобы спасти компанию?</div>
+    </div>
+
+    <div class="cell col-emotional">
+      <div class="cell-title">Импульсивные траты</div>
+      <div class="cell-desc">Решения в стрессе. Покупаете ненужное. Продаёте то, что нельзя.</div>
+      <div class="cell-question">Какое решение в страхе стоило компании дорого?</div>
+    </div>
+
+    <div class="cell col-mental">
+      <div class="cell-title">Туннельное зрение</div>
+      <div class="cell-desc">Видите только цифры, не видите рисков и возможностей за ними.</div>
+      <div class="cell-question">На чём экономите, потому что не видите альтернатив?</div>
+    </div>
+
+    <div class="cell col-value">
+      <div class="cell-title">Мёртвые инвестиции</div>
+      <div class="cell-desc">Деньги стали самоцелью. Вкладываете в то, что не имеет смысла.</div>
+      <div class="cell-question">Во что вкладываете деньги, но не знаете, зачем?</div>
+    </div>
+
+    <!-- ROW 4: Рыночный -->
+    <div class="row-label market">
+      <span class="cap-code">MCap</span>
+      <span class="cap-name">Рыночный</span>
+    </div>
+
+    <div class="cell col-physical">
+      <div class="cell-title">Отключённый радар</div>
+      <div class="cell-desc">Вы слишком устали слышать клиентов. Новые игроки забирают долю.</div>
+      <div class="cell-question">Когда последний раз слушали клиента — не чтобы продать?</div>
+    </div>
+
+    <div class="cell col-emotional">
+      <div class="cell-title">Зеркало пустоты</div>
+      <div class="cell-desc">Клиенты чувствуют пустоту лидера. Бренд теряет притяжение.</div>
+      <div class="cell-question">Что ваши клиенты чувствуют, встречаясь с вами?</div>
+    </div>
+
+    <div class="cell col-mental">
+      <div class="cell-title">Фокус на внутреннем</div>
+      <div class="cell-desc">Смотрите внутрь, а не на рынок. Заняты отчётами и согласованиями.</div>
+      <div class="cell-question">Сколько времени на процессы и сколько — на рынок?</div>
+    </div>
+
+    <div class="cell col-value">
+      <div class="cell-title">Потерянный Север</div>
+      <div class="cell-desc">Не знаете, зачем компания нужна рынку. Клиенты уходят к тем, у кого смысл есть.</div>
+      <div class="cell-question">Зачем вы нужны своим клиентам? Чем отличаетесь?</div>
+    </div>
+
+  </div>
+
+  <!-- MY SHEET -->
+  <div class="my-sheet">
+    <h2 class="my-sheet-title">Мой лист</h2>
+
+    <div class="assess-grid">
+      <!-- Capitals -->
+      <div class="assess-block">
+        <div class="assess-block-title">Оценка капиталов (1–5)</div>
+        <div class="assess-row">
+          <span class="assess-label">Человеческий</span>
+          <div class="assess-scale" data-group="cap">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+        <div class="assess-row">
+          <span class="assess-label">Социальный</span>
+          <div class="assess-scale" data-group="cap">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+        <div class="assess-row">
+          <span class="assess-label">Финансовый</span>
+          <div class="assess-scale" data-group="cap">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+        <div class="assess-row">
+          <span class="assess-label">Рыночный</span>
+          <div class="assess-scale" data-group="cap">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Batteries -->
+      <div class="assess-block">
+        <div class="assess-block-title">Оценка батареек (1–5)</div>
+        <div class="assess-row">
+          <span class="assess-label">Физическая</span>
+          <div class="assess-scale" data-group="bat">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+        <div class="assess-row">
+          <span class="assess-label">Эмоциональная</span>
+          <div class="assess-scale" data-group="bat">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+        <div class="assess-row">
+          <span class="assess-label">Ментальная</span>
+          <div class="assess-scale" data-group="bat">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+        <div class="assess-row">
+          <span class="assess-label">Ценностная</span>
+          <div class="assess-scale" data-group="bat">
+            <div class="assess-dot" data-val="1">1</div>
+            <div class="assess-dot" data-val="2">2</div>
+            <div class="assess-dot" data-val="3">3</div>
+            <div class="assess-dot" data-val="4">4</div>
+            <div class="assess-dot" data-val="5">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-area">
+      <div class="result-box">
+        <div class="result-box-label">Моя трещина</div>
+        <div class="result-box-content" id="crackResult">—</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">Мой отказ — что я перестаю делать</div>
+        <div class="result-box-content" id="refusalResult">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="steps-title">Алгоритм</div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Оцените 4 капитала</strong> по шкале 1–5, обведите самый низкий</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Оцените 4 батарейки</strong> по шкале 1–5, обведите самую низкую</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Найдите их пересечение</strong> в матрице — это ваша трещина</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer-note">Шаг не записывается — он делается</p>
+
+</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  // Crack names mapped by row (cap index) and col (bat index)
+  const crackNames = [
+    ['Выжженное поле', 'Токсичная среда', 'Слепой найм', 'Бессмысленный труд'],
+    ['Выгоревший дипломат', 'Разрушенные мосты', 'Потерянная карта', 'Холодная война'],
+    ['Экономия на себе', 'Импульсивные траты', 'Туннельное зрение', 'Мёртвые инвестиции'],
+    ['Отключённый радар', 'Зеркало пустоты', 'Фокус на внутреннем', 'Потерянный Север']
+  ];
 
-  var STORAGE_KEY = 'fomo_workbook_v7';
-  var CODEWORD = 'FOMO2026';
+  const capLabels = ['Человеческий', 'Социальный', 'Финансовый', 'Рыночный'];
+  const batLabels = ['Физическая', 'Эмоциональная', 'Ментальная', 'Ценностная'];
 
-  var block3Unlocked = false;
+  // State
+  const capScores = [null, null, null, null];
+  const batScores = [null, null, null, null];
 
-  var storageOk = false;
-  try { localStorage.setItem('_t','1'); localStorage.removeItem('_t'); storageOk = true; } catch(e) {}
-  var badge = document.getElementById('storageBadge');
-  if (storageOk) {
-    badge.className = 'storage-badge no-print storage-ok';
-    badge.textContent = 'Автосохранение включено';
-  } else {
-    badge.className = 'storage-badge no-print storage-fail';
-    badge.textContent = 'localStorage недоступен';
+  function getLowest(arr) {
+    let min = Infinity, idx = -1;
+    arr.forEach((v, i) => { if (v !== null && v < min) { min = v; idx = i; } });
+    return idx;
   }
 
-  function saveData() {
-    if (!storageOk) return;
-    var data = { _block3Unlocked: block3Unlocked };
-    document.querySelectorAll('[data-key]').forEach(function(el) {
-      var k = el.dataset.key;
-      if (el.type === 'radio') return;
-      if (el.classList.contains('condition-check')) { data[k] = el.classList.contains('checked'); }
-      else { data[k] = el.value; }
-    });
-    document.querySelectorAll('input[type="radio"]').forEach(function(r) { if (r.checked) data[r.name] = r.value; });
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
-  }
+  function updateResult() {
+    const capIdx = getLowest(capScores);
+    const batIdx = getLowest(batScores);
 
-  function loadData() {
-    if (!storageOk) return;
-    try {
-      var data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (!data) return;
-      if (data._block3Unlocked) { block3Unlocked = true; unlockBlock3UI(); }
-      document.querySelectorAll('[data-key]').forEach(function(el) {
-        var k = el.dataset.key;
-        if (el.type === 'radio') return;
-        if (el.classList.contains('condition-check')) { if (data[k]) el.classList.add('checked'); }
-        else if (data[k] !== undefined) { el.value = data[k]; }
-      });
-      Object.keys(data).forEach(function(k) {
-        if (k.charAt(0) === '_') return;
-        var r = document.querySelector('input[name="'+k+'"][value="'+data[k]+'"]');
-        if (r) r.checked = true;
-      });
-      updateTempIndicator(); updateProgress(); updateAllDistSums(); toggleNewDist();
-    } catch(e) {}
-  }
+    const crackEl = document.getElementById('crackResult');
+    const refusalEl = document.getElementById('refusalResult');
 
-  var toastTimer;
-  function showToast(text, icon, isError) {
-    var t = document.getElementById('toast');
-    t.className = 'toast' + (isError ? ' toast-error' : '');
-    document.getElementById('toastText').textContent = text;
-    document.getElementById('toastIcon').textContent = icon || '✓';
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2500);
-  }
-
-  function updateProgress() {
-    var all = document.querySelectorAll('[data-key]:not(.condition-check)');
-    var filled = 0;
-    all.forEach(function(el) {
-      if (el.type === 'radio') return;
-      if (el.closest('#block3Content') && !block3Unlocked) return;
-      if (el.value && el.value.trim()) filled++;
-    });
-    var rn = {};
-    document.querySelectorAll('input[type="radio"]').forEach(function(r) {
-      if (r.closest('#block3Content') && !block3Unlocked) return;
-      rn[r.name] = true;
-    });
-    Object.keys(rn).forEach(function(n) { if (document.querySelector('input[name="'+n+'"]:checked')) filled++; });
-    document.querySelectorAll('.condition-check[data-key]').forEach(function(el) { if (el.classList.contains('checked')) filled++; });
-    var total = all.length + Object.keys(rn).length + document.querySelectorAll('.condition-check[data-key]').length;
-    var cnt = 0;
-    all.forEach(function(el) { if (el.closest('#block3Content') && !block3Unlocked) cnt++; });
-    var rnc = {};
-    document.querySelectorAll('input[type="radio"]').forEach(function(r) {
-      if (r.closest('#block3Content') && !block3Unlocked) { if (!rnc[r.name]) { cnt++; rnc[r.name]=1; } }
-    });
-    total -= cnt;
-    if (total < 1) total = 1;
-    document.getElementById('progressBar').style.width = Math.round((filled/total)*100) + '%';
-  }
-
-  function updateTempIndicator() {
-    var el = document.querySelector('[data-key="b2_temp"]');
-    var ind = document.getElementById('tempIndicator');
-    if (!el || !ind) return;
-    var v = parseFloat(el.value);
-    if (isNaN(v)) { ind.textContent = ''; return; }
-    if (v <= 36.6) { ind.textContent = '● Норма'; ind.style.color = '#4ADE80'; }
-    else if (v <= 37.5) { ind.textContent = '● Внимание'; ind.style.color = '#FACC15'; }
-    else if (v <= 38.5) { ind.textContent = '⚠ Опасно'; ind.style.color = '#FB923C'; }
-    else if (v <= 39.5) { ind.textContent = '🔴 Критично'; ind.style.color = '#F87171'; }
-    else { ind.textContent = '🔴🔴 Катастрофа'; ind.style.color = '#EF4444'; }
-  }
-
-  document.querySelectorAll('.condition-check[data-key]').forEach(function(el) {
-    el.addEventListener('click', function() { el.classList.toggle('checked'); saveData(); updateProgress(); });
-  });
-
-  var saveDebounce;
-  function scheduleSave() {
-    clearTimeout(saveDebounce);
-    saveDebounce = setTimeout(function() { saveData(); updateProgress(); }, 600);
-  }
-  document.querySelectorAll('input[type="text"], textarea').forEach(function(el) { el.addEventListener('input', scheduleSave); });
-  document.querySelectorAll('input[type="radio"]').forEach(function(el) { el.addEventListener('change', function() { scheduleSave(); toggleNewDist(); }); });
-  var b2t = document.querySelector('[data-key="b2_temp"]');
-  if (b2t) b2t.addEventListener('input', updateTempIndicator);
-
-  function unlockBlock3UI() {
-    document.getElementById('unlockArea').style.display = 'none';
-    document.getElementById('block3Content').classList.add('unlocked');
-  }
-
-  document.getElementById('codeInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      var val = this.value.trim().toLowerCase();
-      var errEl = document.getElementById('unlockError');
-      if (val === CODEWORD.toLowerCase()) {
-        errEl.textContent = '';
-        this.value = '';
-        block3Unlocked = true;
-        unlockBlock3UI();
-        saveData();
-        updateProgress();
-        showToast('Блок экспериментов открыт', '🔓');
-        setTimeout(function() {
-          document.getElementById('block3').scrollIntoView({behavior:'smooth', block:'start'});
-        }, 100);
-      } else {
-        errEl.textContent = 'Неверный код. Попробуйте ещё раз.';
-        this.select();
-        showToast('Неверный код', '✗', true);
+    if (capIdx >= 0 && batIdx >= 0) {
+      crackEl.textContent = crackNames[capIdx][batIdx];
+      // Highlight the cell
+      document.querySelectorAll('.cell').forEach(c => c.style.outline = 'none');
+      const rowOffset = capIdx * 5; // 1 label + 4 cells per row
+      const cellIndex = rowOffset + 1 + batIdx;
+      const cells = document.querySelectorAll('.cell');
+      if (cells[cellIndex]) {
+        cells[cellIndex].style.outline = '2.5px solid #2A382E';
+        cells[cellIndex].style.outlineOffset = '-1px';
+        cells[cellIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+    } else {
+      crackEl.textContent = '—';
+      document.querySelectorAll('.cell').forEach(c => c.style.outline = 'none');
     }
-  });
-
-  function calcSum(prefix) {
-    var a = parseFloat(document.querySelector('[data-key="'+prefix+'a"]')?.value) || 0;
-    var b = parseFloat(document.querySelector('[data-key="'+prefix+'b"]')?.value) || 0;
-    var v = parseFloat(document.querySelector('[data-key="'+prefix+'v"]')?.value) || 0;
-    return (a + b + v).toLocaleString('ru-RU');
-  }
-  function updateAllDistSums() {
-    var s1 = document.getElementById('distSum');
-    var s2 = document.getElementById('distSumNew');
-    if (s1) s1.innerHTML = calcSum('sh_') + ' ₽';
-    if (s2) s2.innerHTML = calcSum('sh_n') + ' ₽';
-  }
-  document.querySelectorAll('.dist-input').forEach(function(el) {
-    el.addEventListener('input', updateAllDistSums);
-  });
-
-  function toggleNewDist() {
-    var checked = document.querySelector('input[name="sh_changed"][value="yes"]');
-    var el = document.getElementById('shNewDist');
-    if (el) el.style.display = (checked && checked.checked) ? 'block' : 'none';
   }
 
-  function collectData() {
-    var data = {};
-    document.querySelectorAll('[data-key]').forEach(function(el) {
-      var k = el.dataset.key;
-      if (el.type === 'radio') return;
-      if (el.classList.contains('condition-check')) { data[k] = el.classList.contains('checked'); }
-      else { data[k] = el.value || ''; }
-    });
-    document.querySelectorAll('input[type="radio"]').forEach(function(r) { if (r.checked) data[r.name] = r.value; });
-    return data;
-  }
+  document.querySelectorAll('.assess-scale').forEach(scale => {
+    const group = scale.dataset.group;
+    const row = scale.closest('.assess-row');
+    const label = row.querySelector('.assess-label').textContent.trim();
+    const dots = scale.querySelectorAll('.assess-dot');
 
-  function rv(d, k) {
-    var labels = {
-      'b1_time': {'less5':'Менее 5 мин','to30':'До 30 мин','hours':'Несколько часов','days':'Несколько дней'},
-      'b1_planned': {'yes':'Да','no':'Нет','convinced':'Я убедил себя, что да'},
-      'e2_stronger': {'win':'Желание выиграть','fear':'Страх переплатить'},
-      'sh_changed': {'no':'Нет','yes':'Да'},
-      'sh_what': {'unknown':'Неизвестность содержания шёпота','insider':'Факт чужого информационного преимущества','action':'Действие «инсайдера» — то, что он что-то изменил'}
-    };
-    if (!d[k]) return '—';
-    return (labels[k] && labels[k][d[k]]) ? labels[k][d[k]] : d[k];
-  }
-
-  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-  document.getElementById('btnPdf').addEventListener('click', function() {
-    var btn = this;
-    if (typeof html2pdf === 'undefined') { showToast('Библиотека не загрузилась — обновите страницу (F5)', '✗', true); return; }
-    btn.disabled = true; btn.textContent = 'Генерация PDF...';
-
-    var overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;z-index:9998;background:#0B0C0E;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;';
-    overlay.innerHTML = '<div style="width:48px;height:48px;border:3px solid rgba(255,255,255,0.1);border-top-color:#FF4F30;border-radius:50%;animation:spin 0.8s linear infinite;"></div><p style="color:rgba(255,255,255,0.7);font-size:15px;">Генерируем PDF...</p><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
-    document.body.appendChild(overlay);
-
-    var d = collectData();
-    var name = d.name || 'Участник';
-    var h = '';
-
-    h += '<div style="font-family:Helvetica,Arial,sans-serif;color:#1a1a1a;padding:40px 48px;max-width:700px;margin:0 auto;line-height:1.6;">';
-    h += '<div style="text-align:center;margin-bottom:36px;padding-bottom:24px;border-bottom:3px solid #FF4F30;">';
-    h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#FF4F30;margin-bottom:12px;">Рабочая тетрадь участника</div>';
-    h += '<h1 style="font-size:26px;font-weight:600;margin-bottom:6px;color:#111;">Психология принятия решений</h1>';
-    h += '<p style="font-size:15px;color:#666;margin-bottom:16px;">Как FOMO мешает сохранить капитал</p>';
-    h += '<p style="font-size:13px;color:#999;font-style:italic;margin-bottom:16px;">«Мы не выбираем активы. Мы чиним алгоритм.»</p>';
-    h += '<table style="margin:0 auto;font-size:14px;"><tr><td style="padding:4px 12px;color:#888;">Дата:</td><td style="font-weight:500;">'+esc(d.date||'—')+'</td></tr>';
-    h += '<tr><td style="padding:4px 12px;color:#888;">Имя:</td><td style="font-weight:500;">'+esc(name)+'</td></tr></table></div>';
-
-    h += '<div style="margin-bottom:28px;">';
-    h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">1</span><h2 style="font-size:18px;font-weight:600;color:#111;">Стартовая диагностика</h2></div>';
-    h += '<table style="width:100%;font-size:14px;border-collapse:collapse;">';
-    h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;width:45%;border:1px solid #eee;">Сделка (2-3 слова)</td><td style="padding:10px 14px;border:1px solid #eee;">'+esc(d.b1_deal)+'</td></tr>';
-    h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Чувство</td><td style="padding:10px 14px;border:1px solid #eee;">'+esc(d.b1_feeling)+'</td></tr>';
-    h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Время раздумий</td><td style="padding:10px 14px;border:1px solid #eee;">'+esc(rv(d,'b1_time'))+'</td></tr>';
-    h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Запланировано</td><td style="padding:10px 14px;border:1px solid #eee;">'+esc(rv(d,'b1_planned'))+'</td></tr>';
-    h += '</table></div>';
-
-    h += '<div style="margin-bottom:28px;">';
-    h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">2</span><h2 style="font-size:18px;font-weight:600;color:#111;">Шкала FOMO-температуры</h2></div>';
-    h += '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:12px;">';
-    h += '<tr><td style="padding:6px 10px;background:#f0faf0;color:#16a34a;width:80px;border:1px solid #eee;font-weight:600;">36.6°</td><td style="padding:6px 10px;border:1px solid #eee;">Радар — Любопытство — Норма. PFC активна.</td></tr>';
-    h += '<tr><td style="padding:6px 10px;background:#fefce8;color:#ca8a04;border:1px solid #eee;font-weight:600;">37.5°</td><td style="padding:6px 10px;border:1px solid #eee;">Зуд — Беспокойство — Confirmation bias.</td></tr>';
-    h += '<tr><td style="padding:6px 10px;background:#fff7ed;color:#ea580c;border:1px solid #eee;font-weight:600;">38.5°</td><td style="padding:6px 10px;border:1px solid #eee;">Жар — Раздражение — ОПАСНО. Миндалина, кортизол.</td></tr>';
-    h += '<tr><td style="padding:6px 10px;background:#fef2f2;color:#dc2626;border:1px solid #eee;font-weight:600;">39.5°</td><td style="padding:6px 10px;border:1px solid #eee;">Лихорадка — Возбуждение — КРИТИЧНО. PFC отключена.</td></tr>';
-    h += '<tr><td style="padding:6px 10px;background:#fef2f2;color:#b91c1c;border:1px solid #eee;font-weight:600;">41.0°</td><td style="padding:6px 10px;border:1px solid #eee;">Удар — Одержимость — КАТАСТРОФА. Loss Aversion ×2.5.</td></tr>';
-    h += '</table>';
-    h += '<div style="margin:0 0 12px;padding:10px 14px;background:#fff5f0;border:1px solid #ffddcc;border-radius:6px;font-size:13px;color:#cc4400;">ПРАВИЛО ЗАМОРОЗКИ: при 38.5° и выше — заморозка на 24 часа</div>';
-    h += '<table style="width:100%;font-size:14px;border-collapse:collapse;">';
-    h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;width:45%;border:1px solid #eee;">Типичная температура</td><td style="padding:10px 14px;border:1px solid #eee;font-weight:500;">'+esc(d.b2_temp)+'°</td></tr>';
-    h += '<tr><td style="padding:10px 14px;background:#f8f8f8;color:#555;border:1px solid #eee;">Физические сигналы</td><td style="padding:10px 14px;border:1px solid #eee;">'+esc(d.b2_physical)+'</td></tr>';
-    h += '</table></div>';
-
-    if (block3Unlocked) {
-      h += '<div style="page-break-before:always;margin-bottom:28px;">';
-      h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">3</span><h2 style="font-size:18px;font-weight:600;color:#111;">Эксперименты и инсайты</h2></div>';
-
-      h += '<div style="margin-bottom:18px;padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">';
-      h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 1 — Шёпот инсайдера</div>';
-      h += '<table style="width:100%;font-size:13px;border-collapse:collapse;">';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;width:45%;border:1px solid #eee;">Распределение (до)</td><td style="padding:6px 10px;border:1px solid #eee;">А: '+esc(d.sh_a)+' ₽ &nbsp; Б: '+esc(d.sh_b)+' ₽ &nbsp; В: '+esc(d.sh_v)+' ₽</td></tr>';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Почему так</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.sh_why)+'</td></tr>';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Температура после</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.sh_temp)+'°</td></tr>';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Изменил?</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(rv(d,'sh_changed'))+'</td></tr>';
-      if (d.sh_changed === 'yes') {
-        h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Новое распределение</td><td style="padding:6px 10px;border:1px solid #eee;">А: '+esc(d.sh_na)+' ₽ &nbsp; Б: '+esc(d.sh_nb)+' ₽ &nbsp; В: '+esc(d.sh_nv)+' ₽</td></tr>';
-        h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Куда переложили и почему</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.sh_redirect)+'</td></tr>';
-      }
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Что сработало</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(rv(d,'sh_what'))+'</td></tr>';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Чувство (одно слово)</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.sh_emotion)+'</td></tr>';
-      h += '</table></div>';
-
-      h += '<div style="margin-bottom:18px;padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">';
-      h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 2 — Аукцион с таймером</div>';
-      h += '<table style="width:100%;font-size:13px;border-collapse:collapse;">';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;width:45%;border:1px solid #eee;">Температура >1000₽</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.e2_temp)+'°</td></tr>';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Что сильнее</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(rv(d,'e2_stronger'))+'</td></tr>';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Заметки</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.e2_notes)+'</td></tr>';
-      h += '</table></div>';
-
-      h += '<div style="padding:16px;background:#fafafa;border:1px solid #eee;border-radius:8px;border-top:2px solid #FF4F30;">';
-      h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin-bottom:8px;">Эксперимент 3 — Публичная иерархия</div>';
-      h += '<table style="width:100%;font-size:13px;border-collapse:collapse;">';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;width:45%;border:1px solid #eee;">Чувство при «+300%»</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.e3_feeling)+'</td></tr>';
-      h += '<tr><td style="padding:6px 10px;background:#f0f0f0;color:#666;border:1px solid #eee;">Источники (температура)</td><td style="padding:6px 10px;border:1px solid #eee;">'+esc(d.e3_source1)+(d.e3_source2 ? ', '+esc(d.e3_source2) : '')+'</td></tr>';
-      h += '</table></div>';
-
-      h += '</div>';
+    let arr, idx;
+    if (group === 'cap') {
+      idx = capLabels.indexOf(label);
+      arr = capScores;
+    } else {
+      idx = batLabels.indexOf(label);
+      arr = batScores;
     }
 
-    h += '<div style="page-break-before:always;">';
-    h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="display:inline-flex;width:28px;height:28px;background:#fff0ec;color:#FF4F30;border-radius:6px;font-size:13px;font-weight:600;align-items:center;justify-content:center;">4</span><h2 style="font-size:18px;font-weight:600;color:#111;">Мой нейро-протокол</h2></div>';
-
-    h += '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">';
-    h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 1 — Условие входа (макс. '+esc(d.r1_temp||'—')+'°)</div>';
-    h += '<div style="font-size:13px;">'+(d.r1_cond1_check?'&#10003;':'&#9675;')+' '+esc(d.r1_cond1_text)+'</div>';
-    h += '<div style="font-size:13px;margin-top:4px;">'+(d.r1_cond2_check?'&#10003;':'&#9675;')+' '+esc(d.r1_cond2_text)+'</div></div>';
-
-    h += '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">';
-    h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 2 — Заморозка (24 часа)</div>';
-    h += '<div style="font-size:13px;"><strong>Триггер:</strong> '+esc(d.r2_trigger)+'</div>';
-    h += '<div style="font-size:13px;margin-top:4px;"><strong>Действие:</strong> Полная заморозка терминала на 24 часа</div></div>';
-
-    h += '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">';
-    h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 3 — Фильтр шума (выше '+esc(d.r3_temp||'—')+'°)</div>';
-    h += '<div style="font-size:13px;">'+esc(d.r3_sources)+'</div></div>';
-
-    h += '<div style="margin-bottom:12px;padding:14px;background:#fafafa;border:1px solid #eee;border-radius:8px;">';
-    h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#FF4F30;margin-bottom:8px;">Правило 4 — Стоп-механизм (при '+esc(d.r4_temp||'—')+'°)</div>';
-    h += '<div style="font-size:13px;">'+esc(d.r4_action)+'</div></div>';
-
-    h += '<div style="padding:16px;background:#fff5f0;border:2px dashed #ffccbb;border-radius:8px;text-align:center;">';
-    h += '<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#999;margin-bottom:6px;">Фраза-якорь</div>';
-    h += '<div style="font-size:16px;font-weight:600;color:#cc3300;font-style:italic;">«'+esc(d.anchor)+'»</div></div>';
-
-    h += '</div></div>';
-
-    var fullDoc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script></head><body style="margin:0;background:white;">'+h+'</body></html>';
-    var iframe = document.createElement('iframe');
-    iframe.style.cssText = 'position:fixed;left:0;top:0;width:700px;height:2000px;z-index:1;border:none;opacity:0;pointer-events:none;';
-    document.body.appendChild(iframe);
-    iframe.contentDocument.open();
-    iframe.contentDocument.write(fullDoc);
-    iframe.contentDocument.close();
-
-    function tryGenerate(attempts) {
-      if (attempts <= 0) {
-        document.body.removeChild(iframe);
-        overlay.remove();
-        btn.disabled = false;
-        btn.textContent = 'Скачать PDF';
-        showToast('Не удалось загрузить библиотеку в iframe', '✗', true);
-        return;
-      }
-      var h2p = iframe.contentWindow.html2pdf;
-      if (!h2p) {
-        setTimeout(function() { tryGenerate(attempts - 1); }, 500);
-        return;
-      }
-      var opt = {
-        margin: 10,
-        filename: 'рабочая_тетрадь_' + name.replace(/\s+/g, '_') + '.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-      h2p().set(opt).from(iframe.contentDocument.body).outputPdf('blob').then(function(blob) {
-        document.body.removeChild(iframe);
-        overlay.remove();
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = opt.filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(function() { URL.revokeObjectURL(url); }, 3000);
-        btn.disabled = false;
-        btn.textContent = 'Скачать PDF';
-        showToast('PDF скачан', '📄');
-      }).catch(function(err) {
-        document.body.removeChild(iframe);
-        overlay.remove();
-        btn.disabled = false;
-        btn.textContent = 'Скачать PDF';
-        showToast('Ошибка: ' + err.message, '✗', true);
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const val = parseInt(dot.dataset.val);
+        arr[idx] = val;
+        dots.forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        updateResult();
       });
-    }
-    setTimeout(function() { tryGenerate(12); }, 1000);
-  });
-
-  document.getElementById('btnPrint').addEventListener('click', function() { window.print(); });
-
-  document.getElementById('btnCopy').addEventListener('click', function() {
-    var d = collectData();
-    var text = 'РАБОЧАЯ ТЕТРАДЬ: ПСИХОЛОГИЯ ПРИНЯТИЯ РЕШЕНИЙ\n========================================\nДата: '+(d.date||'—')+'\nИмя: '+(d.name||'—')+'\n\n1. СТАРТОВАЯ ДИАГНОСТИКА\nСделка: '+(d.b1_deal||'—')+'\nЧувство: '+(d.b1_feeling||'—')+'\nВремя: '+rv(d,'b1_time')+'\nЗапланировано: '+rv(d,'b1_planned')+'\n\n2. ШКАЛА FOMO\nТемпература: '+(d.b2_temp||'—')+'°\nСигналы: '+(d.b2_physical||'—')+'\n';
-    if (block3Unlocked) {
-      text += '\n3. ЭКСПЕРИМЕНТЫ\nШёпот инсайдера:\n  Распределение: А='+d.sh_a+' Б='+d.sh_b+' В='+d.sh_v+'\n  Почему: '+(d.sh_why||'—')+'\n';
-      text += '  Температура после: '+(d.sh_temp||'—')+'°\n  Изменил: '+rv(d,'sh_changed')+'\n';
-      if (d.sh_changed==='yes') text += '  Новое: А='+d.sh_na+' Б='+d.sh_nb+' В='+d.sh_nv+'\n  Причина: '+(d.sh_redirect||'—')+'\n';
-      text += '  Что сработало: '+rv(d,'sh_what')+'\n  Чувство: '+(d.sh_emotion||'—')+'\n';
-      text += '\nАукцион: '+(d.e2_temp||'—')+'° '+rv(d,'e2_stronger')+'\nЗаметки: '+(d.e2_notes||'—')+'\n';
-      text += '\nПубличная иерархия: '+(d.e3_feeling||'—')+'\nИсточники: '+(d.e3_source1||'—')+', '+(d.e3_source2||'—')+'\n';
-    }
-    text += '\n4. НЕЙРО-ПРОТОКОЛ\nП1: '+(d.r1_temp||'—')+'° — '+(d.r1_cond1_text||'—')+'; '+(d.r1_cond2_text||'—')+'\nП2: '+(d.r2_trigger||'—')+'\nП3: '+(d.r3_temp||'—')+'° — '+(d.r3_sources||'—')+'\nП4: '+(d.r4_temp||'—')+'° — '+(d.r4_action||'—')+'\n\nЯкорь: «'+(d.anchor||'—')+'»';
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function() { showToast('Скопировано', '📋'); }).catch(function() { fallbackCopy(text); });
-    } else { fallbackCopy(text); }
-  });
-
-  function fallbackCopy(text) {
-    var ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;left:-9999px;';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); showToast('Скопировано', '📋'); } catch(e) { showToast('Не удалось скопировать', '✗', true); }
-    document.body.removeChild(ta);
-  }
-
-  document.getElementById('btnClear').addEventListener('click', function() {
-    var ov = document.createElement('div'); ov.className = 'confirm-overlay';
-    var bx = document.createElement('div'); bx.className = 'confirm-box';
-    bx.innerHTML = '<p style="font-size:16px;color:rgba(255,255,255,0.85);margin-bottom:24px;">Очистить все данные?</p><div style="display:flex;gap:10px;justify-content:center;"><button class="btn-secondary" id="cc" type="button" style="padding:10px 20px;">Отмена</button><button class="btn-primary" id="co" type="button" style="padding:10px 20px;background:#EF4444;">Очистить</button></div>';
-    ov.appendChild(bx); document.body.appendChild(ov);
-    bx.querySelector('#cc').addEventListener('click', function() { ov.remove(); });
-    ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
-    bx.querySelector('#co').addEventListener('click', function() {
-      ov.remove();
-      try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
-      block3Unlocked = false;
-      document.getElementById('unlockArea').style.display = '';
-      document.getElementById('block3Content').classList.remove('unlocked');
-      document.getElementById('codeInput').value = '';
-      document.getElementById('unlockError').textContent = '';
-      document.querySelectorAll('[data-key]').forEach(function(el) {
-        if (el.type === 'radio') el.checked = false;
-        else if (el.classList.contains('condition-check')) el.classList.remove('checked');
-        else el.value = (el.dataset.key === 'date') ? '30 мая 2026' : '';
-      });
-      updateTempIndicator(); updateProgress(); updateAllDistSums(); toggleNewDist();
-      showToast('Очищено', '🗑️');
     });
   });
-
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
-
-  var sections = ['header','block1','block2','block3','block4'];
-  var dots = document.querySelectorAll('.nav-dot');
-  var sObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) dots.forEach(function(d) { d.classList.toggle('active', d.dataset.section === e.target.id); });
-    });
-  }, { threshold: 0.3 });
-  sections.forEach(function(id) { var el = document.getElementById(id); if (el) sObs.observe(el); });
-  dots.forEach(function(d) { d.addEventListener('click', function() { var el = document.getElementById(d.dataset.section); if (el) el.scrollIntoView({behavior:'smooth'}); }); });
-
-  loadData();
-});
 </script>
+
 </body>
 </html>
