@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Матрица стыков — 16 типов трещин</title>
+<title>Матрица стыков — Рабочий лист</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -22,528 +22,22 @@
     --border-light: #E8E4D9;
     --border-mid: #D6CEC0;
     --card-bg: #FFFFFF;
-    --highlight-physical: #F59E0B;
-    --highlight-emotional: #3B82F6;
-    --highlight-mental: #8B5CF6;
-    --highlight-value: #EF4444;
-    --cap-human: #059669;
-    --cap-social: #2563EB;
-    --cap-financial: #D97706;
-    --cap-market: #7C3AED;
   }
 
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text-primary);
-    line-height: 1.5;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* === PAGE WRAPPER === */
   .page {
-    max-width: 1120px;
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 40px 32px 60px;
+    padding: 40px 28px 60px;
   }
 
-  /* === HEADER === */
-  .header {
-    text-align: center;
-    margin-bottom: 40px;
-    padding-bottom: 32px;
-    border-bottom: 1px solid var(--border-light);
-  }
-
-  .header-badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--accent);
-    background: rgba(42, 56, 46, 0.06);
-    border: 1px solid rgba(42, 56, 46, 0.12);
-    border-radius: 100px;
-    padding: 6px 16px;
-    margin-bottom: 20px;
-  }
-
-  .header h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 42px;
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    margin-bottom: 12px;
-  }
-
-  .header-sub {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    letter-spacing: 0.02em;
-    margin-bottom: 8px;
-  }
-
-  .header-tagline {
-    font-family: 'Instrument Serif', serif;
-    font-size: 20px;
-    font-style: italic;
-    color: var(--accent);
-    margin-top: 16px;
-  }
-
-  /* === FORMULA BAR === */
-  .formula-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 36px;
-    padding: 14px 24px;
-    background: var(--accent);
-    border-radius: 10px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-  }
-
-  .formula-bar .arrow { color: rgba(255,255,255,0.5); }
-  .formula-bar .plus { color: rgba(255,255,255,0.4); font-weight: 300; }
-  .formula-bar .eq { color: rgba(255,255,255,0.4); font-weight: 300; }
-  .formula-bar .result {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: #F2F0E9;
-  }
-
-  /* === BATTERY LABELS (Column Headers) === */
-  .battery-labels {
-    display: grid;
-    grid-template-columns: 160px repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 8px;
-    align-items: end;
-  }
-
-  .battery-label {
-    text-align: center;
-    padding: 12px 8px 14px;
-    border-radius: 8px 8px 0 0;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    line-height: 1.4;
-  }
-
-  .battery-label .emoji {
-    display: block;
-    font-size: 22px;
-    margin-bottom: 4px;
-    filter: grayscale(0);
-  }
-
-  .battery-label.physical {
-    background: rgba(245, 158, 11, 0.08);
-    color: #92400E;
-    border: 1px solid rgba(245, 158, 11, 0.15);
-    border-bottom: none;
-  }
-  .battery-label.emotional {
-    background: rgba(59, 130, 246, 0.08);
-    color: #1E40AF;
-    border: 1px solid rgba(59, 130, 246, 0.15);
-    border-bottom: none;
-  }
-  .battery-label.mental {
-    background: rgba(139, 92, 246, 0.08);
-    color: #5B21B6;
-    border: 1px solid rgba(139, 92, 246, 0.15);
-    border-bottom: none;
-  }
-  .battery-label.value {
-    background: rgba(239, 68, 68, 0.08);
-    color: #991B1B;
-    border: 1px solid rgba(239, 68, 68, 0.15);
-    border-bottom: none;
-  }
-
-  .battery-desc {
-    display: block;
-    font-size: 9.5px;
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0.01em;
-    opacity: 0.7;
-    margin-top: 2px;
-  }
-
-  /* === MATRIX GRID === */
-  .matrix {
-    display: grid;
-    grid-template-columns: 160px repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 48px;
-  }
-
-  /* Row Label */
-  .row-label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 16px 14px;
-    border-radius: 8px;
-    text-align: left;
-  }
-
-  .row-label .cap-code {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.6;
-    margin-bottom: 4px;
-  }
-
-  .row-label .cap-name {
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-
-  .row-label.human {
-    background: rgba(5, 150, 105, 0.06);
-    color: #065F46;
-    border: 1px solid rgba(5, 150, 105, 0.12);
-  }
-  .row-label.social {
-    background: rgba(37, 99, 235, 0.06);
-    color: #1E3A8A;
-    border: 1px solid rgba(37, 99, 235, 0.12);
-  }
-  .row-label.financial {
-    background: rgba(217, 119, 6, 0.06);
-    color: #92400E;
-    border: 1px solid rgba(217, 119, 6, 0.12);
-  }
-  .row-label.market {
-    background: rgba(124, 58, 237, 0.06);
-    color: #4C1D95;
-    border: 1px solid rgba(124, 58, 237, 0.12);
-  }
-
-  /* Cell */
-  .cell {
-    background: var(--card-bg);
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    padding: 14px 13px 13px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cell::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .cell.col-physical::before { background: var(--highlight-physical); }
-  .cell.col-emotional::before { background: var(--highlight-emotional); }
-  .cell.col-mental::before { background: var(--highlight-mental); }
-  .cell.col-value::before { background: var(--highlight-value); }
-
-  .cell:hover {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    border-color: var(--border-mid);
-  }
-  .cell:hover::before { opacity: 1; }
-
-  .cell-title {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-primary);
-    line-height: 1.3;
-  }
-
-  .cell-desc {
-    font-size: 10.5px;
-    font-weight: 400;
-    color: var(--text-tertiary);
-    line-height: 1.45;
-    flex: 1;
-  }
-
-  .cell-question {
-    font-size: 10px;
-    font-style: italic;
-    color: var(--accent-light);
-    line-height: 1.4;
-    padding-top: 6px;
-    border-top: 1px solid var(--border-light);
-    font-weight: 400;
-  }
-
-  /* === MY SHEET SECTION === */
-  .my-sheet {
-    background: var(--bg-warm);
-    border: 1px solid var(--border-light);
-    border-radius: 14px;
-    padding: 36px 32px;
-    margin-bottom: 32px;
-  }
-
-  .my-sheet-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 28px;
-    font-weight: 400;
-    margin-bottom: 28px;
-    text-align: center;
-    color: var(--text-primary);
-  }
-
-  .assess-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-bottom: 32px;
-  }
-
-  .assess-block {
-    background: var(--card-bg);
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-    padding: 20px 22px;
-  }
-
-  .assess-block-title {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-  }
-
-  .assess-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px dashed rgba(0,0,0,0.06);
-  }
-
-  .assess-row:last-child { border-bottom: none; }
-
-  .assess-label {
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--text-secondary);
-  }
-
-  .assess-scale {
-    display: flex;
-    gap: 6px;
-  }
-
-  .assess-dot {
-    width: 28px;
-    height: 28px;
-    border: 1.5px solid var(--border-mid);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-    background: #fff;
-  }
-
-  .assess-dot:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(42, 56, 46, 0.04);
-  }
-
-  .assess-dot.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-
-  /* === RESULT AREA === */
-  .result-area {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-
-  .result-box {
-    background: #fff;
-    border: 1.5px solid var(--border-mid);
-    border-radius: 10px;
-    padding: 18px 20px;
-    min-height: 80px;
-  }
-
-  .result-box-label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-  }
-
-  .result-box-content {
-    font-family: 'Instrument Serif', serif;
-    font-size: 17px;
-    font-style: italic;
-    color: var(--accent);
-    line-height: 1.4;
-    min-height: 24px;
-  }
-
-  /* === STEPS === */
-  .steps {
-    background: var(--card-bg);
-    border: 1px solid var(--border-light);
-    border-radius: 14px;
-    padding: 32px;
-    margin-bottom: 32px;
-  }
-
-  .steps-title {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-    text-align: center;
-  }
-
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  .step {
-    text-align: center;
-    padding: 20px 16px;
-    border-radius: 10px;
-    background: var(--bg-warm-light);
-    border: 1px solid var(--border-light);
-    position: relative;
-  }
-
-  .step-num {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 12px;
-  }
-
-  .step-text {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-
-  .step-text strong {
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  /* === FOOTER NOTE === */
-  .footer-note {
-    text-align: center;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--text-muted);
-    padding-top: 8px;
-  }
-
-  /* === RESPONSIVE === */
-  @media (max-width: 900px) {
-    .page { padding: 24px 16px 40px; }
-    .header h1 { font-size: 30px; }
-    .battery-labels, .matrix {
-      grid-template-columns: 100px repeat(4, 1fr);
-      gap: 5px;
-    }
-    .row-label { padding: 10px 8px; }
-    .row-label .cap-name { font-size: 12px; }
-    .row-label .cap-code { font-size: 8px; }
-    .cell { padding: 10px 8px 9px; }
-    .cell-title { font-size: 11px; }
-    .cell-desc { font-size: 9.5px; }
-    .cell-question { font-size: 9px; }
-    .assess-grid { grid-template-columns: 1fr; gap: 16px; }
-    .result-area { grid-template-columns: 1fr; }
-    .steps-grid { grid-template-columns: 1fr; gap: 12px; }
-    .battery-label .emoji { font-size: 18px; }
-    .battery-label { font-size: 9.5px; padding: 8px 4px 10px; }
-    .battery-desc { font-size: 8.5px; }
-  }
-
-  @media (max-width: 640px) {
-    .battery-labels, .matrix {
-      grid-template-columns: 70px repeat(4, 1fr);
-      gap: 3px;
-    }
-    .row-label .cap-name { font-size: 10px; }
-    .row-label .cap-code { display: none; }
-    .cell { padding: 8px 6px; }
-    .cell-desc { display: none; }
-    .cell-title { font-size: 10px; }
-    .cell-question { font-size: 8.5px; padding-top: 4px; border-top: none; }
-    .formula-bar { font-size: 12px; padding: 10px 14px; flex-wrap: wrap; }
-  }
-
-  /* === PRINT === */
-  @media print {
-    body { background: #fff; }
-    .page { padding: 20px 16px; max-width: 100%; }
-    .cell { break-inside: avoid; }
-    .cell:hover { box-shadow: none; border-color: var(--border-light); }
-    .cell::before { opacity: 0; }
-    .assess-dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .assess-dot.active { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
-    .formula-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .step-num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .row-label { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .battery-label { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  }
-
-  /* Subtle page grain */
   .page::before {
     content: '';
     position: fixed;
@@ -554,10 +48,450 @@
     z-index: 9999;
   }
 
-  /* Selection color */
-  ::selection {
-    background: rgba(42, 56, 46, 0.15);
+  ::selection { background: rgba(42,56,46,0.15); color: var(--text-primary); }
+
+  /* ===== HEADER ===== */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .header-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    background: rgba(42,56,46,0.06);
+    border: 1px solid rgba(42,56,46,0.12);
+    border-radius: 100px;
+    padding: 5px 16px;
+    margin-bottom: 18px;
+  }
+  .header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .header-sub {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.01em;
+  }
+  .header-tagline {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--accent);
+    margin-top: 14px;
+  }
+
+  /* ===== FORMULA ===== */
+  .formula-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding: 13px 24px;
+    background: var(--accent);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .formula-bar .dim { color: rgba(255,255,255,0.4); font-weight: 300; }
+  .formula-bar .result { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 17px; color: #F2F0E9; }
+
+  /* ===== STEP BLOCK ===== */
+  .step-block {
+    margin-bottom: 36px;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .step-num-circle {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    font-weight: 400;
     color: var(--text-primary);
+  }
+  .step-intro {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-bottom: 18px;
+    padding-left: 50px;
+    line-height: 1.55;
+  }
+
+  /* ===== RANK CARDS ===== */
+  .rank-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-left: 50px;
+  }
+  .rank-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: border-color 0.3s, box-shadow 0.3s, outline 0.3s;
+    cursor: default;
+  }
+  .rank-card.is-lowest {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .rank-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .rank-card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .rank-dots {
+    display: flex;
+    gap: 5px;
+  }
+  .rank-dot {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--border-mid);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    background: #fff;
+  }
+  .rank-dot:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(42,56,46,0.04);
+  }
+  .rank-dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .rank-dot.disabled {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+  .rank-card-desc {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+  .rank-lowest-badge {
+    display: none;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fff;
+    background: var(--accent);
+    border-radius: 100px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .rank-card.is-lowest .rank-lowest-badge {
+    display: inline-block;
+  }
+
+  /* ===== MATRIX SECTION (Step 3) ===== */
+  .battery-labels {
+    display: grid;
+    grid-template-columns: 140px repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+    padding-left: 50px;
+  }
+  .battery-label {
+    text-align: center;
+    padding: 10px 6px 12px;
+    border-radius: 8px 8px 0 0;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+  }
+  .battery-label .emoji { display: block; font-size: 20px; margin-bottom: 3px; }
+  .battery-label.physical { background: rgba(245,158,11,0.08); color: #92400E; border: 1px solid rgba(245,158,11,0.15); border-bottom: none; }
+  .battery-label.emotional { background: rgba(59,130,246,0.08); color: #1E40AF; border: 1px solid rgba(59,130,246,0.15); border-bottom: none; }
+  .battery-label.mental { background: rgba(139,92,246,0.08); color: #5B21B6; border: 1px solid rgba(139,92,246,0.15); border-bottom: none; }
+  .battery-label.value { background: rgba(239,68,68,0.08); color: #991B1B; border: 1px solid rgba(239,68,68,0.15); border-bottom: none; }
+
+  .matrix {
+    display: grid;
+    grid-template-columns: 140px repeat(4, 1fr);
+    gap: 6px;
+    padding-left: 50px;
+  }
+  .row-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 14px 10px;
+    border-radius: 8px;
+  }
+  .row-label .cap-code { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.6; margin-bottom: 3px; }
+  .row-label .cap-name { font-size: 13px; font-weight: 600; line-height: 1.2; }
+  .row-label.human { background: rgba(5,150,105,0.06); color: #065F46; border: 1px solid rgba(5,150,105,0.12); }
+  .row-label.social { background: rgba(37,99,235,0.06); color: #1E3A8A; border: 1px solid rgba(37,99,235,0.12); }
+  .row-label.financial { background: rgba(217,119,6,0.06); color: #92400E; border: 1px solid rgba(217,119,6,0.12); }
+  .row-label.market { background: rgba(124,58,237,0.06); color: #4C1D95; border: 1px solid rgba(124,58,237,0.12); }
+
+  .cell {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 12px 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: box-shadow 0.3s, border-color 0.3s, outline-color 0.3s, outline-offset 0s;
+    position: relative;
+    outline: 2.5px solid transparent;
+    outline-offset: -1px;
+  }
+  .cell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cell.col-physical::before { background: #F59E0B; }
+  .cell.col-emotional::before { background: #3B82F6; }
+  .cell.col-mental::before { background: #8B5CF6; }
+  .cell.col-value::before { background: #EF4444; }
+  .cell:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); border-color: var(--border-mid); }
+  .cell:hover::before { opacity: 1; }
+  .cell.highlighted {
+    outline-color: var(--accent) !important;
+    background: rgba(42,56,46,0.02);
+    box-shadow: 0 4px 20px rgba(42,56,46,0.1);
+  }
+  .cell-title { font-size: 12px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+  .cell-desc { font-size: 10px; color: var(--text-tertiary); line-height: 1.45; flex: 1; }
+  .cell-question { font-size: 9.5px; font-style: italic; color: var(--accent-light); line-height: 1.4; padding-top: 5px; border-top: 1px solid var(--border-light); }
+
+  /* ===== DIAGNOSIS BOX (Step 3 result) ===== */
+  .diagnosis-box {
+    margin: 20px 0 0 50px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: none;
+  }
+  .diagnosis-box.visible { display: block; }
+  .diagnosis-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+  .diagnosis-value {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: #F2F0E9;
+  }
+
+  /* ===== RESULT BLOCKS (Steps 4, 5, 6) ===== */
+  .result-block {
+    padding-left: 50px;
+  }
+  .result-card {
+    background: var(--bg-warm);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 12px;
+  }
+  .result-card-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .result-card-value {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.4;
+    min-height: 26px;
+  }
+  .result-card-value.empty { color: var(--text-muted); font-style: normal; font-family: 'Inter', sans-serif; font-size: 13px; }
+
+  /* ===== SCENARIO BLOCK (Step 6) ===== */
+  .scenario-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-left: 50px;
+  }
+  .scenario-card {
+    border: 1.5px solid var(--border-mid);
+    border-radius: 10px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #fff;
+  }
+  .scenario-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(42,56,46,0.08);
+  }
+  .scenario-card.selected-continue {
+    border-color: #EF4444;
+    background: rgba(239,68,68,0.03);
+  }
+  .scenario-card.selected-stop {
+    border-color: var(--accent);
+    background: rgba(42,56,46,0.04);
+  }
+  .scenario-tag {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .scenario-tag.continue { color: #DC2626; }
+  .scenario-tag.stop { color: var(--accent); }
+  .scenario-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ===== FINAL TABLE ===== */
+  .final-section {
+    margin-top: 44px;
+    padding-top: 32px;
+    border-top: 2px solid var(--border-light);
+  }
+  .final-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .final-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .final-table tr { border-bottom: 1px solid var(--border-light); }
+  .final-table tr:last-child { border-bottom: none; }
+  .final-table td {
+    padding: 14px 16px;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  .final-table td:first-child {
+    width: 45%;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .final-table td:last-child {
+    color: var(--accent);
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .final-table td:last-child.empty {
+    color: var(--text-muted);
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+  }
+
+  .final-closing {
+    text-align: center;
+    margin-top: 32px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .rank-grid { grid-template-columns: 1fr; padding-left: 0; }
+    .step-intro { padding-left: 0; }
+    .battery-labels, .matrix { padding-left: 0; grid-template-columns: 100px repeat(4, 1fr); }
+    .diagnosis-box { margin-left: 0; }
+    .result-block { padding-left: 0; }
+    .scenario-cards { padding-left: 0; }
+    .cell-desc { display: none; }
+  }
+  @media (max-width: 640px) {
+    .page { padding: 20px 14px 40px; }
+    .header h1 { font-size: 30px; }
+    .battery-labels, .matrix { grid-template-columns: 70px repeat(4, 1fr); gap: 3px; }
+    .row-label .cap-name { font-size: 10px; }
+    .row-label .cap-code { display: none; }
+    .cell { padding: 8px 6px; }
+    .cell-title { font-size: 10px; }
+    .cell-question { font-size: 8.5px; padding-top: 3px; border-top: none; }
+    .scenario-cards { grid-template-columns: 1fr; }
+    .rank-dot { width: 28px; height: 28px; font-size: 11px; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { padding: 16px; max-width: 100%; }
+    .cell.highlighted { outline: 2.5px solid #2A382E !important; box-shadow: none; }
+    .rank-dot.active { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #2A382E !important; color: #fff !important; border-color: #2A382E !important; }
+    .rank-dot.disabled { opacity: 0.25 !important; }
+    .rank-card.is-lowest { box-shadow: none; border: 2px solid #2A382E; }
+    .formula-bar, .step-num-circle, .diagnosis-box, .scenario-card.selected-stop { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .scenario-card.selected-continue { border-color: #EF4444; }
   }
 </style>
 </head>
@@ -575,367 +509,506 @@
 
   <!-- FORMULA -->
   <div class="formula-bar">
-    <span>Капитал <span class="arrow">↓</span></span>
-    <span class="plus">+</span>
-    <span>Батарейка <span class="arrow">↓</span></span>
-    <span class="eq">=</span>
+    <span>Капитал <span class="dim">↓</span></span>
+    <span class="dim">+</span>
+    <span>Батарейка <span class="dim">↓</span></span>
+    <span class="dim">=</span>
     <span class="result">Трещина</span>
   </div>
 
-  <!-- BATTERY COLUMN HEADERS -->
-  <div class="battery-labels">
-    <div></div>
-    <div class="battery-label physical">
-      <span class="emoji">⚡</span>
-      Физическая
-      <span class="battery-desc">Энергия тела: сон, питание, движение</span>
+  <!-- ==================== STEP 1 ==================== -->
+  <div class="step-block">
+    <div class="step-header">
+      <div class="step-num-circle">1</div>
+      <div class="step-title">Диагностика капиталов</div>
     </div>
-    <div class="battery-label emotional">
-      <span class="emoji">🌊</span>
-      Эмоциональная
-      <span class="battery-desc">Устойчивость: не срываться, оставаться в ресурсе</span>
-    </div>
-    <div class="battery-label mental">
-      <span class="emoji">🧠</span>
-      Ментальная
-      <span class="battery-desc">Фокус: держать картину целиком</span>
-    </div>
-    <div class="battery-label value">
-      <span class="emoji">🧭</span>
-      Ценностная
-      <span class="battery-desc">Смысл: знать, зачем просыпаешься</span>
-    </div>
-  </div>
-
-  <!-- MATRIX -->
-  <div class="matrix">
-
-    <!-- ROW 1: Человеческий -->
-    <div class="row-label human">
-      <span class="cap-code">HCap</span>
-      <span class="cap-name">Человеческий</span>
-    </div>
-
-    <div class="cell col-physical">
-      <div class="cell-title">Выжженное поле</div>
-      <div class="cell-desc">Усталость лидера выжигает команду. Лучшие уходят от вашей энергии.</div>
-      <div class="cell-question">Когда ваша энергия зажигала команду, а не тушила её?</div>
-    </div>
-
-    <div class="cell col-emotional">
-      <div class="cell-title">Токсичная среда</div>
-      <div class="cell-desc">Вы срываетесь. Команда боится. Таланты уходят из-за атмосферы.</div>
-      <div class="cell-question">Какую атмосферу вы создаёте, когда злитесь?</div>
-    </div>
-
-    <div class="cell col-mental">
-      <div class="cell-title">Слепой найм</div>
-      <div class="cell-desc">Вы не видите, кто растёт, а кто тянет вниз. Ошибки в назначениях.</div>
-      <div class="cell-question">Когда вы точно знали, куда направить сотрудника?</div>
-    </div>
-
-    <div class="cell col-value">
-      <div class="cell-title">Бессмысленный труд</div>
-      <div class="cell-desc">Вы не знаете, зачем это делаете. Люди не видят смысла и уходят.</div>
-      <div class="cell-question">Какой смысл вы несёте в компанию каждый день?</div>
-    </div>
-
-    <!-- ROW 2: Социальный -->
-    <div class="row-label social">
-      <span class="cap-code">SCap</span>
-      <span class="cap-name">Социальный</span>
-    </div>
-
-    <div class="cell col-physical">
-      <div class="cell-title">Выгоревший дипломат</div>
-      <div class="cell-desc">Вы слишком устали гасить конфликты. Войны отделов — норма.</div>
-      <div class="cell-question">Когда вы перестали вмешиваться, потому что устали?</div>
-    </div>
-
-    <div class="cell col-emotional">
-      <div class="cell-title">Разрушенные мосты</div>
-      <div class="cell-desc">Вы срываетесь на людей. Доверие разрушено. Правды вам не говорят.</div>
-      <div class="cell-question">Когда последний раз люди говорили вам правду в глаза?</div>
-    </div>
-
-    <div class="cell col-mental">
-      <div class="cell-title">Потерянная карта</div>
-      <div class="cell-desc">Вы разрываетесь между задачами и не видите, как отделы воюют.</div>
-      <div class="cell-question">Вы видите, что происходит с культурой компании?</div>
-    </div>
-
-    <div class="cell col-value">
-      <div class="cell-title">Холодная война</div>
-      <div class="cell-desc">Вы потеряли смысл. Никто не задаёт вопроса «зачем мы вместе».</div>
-      <div class="cell-question">Зачем вашей компании быть вместе? Что вас объединяет?</div>
-    </div>
-
-    <!-- ROW 3: Финансовый -->
-    <div class="row-label financial">
-      <span class="cap-code">FCap</span>
-      <span class="cap-name">Финансовый</span>
-    </div>
-
-    <div class="cell col-physical">
-      <div class="cell-title">Экономия на себе</div>
-      <div class="cell-desc">Вы не спите, экономите на себе. «Выложусь на 150% — компания выживет».</div>
-      <div class="cell-question">Когда вы перестали заботиться о себе, чтобы спасти компанию?</div>
-    </div>
-
-    <div class="cell col-emotional">
-      <div class="cell-title">Импульсивные траты</div>
-      <div class="cell-desc">Решения в стрессе. Покупаете ненужное. Продаёте то, что нельзя.</div>
-      <div class="cell-question">Какое решение в страхе стоило компании дорого?</div>
-    </div>
-
-    <div class="cell col-mental">
-      <div class="cell-title">Туннельное зрение</div>
-      <div class="cell-desc">Видите только цифры, не видите рисков и возможностей за ними.</div>
-      <div class="cell-question">На чём экономите, потому что не видите альтернатив?</div>
-    </div>
-
-    <div class="cell col-value">
-      <div class="cell-title">Мёртвые инвестиции</div>
-      <div class="cell-desc">Деньги стали самоцелью. Вкладываете в то, что не имеет смысла.</div>
-      <div class="cell-question">Во что вкладываете деньги, но не знаете, зачем?</div>
-    </div>
-
-    <!-- ROW 4: Рыночный -->
-    <div class="row-label market">
-      <span class="cap-code">MCap</span>
-      <span class="cap-name">Рыночный</span>
-    </div>
-
-    <div class="cell col-physical">
-      <div class="cell-title">Отключённый радар</div>
-      <div class="cell-desc">Вы слишком устали слышать клиентов. Новые игроки забирают долю.</div>
-      <div class="cell-question">Когда последний раз слушали клиента — не чтобы продать?</div>
-    </div>
-
-    <div class="cell col-emotional">
-      <div class="cell-title">Зеркало пустоты</div>
-      <div class="cell-desc">Клиенты чувствуют пустоту лидера. Бренд теряет притяжение.</div>
-      <div class="cell-question">Что ваши клиенты чувствуют, встречаясь с вами?</div>
-    </div>
-
-    <div class="cell col-mental">
-      <div class="cell-title">Фокус на внутреннем</div>
-      <div class="cell-desc">Смотрите внутрь, а не на рынок. Заняты отчётами и согласованиями.</div>
-      <div class="cell-question">Сколько времени на процессы и сколько — на рынок?</div>
-    </div>
-
-    <div class="cell col-value">
-      <div class="cell-title">Потерянный Север</div>
-      <div class="cell-desc">Не знаете, зачем компания нужна рынку. Клиенты уходят к тем, у кого смысл есть.</div>
-      <div class="cell-question">Зачем вы нужны своим клиентам? Чем отличаетесь?</div>
-    </div>
-
-  </div>
-
-  <!-- MY SHEET -->
-  <div class="my-sheet">
-    <h2 class="my-sheet-title">Мой лист</h2>
-
-    <div class="assess-grid">
-      <!-- Capitals -->
-      <div class="assess-block">
-        <div class="assess-block-title">Оценка капиталов (1–5)</div>
-        <div class="assess-row">
-          <span class="assess-label">Человеческий</span>
-          <div class="assess-scale" data-group="cap">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
+    <p class="step-intro">Проранжируйте четыре капитала вашей компании по степени их проседания. Расставьте цифры от 1 до 4, где 1 — самый просевший капитал, 4 — наименее просевший. Каждая цифра используется только один раз.</p>
+    <div class="rank-grid" id="capGrid">
+      <div class="rank-card" data-idx="0">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Человеческий<span class="rank-lowest-badge">просевший</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
           </div>
         </div>
-        <div class="assess-row">
-          <span class="assess-label">Социальный</span>
-          <div class="assess-scale" data-group="cap">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
-          </div>
-        </div>
-        <div class="assess-row">
-          <span class="assess-label">Финансовый</span>
-          <div class="assess-scale" data-group="cap">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
-          </div>
-        </div>
-        <div class="assess-row">
-          <span class="assess-label">Рыночный</span>
-          <div class="assess-scale" data-group="cap">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
-          </div>
-        </div>
+        <div class="rank-card-desc">Способность сотрудников расти, обучаться и реализовывать свой потенциал, удержание талантов, наличие кадрового резерва.</div>
       </div>
-
-      <!-- Batteries -->
-      <div class="assess-block">
-        <div class="assess-block-title">Оценка батареек (1–5)</div>
-        <div class="assess-row">
-          <span class="assess-label">Физическая</span>
-          <div class="assess-scale" data-group="bat">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
+      <div class="rank-card" data-idx="1">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Социальный<span class="rank-lowest-badge">просевший</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
           </div>
         </div>
-        <div class="assess-row">
-          <span class="assess-label">Эмоциональная</span>
-          <div class="assess-scale" data-group="bat">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
-          </div>
-        </div>
-        <div class="assess-row">
-          <span class="assess-label">Ментальная</span>
-          <div class="assess-scale" data-group="bat">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
-          </div>
-        </div>
-        <div class="assess-row">
-          <span class="assess-label">Ценностная</span>
-          <div class="assess-scale" data-group="bat">
-            <div class="assess-dot" data-val="1">1</div>
-            <div class="assess-dot" data-val="2">2</div>
-            <div class="assess-dot" data-val="3">3</div>
-            <div class="assess-dot" data-val="4">4</div>
-            <div class="assess-dot" data-val="5">5</div>
-          </div>
-        </div>
+        <div class="rank-card-desc">Уровень доверия между сотрудниками и внутри команд, качество коммуникаций, наличие или отсутствие внутренних конфликтов.</div>
       </div>
-    </div>
-
-    <!-- Result -->
-    <div class="result-area">
-      <div class="result-box">
-        <div class="result-box-label">Моя трещина</div>
-        <div class="result-box-content" id="crackResult">—</div>
+      <div class="rank-card" data-idx="2">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Финансовый<span class="rank-lowest-badge">просевший</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
+          </div>
+        </div>
+        <div class="rank-card-desc">EBITDA, маржинальность, ликвидность, эффективность использования ресурсов.</div>
       </div>
-      <div class="result-box">
-        <div class="result-box-label">Мой отказ — что я перестаю делать</div>
-        <div class="result-box-content" id="refusalResult">—</div>
+      <div class="rank-card" data-idx="3">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Рыночный<span class="rank-lowest-badge">просевший</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
+          </div>
+        </div>
+        <div class="rank-card-desc">Динамика клиентской базы, изменение доли рынка, восприятие бренда клиентами.</div>
       </div>
     </div>
   </div>
 
-  <!-- STEPS -->
-  <div class="steps">
-    <div class="steps-title">Алгоритм</div>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-text"><strong>Оцените 4 капитала</strong> по шкале 1–5, обведите самый низкий</div>
+  <!-- ==================== STEP 2 ==================== -->
+  <div class="step-block">
+    <div class="step-header">
+      <div class="step-num-circle">2</div>
+      <div class="step-title">Диагностика батареек</div>
+    </div>
+    <p class="step-intro">Проранжируйте четыре батарейки лидера по степени их разряженности. Расставьте цифры от 1 до 4, где 1 — самая разряженная батарейка, 4 — наименее разряженная. Каждая цифра используется только один раз.</p>
+    <div class="rank-grid" id="batGrid">
+      <div class="rank-card" data-idx="0">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Физическая<span class="rank-lowest-badge">разряженная</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
+          </div>
+        </div>
+        <div class="rank-card-desc">Качество сна, режим питания, физическая активность, общее самочувствие.</div>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-text"><strong>Оцените 4 батарейки</strong> по шкале 1–5, обведите самую низкую</div>
+      <div class="rank-card" data-idx="1">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Эмоциональная<span class="rank-lowest-badge">разряженная</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
+          </div>
+        </div>
+        <div class="rank-card-desc">Способность управлять стрессом, сохранять устойчивость и спокойствие в сложных ситуациях.</div>
       </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-text"><strong>Найдите их пересечение</strong> в матрице — это ваша трещина</div>
+      <div class="rank-card" data-idx="2">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Ментальная<span class="rank-lowest-badge">разряженная</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
+          </div>
+        </div>
+        <div class="rank-card-desc">Способность к фокусировке, ясность мышления, устойчивость к информационному шуму.</div>
+      </div>
+      <div class="rank-card" data-idx="3">
+        <div class="rank-card-head">
+          <span class="rank-card-name">Ценностная<span class="rank-lowest-badge">разряженная</span></span>
+          <div class="rank-dots">
+            <div class="rank-dot" data-val="1">1</div>
+            <div class="rank-dot" data-val="2">2</div>
+            <div class="rank-dot" data-val="3">3</div>
+            <div class="rank-dot" data-val="4">4</div>
+          </div>
+        </div>
+        <div class="rank-card-desc">Наличие смысла и цели в том, что вы делаете, связь с «зачем» вашей работы.</div>
       </div>
     </div>
   </div>
 
-  <p class="footer-note">Шаг не записывается — он делается</p>
+  <!-- ==================== STEP 3 ==================== -->
+  <div class="step-block">
+    <div class="step-header">
+      <div class="step-num-circle">3</div>
+      <div class="step-title">Формулировка диагноза</div>
+    </div>
+    <p class="step-intro">Соедините просевший капитал (цифра 1 из шага 1) и разряжённую батарейку (цифра 1 из шага 2). На их пересечении находится ваша трещина.</p>
+
+    <div class="battery-labels">
+      <div></div>
+      <div class="battery-label physical"><span class="emoji">⚡</span>Физическая</div>
+      <div class="battery-label emotional"><span class="emoji">🌊</span>Эмоциональная</div>
+      <div class="battery-label mental"><span class="emoji">🧠</span>Ментальная</div>
+      <div class="battery-label value"><span class="emoji">🧭</span>Ценностная</div>
+    </div>
+
+    <div class="matrix" id="matrixGrid">
+      <div class="row-label human"><span class="cap-code">HCap</span><span class="cap-name">Человеческий</span></div>
+      <div class="cell col-physical" data-r="0" data-c="0"><div class="cell-title">Выжженное поле</div><div class="cell-desc">Усталость лидера выжигает команду. Лучшие уходят от вашей энергии.</div><div class="cell-question">Когда ваша энергия зажигала команду, а не тушила её?</div></div>
+      <div class="cell col-emotional" data-r="0" data-c="1"><div class="cell-title">Токсичная среда</div><div class="cell-desc">Вы срываетесь. Команда боится. Таланты уходят из-за атмосферы.</div><div class="cell-question">Какую атмосферу вы создаёте, когда злитесь?</div></div>
+      <div class="cell col-mental" data-r="0" data-c="2"><div class="cell-title">Слепой найм</div><div class="cell-desc">Вы не видите, кто растёт, а кто тянет вниз. Ошибки в назначениях.</div><div class="cell-question">Когда вы точно знали, куда направить сотрудника?</div></div>
+      <div class="cell col-value" data-r="0" data-c="3"><div class="cell-title">Бессмысленный труд</div><div class="cell-desc">Вы не знаете, зачем это делаете. Люди не видят смысла и уходят.</div><div class="cell-question">Какой смысл вы несёте в компанию каждый день?</div></div>
+
+      <div class="row-label social"><span class="cap-code">SCap</span><span class="cap-name">Социальный</span></div>
+      <div class="cell col-physical" data-r="1" data-c="0"><div class="cell-title">Выгоревший дипломат</div><div class="cell-desc">Вы слишком устали гасить конфликты. Войны отделов — норма.</div><div class="cell-question">Когда вы перестали вмешиваться, потому что устали?</div></div>
+      <div class="cell col-emotional" data-r="1" data-c="1"><div class="cell-title">Разрушенные мосты</div><div class="cell-desc">Вы срываетесь на людей. Доверие разрушено. Правды вам не говорят.</div><div class="cell-question">Когда последний раз люди говорили вам правду в глаза?</div></div>
+      <div class="cell col-mental" data-r="1" data-c="2"><div class="cell-title">Потерянная карта</div><div class="cell-desc">Вы разрываетесь между задачами и не видите, как отделы воюют.</div><div class="cell-question">Вы видите, что происходит с культурой компании?</div></div>
+      <div class="cell col-value" data-r="1" data-c="3"><div class="cell-title">Холодная война</div><div class="cell-desc">Вы потеряли смысл. Никто не задаёт вопроса «зачем мы вместе».</div><div class="cell-question">Зачем вашей компании быть вместе? Что вас объединяет?</div></div>
+
+      <div class="row-label financial"><span class="cap-code">FCap</span><span class="cap-name">Финансовый</span></div>
+      <div class="cell col-physical" data-r="2" data-c="0"><div class="cell-title">Экономия на себе</div><div class="cell-desc">Вы не спите, экономите на себе. «Выложусь на 150% — компания выживет».</div><div class="cell-question">Когда вы перестали заботиться о себе, чтобы спасти компанию?</div></div>
+      <div class="cell col-emotional" data-r="2" data-c="1"><div class="cell-title">Импульсивные траты</div><div class="cell-desc">Решения в стрессе. Покупаете ненужное. Продаёте то, что нельзя.</div><div class="cell-question">Какое решение в страхе стоило компании дорого?</div></div>
+      <div class="cell col-mental" data-r="2" data-c="2"><div class="cell-title">Туннельное зрение</div><div class="cell-desc">Видите только цифры, не видите рисков и возможностей за ними.</div><div class="cell-question">На чём экономите, потому что не видите альтернатив?</div></div>
+      <div class="cell col-value" data-r="2" data-c="3"><div class="cell-title">Мёртвые инвестиции</div><div class="cell-desc">Деньги стали самоцелью. Вкладываете в то, что не имеет смысла.</div><div class="cell-question">Во что вкладываете деньги, но не знаете, зачем?</div></div>
+
+      <div class="row-label market"><span class="cap-code">MCap</span><span class="cap-name">Рыночный</span></div>
+      <div class="cell col-physical" data-r="3" data-c="0"><div class="cell-title">Отключённый радар</div><div class="cell-desc">Вы слишком устали слышать клиентов. Новые игроки забирают долю.</div><div class="cell-question">Когда последний раз слушали клиента — не чтобы продать?</div></div>
+      <div class="cell col-emotional" data-r="3" data-c="1"><div class="cell-title">Зеркало пустоты</div><div class="cell-desc">Клиенты чувствуют пустоту лидера. Бренд теряет притяжение.</div><div class="cell-question">Что ваши клиенты чувствуют, встречаясь с вами?</div></div>
+      <div class="cell col-mental" data-r="3" data-c="2"><div class="cell-title">Фокус на внутреннем</div><div class="cell-desc">Смотрите внутрь, а не на рынок. Заняты отчётами и согласованиями.</div><div class="cell-question">Сколько времени на процессы и сколько — на рынок?</div></div>
+      <div class="cell col-value" data-r="3" data-c="3"><div class="cell-title">Потерянный Север</div><div class="cell-desc">Не знаете, зачем компания нужна рынку. Клиенты уходят к тем, у кого смысл есть.</div><div class="cell-question">Зачем вы нужны своим клиентам? Чем отличаетесь?</div></div>
+    </div>
+
+    <div class="diagnosis-box" id="diagnosisBox">
+      <div class="diagnosis-label">Ваша трещина (диагноз)</div>
+      <div class="diagnosis-value" id="diagnosisValue">—</div>
+    </div>
+  </div>
+
+  <!-- ==================== STEP 4 ==================== -->
+  <div class="step-block">
+    <div class="step-header">
+      <div class="step-num-circle">4</div>
+      <div class="step-title">Определение отказа</div>
+    </div>
+    <p class="step-intro">Трещина закрывается не добавлением ресурсов, а отказом от практик, которые её поддерживают.</p>
+    <div class="result-block">
+      <div class="result-card">
+        <div class="result-card-label">Мой отказ</div>
+        <div class="result-card-value empty" id="refusalValue">Заполните шаги 1 и 2, чтобы увидеть отказ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STEP 5 ==================== -->
+  <div class="step-block">
+    <div class="step-header">
+      <div class="step-num-circle">5</div>
+      <div class="step-title">Определение шага</div>
+    </div>
+    <p class="step-intro">После принятия отказа необходимо совершить первое действие в новом пространстве.</p>
+    <div class="result-block">
+      <div class="result-card">
+        <div class="result-card-label">Мой шаг в ближайшие 24 часа</div>
+        <div class="result-card-value empty" id="stepValue">Заполните шаги 1 и 2, чтобы увидеть шаг</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STEP 6 ==================== -->
+  <div class="step-block">
+    <div class="step-header">
+      <div class="step-num-circle">6</div>
+      <div class="step-title">Выбор сценария</div>
+    </div>
+    <p class="step-intro">Ознакомьтесь с двумя сценариями развития ситуации. Выберите один.</p>
+    <div class="scenario-cards" id="scenarioCards">
+      <div class="scenario-card" data-type="continue" onclick="selectScenario('continue')">
+        <div class="scenario-tag continue">Продолжать</div>
+        <div class="scenario-text" id="scenarioContinue">—</div>
+      </div>
+      <div class="scenario-card" data-type="stop" onclick="selectScenario('stop')">
+        <div class="scenario-tag stop">Отказаться</div>
+        <div class="scenario-text" id="scenarioStop">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ИТОГ ==================== -->
+  <div class="final-section">
+    <div class="final-title">Итог</div>
+    <table class="final-table">
+      <tr>
+        <td>Просевший капитал (цифра 1)</td>
+        <td id="fCap" class="empty">—</td>
+      </tr>
+      <tr>
+        <td>Разряженная батарейка (цифра 1)</td>
+        <td id="fBat" class="empty">—</td>
+      </tr>
+      <tr>
+        <td>Трещина</td>
+        <td id="fCrack" class="empty">—</td>
+      </tr>
+      <tr>
+        <td>Отказ</td>
+        <td id="fRefusal" class="empty">—</td>
+      </tr>
+      <tr>
+        <td>Шаг</td>
+        <td id="fStep" class="empty">—</td>
+      </tr>
+      <tr>
+        <td>Выбранный сценарий</td>
+        <td id="fScenario" class="empty">—</td>
+      </tr>
+    </table>
+    <p class="final-closing">Все шаги пройдены. Конструкция вашего бизнеса получила диагностику и первое направление движения.<br>Ветер дует. Теперь вы знаете, куда дуть.</p>
+  </div>
 
 </div>
 
 <script>
-  // Crack names mapped by row (cap index) and col (bat index)
-  const crackNames = [
-    ['Выжженное поле', 'Токсичная среда', 'Слепой найм', 'Бессмысленный труд'],
-    ['Выгоревший дипломат', 'Разрушенные мосты', 'Потерянная карта', 'Холодная война'],
-    ['Экономия на себе', 'Импульсивные траты', 'Туннельное зрение', 'Мёртвые инвестиции'],
-    ['Отключённый радар', 'Зеркало пустоты', 'Фокус на внутреннем', 'Потерянный Север']
+  // ===== DATA =====
+  const capNames = ['Человеческий', 'Социальный', 'Финансовый', 'Рыночный'];
+  const batNames = ['Физическая', 'Эмоциональная', 'Ментальная', 'Ценностная'];
+
+  const cracks = [
+    ['Выжженное поле','Токсичная среда','Слепой найм','Бессмысленный труд'],
+    ['Выгоревший дипломат','Разрушенные мосты','Потерянная карта','Холодная война'],
+    ['Экономия на себе','Импульсивные траты','Туннельное зрение','Мёртвые инвестиции'],
+    ['Отключённый радар','Зеркало пустоты','Фокус на внутреннем','Потерянный Север']
   ];
 
-  const capLabels = ['Человеческий', 'Социальный', 'Финансовый', 'Рыночный'];
-  const batLabels = ['Физическая', 'Эмоциональная', 'Ментальная', 'Ценностная'];
+  const refusals = [
+    'Перестать быть единственным источником энергии для команды.',
+    'Перестать срываться на команду.',
+    'Перестать назначать людей без диагностики.',
+    'Перестать делать то, что не имеет смысла.',
+    'Перестать терпеть конфликты из-за усталости.',
+    'Перестать бояться правды.',
+    'Перестать игнорировать культуру.',
+    'Перестать молчать о смысле.',
+    'Перестать экономить на своём здоровье.',
+    'Перестать принимать финансовые решения в стрессе.',
+    'Перестать смотреть только на цифры.',
+    'Перестать вкладывать в то, во что не веришь.',
+    'Перестать игнорировать клиентов.',
+    'Перестать прятать свою пустоту за брендом.',
+    'Перестать смотреть внутрь, а не на рынок.',
+    'Перестать делать компанию, которая никому не нужна.'
+  ];
 
-  // State
+  const steps = [
+    'Передать ответственность. Делегировать одну задачу сегодня.',
+    'Сделать паузу перед реакцией. Не отвечать сразу.',
+    'Провести ролевой аудит одного сотрудника.',
+    'Задать себе и команде вопрос «зачем» в ближайшей встрече.',
+    'Вмешаться в конфликт. Сделать первый шаг.',
+    'Создать пространство для обратной связи. Спросить: «Что я не слышу?»',
+    'Посмотреть на состояние команды. Задать один вопрос о культуре.',
+    'Задать вопрос «зачем мы вместе» трём людям из разных отделов.',
+    'Лечь спать на час раньше или съесть один нормальный приём пищи.',
+    'Взять паузу перед следующим решением о тратах.',
+    'Посмотреть на один отчёт и спросить: «Что я не вижу за цифрами?»',
+    'Пересмотреть один проект. Спросить: «Я верю в это?»',
+    'Позвонить одному клиенту без цели продажи. Просто услышать.',
+    'Спросить у клиента или партнёра: «Что вы чувствуете, когда работаете с нами?»',
+    'Заблокировать 30 минут в календаре на изучение рынка.',
+    'Спросить у трёх клиентов: «Зачем мы вам нужны?»'
+  ];
+
+  const scenariosContinue = [
+    'Команда устаёт, лучшие уходят, я выгораю.',
+    'Таланты уходят, страх становится нормой, я остаюсь один.',
+    'Ошибки в назначениях накапливаются, таланты не видят роста.',
+    'Люди перестают видеть смысл, уходят к тем, у кого он есть.',
+    'Конфликты разрастаются, отделы воюют, я теряю управление.',
+    'Люди перестают говорить правду, доверие разрушается окончательно.',
+    'Культура трещит, я перестаю замечать проблемы.',
+    'Команды воюют, общая цель исчезает.',
+    'Я заболеваю, компания теряет лидера, EBITDA падает.',
+    'Я покупаю то, что не нужно, и продаю то, что нельзя.',
+    'Я не вижу рисков и возможностей, инвестиции режутся вслепую.',
+    'Деньги становятся самоцелью, инвестиции не работают.',
+    'Рынок уходит, пока я отдыхаю.',
+    'Клиенты чувствуют пустоту и уходят, бренд теряет притяжение.',
+    'Я занят внутренними процессами, рынок уходит.',
+    'Клиенты уходят к тем, у кого смысл есть, я теряю рынок.'
+  ];
+
+  const scenariosStop = [
+    'Команда начинает дышать, энергия возвращается.',
+    'Команда начинает говорить правду, доверие возвращается.',
+    'Я вижу людей, они растут, сильные остаются.',
+    'Появляется ясность, действия становятся осознанными.',
+    'Я вмешиваюсь, конфликты гасятся, появляется общий язык.',
+    'Появляется честный диалог, доверие восстанавливается.',
+    'Я вижу состояние команды, появляется возможность влиять.',
+    'Появляется общий смысл, доверие восстанавливается.',
+    'У меня появляется ресурс, решения становятся яснее.',
+    'Я беру паузу, траты становятся осознанными.',
+    'Я вижу полную картину, решения становятся взвешенными.',
+    'Инвестиции начинают приносить результат, появляется смысл.',
+    'Я слышу рынок, клиенты возвращаются.',
+    'Появляется смысл, клиенты возвращаются.',
+    'Я вижу рынок, новые игроки не забирают долю.',
+    'Я нахожу смысл для рынка, клиенты возвращаются.'
+  ];
+
+  // ===== STATE =====
   const capScores = [null, null, null, null];
   const batScores = [null, null, null, null];
+  let selectedScenario = null;
+  let crackIdx = null; // flat index 0-15
 
-  function getLowest(arr) {
-    let min = Infinity, idx = -1;
-    arr.forEach((v, i) => { if (v !== null && v < min) { min = v; idx = i; } });
-    return idx;
+  // ===== RANKING LOGIC =====
+  function getUsedVals(arr) {
+    return arr.filter(v => v !== null);
   }
 
-  function updateResult() {
-    const capIdx = getLowest(capScores);
-    const batIdx = getLowest(batScores);
-
-    const crackEl = document.getElementById('crackResult');
-    const refusalEl = document.getElementById('refusalResult');
-
-    if (capIdx >= 0 && batIdx >= 0) {
-      crackEl.textContent = crackNames[capIdx][batIdx];
-      // Highlight the cell
-      document.querySelectorAll('.cell').forEach(c => c.style.outline = 'none');
-      const rowOffset = capIdx * 5; // 1 label + 4 cells per row
-      const cellIndex = rowOffset + 1 + batIdx;
-      const cells = document.querySelectorAll('.cell');
-      if (cells[cellIndex]) {
-        cells[cellIndex].style.outline = '2.5px solid #2A382E';
-        cells[cellIndex].style.outlineOffset = '-1px';
-        cells[cellIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    } else {
-      crackEl.textContent = '—';
-      document.querySelectorAll('.cell').forEach(c => c.style.outline = 'none');
-    }
-  }
-
-  document.querySelectorAll('.assess-scale').forEach(scale => {
-    const group = scale.dataset.group;
-    const row = scale.closest('.assess-row');
-    const label = row.querySelector('.assess-label').textContent.trim();
-    const dots = scale.querySelectorAll('.assess-dot');
-
-    let arr, idx;
-    if (group === 'cap') {
-      idx = capLabels.indexOf(label);
-      arr = capScores;
-    } else {
-      idx = batLabels.indexOf(label);
-      arr = batScores;
-    }
-
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
+  function updateDots(gridId, scores) {
+    const used = getUsedVals(scores);
+    const cards = document.querySelectorAll(`#${gridId} .rank-card`);
+    cards.forEach((card, idx) => {
+      const dots = card.querySelectorAll('.rank-dot');
+      dots.forEach(dot => {
         const val = parseInt(dot.dataset.val);
-        arr[idx] = val;
-        dots.forEach(d => d.classList.remove('active'));
-        dot.classList.add('active');
-        updateResult();
+        dot.classList.remove('active', 'disabled');
+        if (scores[idx] === val) {
+          dot.classList.add('active');
+        } else if (used.includes(val)) {
+          dot.classList.add('disabled');
+        }
       });
+      card.classList.toggle('is-lowest', scores[idx] === 1);
+    });
+  }
+
+  function handleRankClick(gridId, scores, cardIdx, val) {
+    // If clicking same value, deselect
+    if (scores[cardIdx] === val) {
+      scores[cardIdx] = null;
+    } else {
+      scores[cardIdx] = val;
+    }
+    updateDots(gridId, scores);
+    updateAll();
+  }
+
+  // Bind capital grid
+  document.querySelectorAll('#capGrid .rank-card').forEach(card => {
+    const idx = parseInt(card.dataset.idx);
+    card.querySelectorAll('.rank-dot').forEach(dot => {
+      dot.addEventListener('click', () => handleRankClick('capGrid', capScores, idx, parseInt(dot.dataset.val)));
     });
   });
+
+  // Bind battery grid
+  document.querySelectorAll('#batGrid .rank-card').forEach(card => {
+    const idx = parseInt(card.dataset.idx);
+    card.querySelectorAll('.rank-dot').forEach(dot => {
+      dot.addEventListener('click', () => handleRankClick('batGrid', batScores, idx, parseInt(dot.dataset.val)));
+    });
+  });
+
+  // ===== SCENARIO =====
+  function selectScenario(type) {
+    selectedScenario = type;
+    document.querySelectorAll('.scenario-card').forEach(c => {
+      c.classList.remove('selected-continue', 'selected-stop');
+    });
+    document.querySelector(`.scenario-card[data-type="${type}"]`).classList.add(type === 'continue' ? 'selected-continue' : 'selected-stop');
+    updateFinalTable();
+  }
+
+  // ===== UPDATE ALL =====
+  function updateAll() {
+    const capIdx = capScores.indexOf(1);
+    const batIdx = batScores.indexOf(1);
+
+    const diagBox = document.getElementById('diagnosisBox');
+    const diagVal = document.getElementById('diagnosisValue');
+    const refusalEl = document.getElementById('refusalValue');
+    const stepEl = document.getElementById('stepValue');
+    const scContinue = document.getElementById('scenarioContinue');
+    const scStop = document.getElementById('scenarioStop');
+
+    // Clear highlights
+    document.querySelectorAll('.cell').forEach(c => c.classList.remove('highlighted'));
+
+    if (capIdx >= 0 && batIdx >= 0) {
+      crackIdx = capIdx * 4 + batIdx;
+      const crackName = cracks[capIdx][batIdx];
+
+      // Highlight cell
+      const cell = document.querySelector(`.cell[data-r="${capIdx}"][data-c="${batIdx}"]`);
+      if (cell) {
+        cell.classList.add('highlighted');
+        cell.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Diagnosis
+      diagBox.classList.add('visible');
+      diagVal.textContent = `«${crackName}»`;
+
+      // Refusal
+      refusalEl.textContent = refusals[crackIdx];
+      refusalEl.classList.remove('empty');
+
+      // Step
+      stepEl.textContent = steps[crackIdx];
+      stepEl.classList.remove('empty');
+
+      // Scenarios
+      scContinue.textContent = scenariosContinue[crackIdx];
+      scStop.textContent = scenariosStop[crackIdx];
+
+    } else {
+      crackIdx = null;
+      diagBox.classList.remove('visible');
+      diagVal.textContent = '—';
+      refusalEl.textContent = 'Заполните шаги 1 и 2, чтобы увидеть отказ';
+      refusalEl.classList.add('empty');
+      stepEl.textContent = 'Заполните шаги 1 и 2, чтобы увидеть шаг';
+      stepEl.classList.add('empty');
+      scContinue.textContent = '—';
+      scStop.textContent = '—';
+    }
+
+    updateFinalTable();
+  }
+
+  function updateFinalTable() {
+    const capIdx = capScores.indexOf(1);
+    const batIdx = batScores.indexOf(1);
+
+    const setCell = (id, text, empty) => {
+      const el = document.getElementById(id);
+      if (text) {
+        el.textContent = text;
+        el.classList.remove('empty');
+      } else {
+        el.textContent = '—';
+        el.classList.add('empty');
+      }
+    };
+
+    setCell('fCap', capIdx >= 0 ? capNames[capIdx] : null, true);
+    setCell('fBat', batIdx >= 0 ? batNames[batIdx] : null, true);
+    setCell('fCrack', crackIdx !== null ? `«${cracks[Math.floor(crackIdx/4)][crackIdx%4]}»` : null);
+    setCell('fRefusal', crackIdx !== null ? refusals[crackIdx] : null);
+    setCell('fStep', crackIdx !== null ? steps[crackIdx] : null);
+
+    const scEl = document.getElementById('fScenario');
+    if (selectedScenario === 'continue' && crackIdx !== null) {
+      scEl.textContent = 'Продолжать: ' + scenariosContinue[crackIdx];
+      scEl.classList.remove('empty');
+    } else if (selectedScenario === 'stop' && crackIdx !== null) {
+      scEl.textContent = 'Отказаться: ' + scenariosStop[crackIdx];
+      scEl.classList.remove('empty');
+    } else {
+      scEl.textContent = '—';
+      scEl.classList.add('empty');
+    }
+  }
 </script>
 
 </body>
